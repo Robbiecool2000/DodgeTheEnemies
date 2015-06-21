@@ -69,14 +69,14 @@ public class Main extends InputListener implements Screen,ApplicationListener {
 			if(hoverButton1){ shapeRenderer.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
 			shapeRenderer.rect(SCREEN_WIDTH/2 - 60, SCREEN_HEIGHT/2 + 95, 120, -55);
         shapeRenderer.end();
-        
-        shapeRenderer2.begin(ShapeType.Filled);
+       	shapeRenderer2.begin(ShapeType.Filled);
         	if(!hoverButton2){ shapeRenderer2.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
         	if(hoverButton2){ shapeRenderer2.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
         	shapeRenderer2.rect(SCREEN_WIDTH/2 - 60, SCREEN_HEIGHT/2 + 35, 120, -55);
-        shapeRenderer2.end();
+       	shapeRenderer2.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         Hover();
+        ClickListener();
 	}
 	
 	public void Hover(){
@@ -92,6 +92,12 @@ public class Main extends InputListener implements Screen,ApplicationListener {
 			hoverButton2 = true;
 		}else{
 			hoverButton2 = false;
+		}
+	}
+	
+	public void ClickListener(){
+		if(hoverButton1){
+			if(Gdx.input.justTouched()) {  }
 		}
 	}
 	
