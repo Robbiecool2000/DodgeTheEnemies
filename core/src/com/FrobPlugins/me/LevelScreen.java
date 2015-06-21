@@ -3,18 +3,29 @@ package com.FrobPlugins.me;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LevelScreen implements Screen {
 	
-	Main main;
+	private Main game;
 	
-	public LevelScreen(Main main){
-		this.main = main;
+	public static SpriteBatch batch;
+	
+	public LevelScreen(Main game){
+		this.game = game;
+	}
+	
+	public void create(){
+		batch = new SpriteBatch();
 	}
 	
 	public void render(float arg0) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		batch.begin();
+			
+		batch.end();
 	}
 	
 	public void dispose() {

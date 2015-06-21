@@ -23,7 +23,8 @@ public class Main extends Game implements Screen,ApplicationListener {
 	ShapeRenderer shapeRenderer2;
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
-	LevelScreen levelscreen;
+	
+	public LevelScreen levelscreen;
 	
 	public static boolean hoverButton1 = false;
 	public static boolean hoverButton2 = false;
@@ -48,7 +49,6 @@ public class Main extends Game implements Screen,ApplicationListener {
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer2 = new ShapeRenderer();
 		SetupFont();
-		levelscreen = new LevelScreen(this);
 	}
 	
 	public void render () {
@@ -85,6 +85,8 @@ public class Main extends Game implements Screen,ApplicationListener {
 		if(Gdx.input.getX() > SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < SCREEN_WIDTH/2 + 60
         		&& Gdx.input.getY() < SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() > SCREEN_HEIGHT/2 - 95){
 			if(Gdx.input.justTouched()){
+				levelscreen = new LevelScreen(this);
+				
 				setScreen(levelscreen);
 			}
         	hoverButton1 = true;
