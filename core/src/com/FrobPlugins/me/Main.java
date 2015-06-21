@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -17,6 +18,7 @@ public class Main extends ApplicationAdapter {
 	Rectangle rect;
 	ShapeRenderer shapeRenderer;
 	OrthographicCamera camera;
+	BitmapFont font;
 	
 	//Textures
 	Texture Background;
@@ -36,6 +38,7 @@ public class Main extends ApplicationAdapter {
 		camera.setToOrtho(true, 800, 400);
 		camera.update();
 		shapeRenderer = new ShapeRenderer();
+		SetupFont();
 	}
 
 	public void render () {
@@ -44,11 +47,15 @@ public class Main extends ApplicationAdapter {
 		camera.update();
 		batch.begin();
 			batch.draw(sprite_Background, 0, 0);
+			font.draw(batch, "Play", SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT/2);
 		batch.end();
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.GRAY);
-        shapeRenderer.circle(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 150);
+		shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f));
+        shapeRenderer.rect(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 + 100, 200, -300);
         shapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
 	
 	//Loading all of the textures in the 'assets' folder.
@@ -61,5 +68,9 @@ public class Main extends ApplicationAdapter {
 		sprite_Background = new Sprite(Background);
 	
 		sprite_Background.flip(false, false);
+	}
+	
+	public void SetupFont(){
+		font = new BitmapFont();
 	}
 }
