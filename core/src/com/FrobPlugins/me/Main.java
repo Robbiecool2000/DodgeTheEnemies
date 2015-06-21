@@ -1,6 +1,7 @@
 package com.FrobPlugins.me;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -16,12 +17,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Main extends InputListener implements Screen,ApplicationListener {
-	SpriteBatch batch;
+	public static SpriteBatch batch;
 	Rectangle rect;
 	ShapeRenderer shapeRenderer;
 	ShapeRenderer shapeRenderer2;
-	OrthographicCamera camera;
-	BitmapFont font;
+	public static OrthographicCamera camera;
+	public static BitmapFont font;
 	
 	public static boolean hoverButton1 = false;
 	public static boolean hoverButton2 = false;
@@ -97,7 +98,7 @@ public class Main extends InputListener implements Screen,ApplicationListener {
 	
 	public void ClickListener(){
 		if(hoverButton1){
-			if(Gdx.input.justTouched()) {  }
+			if(Gdx.input.justTouched()) { ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen()); }
 		}
 	}
 	
@@ -118,8 +119,9 @@ public class Main extends InputListener implements Screen,ApplicationListener {
 	}
 
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		shapeRenderer.dispose();
+		shapeRenderer2.dispose();
+		Background.dispose();
 	}
 
 	public void hide() {
