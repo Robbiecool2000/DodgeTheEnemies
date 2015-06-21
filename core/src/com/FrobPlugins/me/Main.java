@@ -12,7 +12,7 @@ public class Main extends ApplicationAdapter {
 	
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("assets/badlogic.jpg");
+		img = new Texture("badlogic.jpg");
 	}
 
 	public void render () {
