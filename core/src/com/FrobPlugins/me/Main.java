@@ -16,13 +16,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class Main extends InputListener implements Screen,ApplicationListener {
+public class Main extends Game implements Screen,ApplicationListener {
 	public static SpriteBatch batch;
 	Rectangle rect;
 	ShapeRenderer shapeRenderer;
 	ShapeRenderer shapeRenderer2;
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
+	LevelScreen levelscreen;
 	
 	public static boolean hoverButton1 = false;
 	public static boolean hoverButton2 = false;
@@ -47,6 +48,7 @@ public class Main extends InputListener implements Screen,ApplicationListener {
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer2 = new ShapeRenderer();
 		SetupFont();
+		levelscreen = new LevelScreen(this);
 	}
 	
 	public void render () {
@@ -77,12 +79,14 @@ public class Main extends InputListener implements Screen,ApplicationListener {
        	shapeRenderer2.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
         Hover();
-        ClickListener();
 	}
 	
 	public void Hover(){
 		if(Gdx.input.getX() > SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < SCREEN_WIDTH/2 + 60
         		&& Gdx.input.getY() < SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() > SCREEN_HEIGHT/2 - 95){
+			if(Gdx.input.justTouched()){
+				setScreen(levelscreen);
+			}
         	hoverButton1 = true;
     	}else{
     		hoverButton1 = false;
@@ -93,12 +97,6 @@ public class Main extends InputListener implements Screen,ApplicationListener {
 			hoverButton2 = true;
 		}else{
 			hoverButton2 = false;
-		}
-	}
-	
-	public void ClickListener(){
-		if(hoverButton1){
-			if(Gdx.input.justTouched()) { ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen()); }
 		}
 	}
 	

@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class LevelScreen implements Screen {
 	
-	public void create() {
-		
+	Main main;
+	
+	public LevelScreen(Main main){
+		this.main = main;
 	}
 	
 	public void render(float arg0) {
