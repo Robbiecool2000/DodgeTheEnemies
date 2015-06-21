@@ -45,12 +45,10 @@ public class Main extends ApplicationAdapter {
 		batch.begin();
 			batch.draw(sprite_Background, 0, 0);
 		batch.end();
-		/* Adding a shape without textures.
-		 * 
-		 * shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(Color.GRAY);
         shapeRenderer.circle(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 150);
-        shapeRenderer.end();*/
+        shapeRenderer.end();
 	}
 	
 	//Loading all of the textures in the 'assets' folder.
