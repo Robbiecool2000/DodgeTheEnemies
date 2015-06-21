@@ -52,8 +52,8 @@ public class Main extends ApplicationAdapter {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f));
-        shapeRenderer.rect(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 + 100, 200, -300);
+			shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f));
+			shapeRenderer.rect(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 + 100, 200, -300);
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
 	}
@@ -71,6 +71,6 @@ public class Main extends ApplicationAdapter {
 	}
 	
 	public void SetupFont(){
-		font = new BitmapFont();
+		font = new BitmapFont(Gdx.files.internal("assets/Font"));
 	}
 }
