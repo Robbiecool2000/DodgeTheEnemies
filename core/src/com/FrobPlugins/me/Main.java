@@ -1,7 +1,8 @@
 package com.FrobPlugins.me;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,13 +13,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class Main extends ApplicationAdapter {
+public class Main extends InputListener implements Screen,ApplicationListener {
 	SpriteBatch batch;
 	Rectangle rect;
 	ShapeRenderer shapeRenderer;
+	ShapeRenderer shapeRenderer2;
 	OrthographicCamera camera;
 	BitmapFont font;
+	
+	public static boolean hoverButton1 = false;
+	public static boolean hoverButton2 = false;
 	
 	//Textures
 	Texture Background;
@@ -38,24 +44,55 @@ public class Main extends ApplicationAdapter {
 		camera.setToOrtho(true, 800, 400);
 		camera.update();
 		shapeRenderer = new ShapeRenderer();
+		shapeRenderer2 = new ShapeRenderer();
 		SetupFont();
 	}
-
+	
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		batch.begin();
 			batch.draw(sprite_Background, 0, 0);
-			font.draw(batch, "Play", SCREEN_WIDTH/2 - 10, SCREEN_HEIGHT/2);
+			font.draw(batch, "Play", SCREEN_WIDTH/2 - 25, SCREEN_HEIGHT/2 + 80);
+			font.draw(batch, "Options", SCREEN_WIDTH/2 - 45, SCREEN_HEIGHT/2 + 20);
+			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+	    
 		shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f));
 			shapeRenderer.rect(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 + 100, 200, -300);
+			
+			if(!hoverButton1){ shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
+			if(hoverButton1){ shapeRenderer.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
+			shapeRenderer.rect(SCREEN_WIDTH/2 - 60, SCREEN_HEIGHT/2 + 95, 120, -55);
         shapeRenderer.end();
+        
+        shapeRenderer2.begin(ShapeType.Filled);
+        	if(!hoverButton2){ shapeRenderer2.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
+        	if(hoverButton2){ shapeRenderer2.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
+        	shapeRenderer2.rect(SCREEN_WIDTH/2 - 60, SCREEN_HEIGHT/2 + 35, 120, -55);
+        shapeRenderer2.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
+        Hover();
+	}
+	
+	public void Hover(){
+		if(Gdx.input.getX() > SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < SCREEN_WIDTH/2 + 60
+        		&& Gdx.input.getY() < SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() > SCREEN_HEIGHT/2 - 95){
+        	hoverButton1 = true;
+    	}else{
+    		hoverButton1 = false;
+    	}
+		
+		if(Gdx.input.getX() > SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < SCREEN_WIDTH/2 + 60
+				&& Gdx.input.getY() < SCREEN_HEIGHT/2 + 20 && Gdx.input.getY() > SCREEN_HEIGHT/2 - 35){
+			hoverButton2 = true;
+		}else{
+			hoverButton2 = false;
+		}
 	}
 	
 	//Loading all of the textures in the 'assets' folder.
@@ -71,6 +108,41 @@ public class Main extends ApplicationAdapter {
 	}
 	
 	public void SetupFont(){
-		font = new BitmapFont(Gdx.files.internal("assets/Font"));
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
+	}
+
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void render(float arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void resize(int arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void show() {
+		// TODO Auto-generated method stub
+		
 	}
 }
