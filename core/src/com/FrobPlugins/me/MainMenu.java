@@ -1,7 +1,5 @@
 package com.FrobPlugins.me;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -37,9 +35,7 @@ public class MainMenu implements Screen {
 	
 	public MainMenu(Main main){
 		this.game = main;
-	}
-	
-	public void create () {
+		System.out.println("hi");
 		batch = new SpriteBatch();
 		LoadTexture();
 		LoadSprite();
@@ -52,34 +48,21 @@ public class MainMenu implements Screen {
 		SetupFont();
 	}
 	
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
-		batch.begin();
-			batch.draw(sprite_Background, 0, 0);
-			font.draw(batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
-			font.draw(batch, "Options", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
-			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
-		batch.end();
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-	    
-		shapeRenderer.begin(ShapeType.Filled);
-			shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f));
-			shapeRenderer.rect(Main.SCREEN_WIDTH/2 - 100, Main.SCREEN_HEIGHT/2 + 100, 200, -300);
-			
-			if(!hoverButton1){ shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
-			if(hoverButton1){ shapeRenderer.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
-			shapeRenderer.rect(Main.SCREEN_WIDTH/2 - 60, Main.SCREEN_HEIGHT/2 + 95, 120, -55);
-        shapeRenderer.end();
-       	shapeRenderer2.begin(ShapeType.Filled);
-        	if(!hoverButton2){ shapeRenderer2.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
-        	if(hoverButton2){ shapeRenderer2.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
-        	shapeRenderer2.rect(Main.SCREEN_WIDTH/2 - 60, Main.SCREEN_HEIGHT/2 + 35, 120, -55);
-       	shapeRenderer2.end();
-        Gdx.gl.glDisable(GL20.GL_BLEND);
-        Hover();
+	public void dispose() {
+		shapeRenderer.dispose();
+		shapeRenderer2.dispose();
+		Background.dispose();
+		
+	}
+
+	public void hide() {
+		System.out.println("boe");
+		
+	}
+
+	public void pause() {
+		System.out.println("boe");
+		
 	}
 	
 	public void Hover(){
@@ -117,39 +100,46 @@ public class MainMenu implements Screen {
 		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
 	}
 
-	public void dispose() {
-		shapeRenderer.dispose();
-		shapeRenderer2.dispose();
-		Background.dispose();
-	}
-
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void render(float arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void resize(int arg0, int arg1) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void resume() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void show() {
-		// TODO Auto-generated method stub
 		
+	}
+
+	public void render(float deltaTime) {
+			Gdx.gl.glClearColor(1, 0, 0, 1);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			camera.update();
+			batch.begin();
+				batch.draw(sprite_Background, 0, 0);
+				font.draw(batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
+				font.draw(batch, "Options", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
+				font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
+			batch.end();
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+		    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		    
+			shapeRenderer.begin(ShapeType.Filled);
+				shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f));
+				shapeRenderer.rect(Main.SCREEN_WIDTH/2 - 100, Main.SCREEN_HEIGHT/2 + 100, 200, -300);
+				
+				if(!hoverButton1){ shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
+				if(hoverButton1){ shapeRenderer.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
+				shapeRenderer.rect(Main.SCREEN_WIDTH/2 - 60, Main.SCREEN_HEIGHT/2 + 95, 120, -55);
+	        shapeRenderer.end();
+	       	shapeRenderer2.begin(ShapeType.Filled);
+	        	if(!hoverButton2){ shapeRenderer2.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
+	        	if(hoverButton2){ shapeRenderer2.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
+	        	shapeRenderer2.rect(Main.SCREEN_WIDTH/2 - 60, Main.SCREEN_HEIGHT/2 + 35, 120, -55);
+	       	shapeRenderer2.end();
+	        Gdx.gl.glDisable(GL20.GL_BLEND);
+	        Hover();
+	        System.out.println("gelezen");
 	}
 }
