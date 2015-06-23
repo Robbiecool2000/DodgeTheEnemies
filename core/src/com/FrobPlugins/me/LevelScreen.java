@@ -1,15 +1,15 @@
 package com.FrobPlugins.me;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class LevelScreen implements Screen {
-	
-	private Main main;
+public class LevelScreen extends Game implements Screen {
 	
 	public static SpriteBatch batch;
+	
 	
 	public void create(){
 		batch = new SpriteBatch();
