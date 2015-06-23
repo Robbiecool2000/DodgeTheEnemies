@@ -7,13 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LevelScreen implements Screen {
 	
-	private MainMenu game;
+	private Main main;
 	
 	public static SpriteBatch batch;
-	
-	public LevelScreen(MainMenu mainMenu){
-		this.game = mainMenu;
-	}
 	
 	public void create(){
 		batch = new SpriteBatch();
