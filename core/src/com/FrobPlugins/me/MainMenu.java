@@ -1,5 +1,6 @@
 package com.FrobPlugins.me;
 
+import com.FrobPlugins.me.desktop.DesktopLauncher;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -21,6 +22,8 @@ public class MainMenu extends Game implements Screen {
 	public static BitmapFont font;
 	Main game;
 	private Game game_class;
+	
+	public static int FPS;
 	
 	public static boolean hoverButton1 = false;
 	public static boolean hoverButton2 = false;
@@ -74,6 +77,8 @@ public class MainMenu extends Game implements Screen {
        	
         Gdx.gl.glDisable(GL20.GL_BLEND);
         Hover(game_class);
+        
+        this.FPS = Gdx.graphics.getFramesPerSecond();
 	}
 	
 	public void dispose() {
@@ -85,12 +90,10 @@ public class MainMenu extends Game implements Screen {
 	}
 
 	public void hide() {
-		System.out.println("boe");
 		
 	}
 
 	public void pause() {
-		System.out.println("boe");
 		
 	}
 	
