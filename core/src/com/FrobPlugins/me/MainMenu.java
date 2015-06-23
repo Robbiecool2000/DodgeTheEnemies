@@ -1,6 +1,8 @@
 package com.FrobPlugins.me;
 
-import com.FrobPlugins.me.desktop.DesktopLauncher;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL15;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,12 +18,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class MainMenu extends Game implements Screen {
 	public static SpriteBatch batch;
-	ShapeRenderer shapeRenderer;
-	ShapeRenderer shapeRenderer2;
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
 	Main game;
 	private Game game_class;
+	ShapeRenderer shapeRenderer, shapeRenderer2;
 	
 	public static int FPS;
 	
@@ -42,9 +43,9 @@ public class MainMenu extends Game implements Screen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true, 800, 400);
 		camera.update();
+		SetupFont();
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer2 = new ShapeRenderer();
-		SetupFont();
 	}
 	
 	public void render(float deltaTime) {
@@ -68,7 +69,6 @@ public class MainMenu extends Game implements Screen {
 			if(hoverButton1){ shapeRenderer.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
 			shapeRenderer.rect(Main.SCREEN_WIDTH/2 - 60, Main.SCREEN_HEIGHT/2 + 95, 120, -55);
         shapeRenderer.end();
-        
        	shapeRenderer2.begin(ShapeType.Filled);
         	if(!hoverButton2){ shapeRenderer2.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
         	if(hoverButton2){ shapeRenderer2.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
@@ -84,9 +84,9 @@ public class MainMenu extends Game implements Screen {
 	public void dispose() {
 		super.dispose();
 		batch.dispose();
-		Background.dispose();
 		shapeRenderer.dispose();
 		shapeRenderer2.dispose();
+		
 	}
 
 	public void hide() {
