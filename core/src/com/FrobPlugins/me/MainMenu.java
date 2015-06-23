@@ -79,10 +79,9 @@ public class MainMenu extends Game implements Screen {
 	public void dispose() {
 		super.dispose();
 		batch.dispose();
+		Background.dispose();
 		shapeRenderer.dispose();
 		shapeRenderer2.dispose();
-		Background.dispose();
-		
 	}
 
 	public void hide() {
