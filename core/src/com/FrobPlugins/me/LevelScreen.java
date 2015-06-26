@@ -10,7 +10,7 @@ public class LevelScreen extends Game implements Screen {
 	
 	public static SpriteBatch batch;
 	
-	
+
 	public void create(){
 		batch = new SpriteBatch();
 	}
