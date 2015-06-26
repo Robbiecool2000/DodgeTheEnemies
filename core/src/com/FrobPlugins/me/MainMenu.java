@@ -1,12 +1,8 @@
 package com.FrobPlugins.me;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class MainMenu extends Game implements Screen {
 	public static SpriteBatch batch;
@@ -44,8 +39,6 @@ public class MainMenu extends Game implements Screen {
 		camera.setToOrtho(true, 800, 400);
 		camera.update();
 		SetupFont();
-		shapeRenderer = new ShapeRenderer();
-		shapeRenderer2 = new ShapeRenderer();
 	}
 	
 	public void render(float deltaTime) {
@@ -60,20 +53,7 @@ public class MainMenu extends Game implements Screen {
 		batch.end();
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-	    
-		shapeRenderer.begin(ShapeType.Filled);
-			shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f));
-			shapeRenderer.rect(Main.SCREEN_WIDTH/2 - 100, Main.SCREEN_HEIGHT/2 + 100, 200, -300);
-			
-			if(!hoverButton1){ shapeRenderer.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
-			if(hoverButton1){ shapeRenderer.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
-			shapeRenderer.rect(Main.SCREEN_WIDTH/2 - 60, Main.SCREEN_HEIGHT/2 + 95, 120, -55);
-        shapeRenderer.end();
-       	shapeRenderer2.begin(ShapeType.Filled);
-        	if(!hoverButton2){ shapeRenderer2.setColor(new Color((float) 0.3,(float) 0.3,(float) 0.3, 0.5f)); }
-        	if(hoverButton2){ shapeRenderer2.setColor(new Color((float) 1,(float) 1,(float) 1, 0.5f)); }
-        	shapeRenderer2.rect(Main.SCREEN_WIDTH/2 - 60, Main.SCREEN_HEIGHT/2 + 35, 120, -55);
-       	shapeRenderer2.end();
+       	
        	
         Gdx.gl.glDisable(GL20.GL_BLEND);
         Hover(game_class);
@@ -84,9 +64,6 @@ public class MainMenu extends Game implements Screen {
 	public void dispose() {
 		super.dispose();
 		batch.dispose();
-		shapeRenderer.dispose();
-		shapeRenderer2.dispose();
-		
 	}
 
 	public void hide() {
@@ -104,16 +81,15 @@ public class MainMenu extends Game implements Screen {
 				setScreen(new LevelScreen());
 				dispose();
 			}
-        	hoverButton1 = true;
     	}else{
-    		hoverButton1 = false;
+    		
     	}
 		
 		if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
 				&& Gdx.input.getY() < Main.SCREEN_HEIGHT/2 + 20 && Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 35){
-			hoverButton2 = true;
+			
 		}else{
-			hoverButton2 = false;
+			
 		}
 	}
 	
