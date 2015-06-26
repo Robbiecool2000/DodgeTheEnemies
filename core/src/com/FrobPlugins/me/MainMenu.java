@@ -59,6 +59,7 @@ public class MainMenu extends Game implements Screen {
         Hover(game_class);
         
         this.FPS = Gdx.graphics.getFramesPerSecond();
+        super.render();
 	}
 	
 	public void dispose() {
