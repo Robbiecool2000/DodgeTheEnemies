@@ -4,20 +4,28 @@ import com.FrobPlugins.me.Actor.PlayButton;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LevelScreen extends Game implements Screen {
 	
 	public static SpriteBatch batch;
 	PlayButton playbutton;
-	int numrows = 12;
-	int numcols = 7;
+	int numrows = 8;
+	int numcols = 3;
 	int x;
 	int y;
-	int rowheight = 55;
-	int colwidth = 55;
+	int rowheight = 85;
+	int colwidth = 85;
+	public BitmapFont font;
+	private Texture redButton;
+	private Sprite sprite_redButton;
+	int X = 1;
 	
 	public static OrthographicCamera camera;
 	
@@ -35,11 +43,57 @@ public class LevelScreen extends Game implements Screen {
 				for(y = 0; y < numcols; y++){
 					int xPos = x * colwidth;
 					int yPos = y * rowheight;
-					playbutton.drawPlay(batch, xPos, yPos, 50, 50);
+					batch.draw(sprite_redButton, xPos + 65, yPos + 75);
 				}
 			}
+			font.draw(batch, "1", 0 + (float)97.5, 0 + (float)292.5);
+			font.draw(batch, "2", 0 + (float)182.5, 0 + (float)292.5);
+			font.draw(batch, "3", 0 + (float)267.5, 0 + (float)292.5);
+			font.draw(batch, "4", 0 + (float)352.5, 0 + (float)292.5);
+			font.draw(batch, "5", 0 + (float)437.5, 0 + (float)292.5);
+			font.draw(batch, "6", 0 + (float)522.5, 0 + (float)292.5);
+			font.draw(batch, "7", 0 + (float)607.5, 0 + (float)292.5);
+			font.draw(batch, "8", 0 + (float)692.5, 0 + (float)292.5);
+			font.draw(batch, "9", 0 + 95, 0 + (float)207.5);
+			font.draw(batch, "10", 0 + 175, 0 + (float)207.5);
+			font.draw(batch, "11", 0 + 260, 0 + (float)207.5);
+			font.draw(batch, "12", 0 + 345, 0 + (float)207.5);
+			font.draw(batch, "13", 0 + 430, 0 + (float)207.5);
+			font.draw(batch, "14", 0 + 515, 0 + (float)207.5);
+			font.draw(batch, "15", 0 + 600, 0 + (float)207.5);
+			font.draw(batch, "16", 0 + 685, 0 + (float)207.5);
+			font.draw(batch, "17", 0 + 95, 0 + (float)122.5);
+			font.draw(batch, "18", 0 + 180, 0 + (float)122.5);
+			font.draw(batch, "19", 0 + 265, 0 + (float)122.5);
+			font.draw(batch, "20", 0 + 350, 0 + (float)122.5);
+			font.draw(batch, "21", 0 + 435, 0 + (float)122.5);
+			font.draw(batch, "22", 0 + 520, 0 + (float)122.5);
+			font.draw(batch, "23", 0 + 605, 0 + (float)122.5);
+			font.draw(batch, "24", 0 + 690, 0 + (float)122.5);
 		batch.end();
-		System.out.println("DEBUG");
+		onClickEvent();
+	}
+	
+	public void onClickEvent(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 1, NU!");
+			}
+		}
+	}
+	
+	public void loadTextures(){
+		redButton = new Texture(Gdx.files.internal("assets/Red_Button.png"));
+	}
+	
+	public void loadSprites(){
+		sprite_redButton = new Sprite(redButton);
+	}
+	
+	public void SetupFont(){
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
+		System.out.println("Loaded font(s)");
 	}
 	
 	public void dispose() {
@@ -71,7 +125,9 @@ public class LevelScreen extends Game implements Screen {
 		batch = new SpriteBatch();
 		playbutton = new PlayButton();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, 800, 400);
-		camera.update();
+		camera.setToOrtho(false, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+		loadTextures();
+		loadSprites();
+		SetupFont();
 	}
 }

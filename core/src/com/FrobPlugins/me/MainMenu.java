@@ -51,11 +51,6 @@ public class MainMenu extends Game implements Screen {
 			font.draw(batch, "Options", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
 			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-	    Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-       	
-       	
-        Gdx.gl.glDisable(GL20.GL_BLEND);
         Hover(game_class);
         
         this.FPS = Gdx.graphics.getFramesPerSecond();
@@ -63,7 +58,6 @@ public class MainMenu extends Game implements Screen {
 	}
 	
 	public void dispose() {
-		super.dispose();
 		batch.dispose();
 	}
 
