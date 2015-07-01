@@ -26,6 +26,7 @@ public class LevelScreen extends Game implements Screen {
 	private Texture redButton;
 	private Sprite sprite_redButton;
 	int X = 1;
+	int Y = 2;
 	
 	public static OrthographicCamera camera;
 	
