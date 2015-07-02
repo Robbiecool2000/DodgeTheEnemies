@@ -2,6 +2,7 @@ package com.FrobPlugins.me;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,6 +19,10 @@ public class Level1 extends Game implements Screen{
 	Sprite sprite_character;
 	
 	private SpriteBatch batch;
+	
+	//CharX-Y
+	int CharX = 360;
+	int CharY = 160;
 	
 	private OrthographicCamera camera;
 	Main main;
@@ -43,9 +48,10 @@ public class Level1 extends Game implements Screen{
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
+		CharControls();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-			batch.draw(sprite_character, 360, 160);
+			batch.draw(sprite_character, CharX, CharY);
 		batch.end();
 	}
 	public void resize(int arg0, int arg1) {
@@ -69,5 +75,20 @@ public class Level1 extends Game implements Screen{
 		sprite_character = new Sprite(Character);
 		
 		sprite_character.flip(false, true);
+	}
+	
+	public void CharControls(){
+		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
+			CharY -= 5;
+		}
+		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
+			CharY += 5;
+		}
+		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
+			CharX -= 5;
+		}
+		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
+			CharX += 5;
+		}
 	}
 }
