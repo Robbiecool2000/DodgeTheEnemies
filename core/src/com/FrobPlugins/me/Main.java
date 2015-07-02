@@ -10,11 +10,13 @@ public class Main extends Game implements ApplicationListener {
 	MainMenu mainmenu;
 	public static LevelScreen level_screen;
 	public Level1 level1;
+	public SplashScreen splash_screen;
 	
 	public void create() {
+		splash_screen = new SplashScreen();
 		level_screen = new LevelScreen(this);
 		level1 = new Level1(this);
 		mainmenu = new MainMenu(this);
-		setScreen(mainmenu);
+		setScreen(splash_screen);
 	}
 }
