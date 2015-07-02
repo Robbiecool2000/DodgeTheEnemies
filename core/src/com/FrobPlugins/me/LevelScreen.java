@@ -27,9 +27,14 @@ public class LevelScreen extends Game implements Screen {
 	private Sprite sprite_redButton;
 	int X = 1;
 	int Y = 2;
+	Main main;
 	
 	public static OrthographicCamera camera;
 	
+	public LevelScreen(Main main) {
+		this.main = main;
+	}
+
 	public void create(){
 		
 	}
@@ -79,8 +84,50 @@ public class LevelScreen extends Game implements Screen {
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				setScreen(new Level1());
+				main.setScreen(main.level1);
 				dispose();
+			}
+		}
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 + 85 && Gdx.input.getX() < 140 + 85
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 2, NU!");
+			}
+		}
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 + 170 && Gdx.input.getX() < 140 + 170
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 3, NU!");
+			}
+		}
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 + 255 && Gdx.input.getX() < 140 + 255
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 4, NU!");
+			}
+		}
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 + 340 && Gdx.input.getX() < 140 + 340
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 5, NU!");
+			}
+		}
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 + 425 && Gdx.input.getX() < 140 + 425
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 6, NU!");
+			}
+		}
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 + 510 && Gdx.input.getX() < 140 + 510
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 7, NU!");
+			}
+		}
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 65 + 595 && Gdx.input.getX() < 140 + 595
+					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
+				System.out.println("MAAK GVD LEVEL 8, NU!");
 			}
 		}
 	}
@@ -95,10 +142,12 @@ public class LevelScreen extends Game implements Screen {
 	
 	public void SetupFont(){
 		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
+		System.out.println("Loaded font(s)");
 	}
 	
 	public void dispose() {
-		batch.dispose();
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void hide() {

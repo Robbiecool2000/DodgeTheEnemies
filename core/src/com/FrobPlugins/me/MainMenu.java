@@ -16,6 +16,7 @@ public class MainMenu extends Game implements Screen {
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
 	Main game;
+	boolean hover = true;
 	private Game game_class;
 	ShapeRenderer shapeRenderer, shapeRenderer2;
 	
@@ -51,10 +52,9 @@ public class MainMenu extends Game implements Screen {
 			font.draw(batch, "Options", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
 			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
-        Hover(game_class);
-        
-        this.FPS = Gdx.graphics.getFramesPerSecond();
-        super.render();
+        if(hover){
+        	Hover();
+        }
 	}
 	
 	public void dispose() {
@@ -69,22 +69,13 @@ public class MainMenu extends Game implements Screen {
 		
 	}
 	
-	public void Hover(Game game){
-		if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
+	public void Hover(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
         		&& Gdx.input.getY() < Main.SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 95){
-			if(Gdx.input.justTouched()){
-				setScreen(new LevelScreen());
 				dispose();
+				game.setScreen(Main.level_screen);
 			}
-    	}else{
-    		
-    	}
-		
-		if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
-				&& Gdx.input.getY() < Main.SCREEN_HEIGHT/2 + 20 && Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 35){
-			
-		}else{
-			
 		}
 	}
 	
