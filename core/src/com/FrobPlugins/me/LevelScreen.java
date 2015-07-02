@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LevelScreen extends Game implements Screen {
 	
-	public static SpriteBatch batch;
+	private SpriteBatch batch;
 	PlayButton playbutton;
 	int numrows = 8;
 	int numcols = 3;
@@ -29,7 +29,7 @@ public class LevelScreen extends Game implements Screen {
 	int Y = 2;
 	Main main;
 	
-	public static OrthographicCamera camera;
+	private OrthographicCamera camera;
 	
 	public LevelScreen(Main main) {
 		this.main = main;
