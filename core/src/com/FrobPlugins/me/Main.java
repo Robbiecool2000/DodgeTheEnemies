@@ -9,7 +9,7 @@ public class Main extends Game implements ApplicationListener {
 	public static final int SCREEN_HEIGHT = 400;
 	MainMenu mainmenu;
 	public static LevelScreen level_screen;
-	public static Level1 level1;
+	public Level1 level1;
 	
 	public void create() {
 		level_screen = new LevelScreen(this);

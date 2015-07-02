@@ -4,7 +4,6 @@ import com.FrobPlugins.me.Actor.PlayButton;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,6 +27,8 @@ public class LevelScreen extends Game implements Screen {
 	int X = 1;
 	int Y = 2;
 	Main main;
+	private Texture Background;
+	private Sprite sprite_Background;
 	
 	private OrthographicCamera camera;
 	
@@ -45,6 +46,7 @@ public class LevelScreen extends Game implements Screen {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		batch.draw(sprite_Background, 0, 0);
 			for(x = 0; x < numrows; x++){
 				for(y = 0; y < numcols; y++){
 					int xPos = x * colwidth;
@@ -60,7 +62,7 @@ public class LevelScreen extends Game implements Screen {
 			font.draw(batch, "6", 0 + (float)522.5, 0 + (float)292.5);
 			font.draw(batch, "7", 0 + (float)607.5, 0 + (float)292.5);
 			font.draw(batch, "8", 0 + (float)692.5, 0 + (float)292.5);
-			font.draw(batch, "9", 0 + 95, 0 + (float)207.5);
+			font.draw(batch, "9", 0 + (float)97.5, 0 + (float)207.5);
 			font.draw(batch, "10", 0 + 175, 0 + (float)207.5);
 			font.draw(batch, "11", 0 + 260, 0 + (float)207.5);
 			font.draw(batch, "12", 0 + 345, 0 + (float)207.5);
@@ -68,16 +70,24 @@ public class LevelScreen extends Game implements Screen {
 			font.draw(batch, "14", 0 + 515, 0 + (float)207.5);
 			font.draw(batch, "15", 0 + 600, 0 + (float)207.5);
 			font.draw(batch, "16", 0 + 685, 0 + (float)207.5);
-			font.draw(batch, "17", 0 + 95, 0 + (float)122.5);
-			font.draw(batch, "18", 0 + 180, 0 + (float)122.5);
-			font.draw(batch, "19", 0 + 265, 0 + (float)122.5);
-			font.draw(batch, "20", 0 + 350, 0 + (float)122.5);
-			font.draw(batch, "21", 0 + 435, 0 + (float)122.5);
-			font.draw(batch, "22", 0 + 520, 0 + (float)122.5);
-			font.draw(batch, "23", 0 + 605, 0 + (float)122.5);
-			font.draw(batch, "24", 0 + 690, 0 + (float)122.5);
+			font.draw(batch, "17", 0 + 90, 0 + (float)122.5);
+			font.draw(batch, "18", 0 + 175, 0 + (float)122.5);
+			font.draw(batch, "19", 0 + 260, 0 + (float)122.5);
+			font.draw(batch, "20", 0 + 345, 0 + (float)122.5);
+			font.draw(batch, "21", 0 + 430, 0 + (float)122.5);
+			font.draw(batch, "22", 0 + 515, 0 + (float)122.5);
+			font.draw(batch, "23", 0 + 600, 0 + (float)122.5);
+			font.draw(batch, "24", 0 + 685, 0 + (float)122.5);
 		batch.end();
 		onClickEvent();
+	}
+	
+	public void LoadTexture(){
+		
+	}
+	
+	public void LoadSprite(){
+		
 	}
 	
 	public void onClickEvent(){
@@ -134,10 +144,15 @@ public class LevelScreen extends Game implements Screen {
 	
 	public void loadTextures(){
 		redButton = new Texture(Gdx.files.internal("assets/Red_Button.png"));
+		Background = new Texture("assets/Background.png");
 	}
 	
 	public void loadSprites(){
 		sprite_redButton = new Sprite(redButton);
+		sprite_Background = new Sprite(Background);
+		
+		sprite_redButton.flip(false, false);
+		sprite_Background.flip(false, false);
 	}
 	
 	public void SetupFont(){
