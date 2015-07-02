@@ -31,7 +31,7 @@ public class LevelScreen extends Game implements Screen {
 	private Sprite sprite_Background;
 	
 	private OrthographicCamera camera;
-	
+
 	public LevelScreen(Main main) {
 		this.main = main;
 	}
@@ -94,7 +94,7 @@ public class LevelScreen extends Game implements Screen {
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				main.setScreen(main.level1);
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level1(main));
 				dispose();
 			}
 		}

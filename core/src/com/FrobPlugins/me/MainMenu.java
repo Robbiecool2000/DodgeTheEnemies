@@ -19,6 +19,7 @@ public class MainMenu extends Game implements Screen {
 	boolean hover = true;
 	private Game game_class;
 	ShapeRenderer shapeRenderer, shapeRenderer2;
+	private LevelScreen levelscreen;
 	
 	public static int FPS;
 	
@@ -40,6 +41,7 @@ public class MainMenu extends Game implements Screen {
 		camera.setToOrtho(true, 800, 400);
 		camera.update();
 		SetupFont();
+		levelscreen = new LevelScreen(main);
 	}
 	
 	public void render(float deltaTime) {
@@ -74,7 +76,7 @@ public class MainMenu extends Game implements Screen {
 			if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
         		&& Gdx.input.getY() < Main.SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 95){
 				dispose();
-				game.setScreen(Main.level_screen);
+				((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen(game));
 			}
 		}
 	}
