@@ -79,7 +79,8 @@ public class LevelScreen extends Game implements Screen {
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 1, NU!");
+				setScreen(new Level1());
+				dispose();
 			}
 		}
 	}
@@ -94,12 +95,10 @@ public class LevelScreen extends Game implements Screen {
 	
 	public void SetupFont(){
 		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
-		System.out.println("Loaded font(s)");
 	}
 	
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		batch.dispose();
 	}
 
 	public void hide() {
