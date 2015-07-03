@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class MainMenu extends Game implements Screen {
-	public static SpriteBatch batch;
+	private SpriteBatch batch;
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
 	Main game;
@@ -64,11 +64,9 @@ public class MainMenu extends Game implements Screen {
 	}
 	
 	public void dispose() {
-		batch.dispose();
 	}
 
 	public void hide() {
-		
 	}
 
 	public void pause() {

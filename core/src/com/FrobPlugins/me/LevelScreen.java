@@ -168,12 +168,10 @@ public class LevelScreen extends Game implements Screen {
 	}
 	
 	public void dispose() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void hide() {
-		// TODO Auto-generated method stub
 		
 	}
 
