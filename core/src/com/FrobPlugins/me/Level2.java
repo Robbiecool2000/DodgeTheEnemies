@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Level1 extends Game implements Screen{
+public class Level2 extends Game implements Screen{
 	
 	//Texture
 	Texture Character;
@@ -27,7 +27,7 @@ public class Level1 extends Game implements Screen{
 	private OrthographicCamera camera;
 	Main main;
 	
-	public Level1(Main main) {
+	public Level2(Main main) {
 		this.main = main;
 		LoadTexture();
 		LoadSprite();
