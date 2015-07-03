@@ -101,43 +101,50 @@ public class LevelScreen extends Game implements Screen {
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 + 85 && Gdx.input.getX() < 140 + 85
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 2, NU!");
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level2(main));
+				dispose();
 			}
 		}
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 + 170 && Gdx.input.getX() < 140 + 170
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 3, NU!");
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level3(main));
+				dispose();
 			}
 		}
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 + 255 && Gdx.input.getX() < 140 + 255
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 4, NU!");
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level4(main));
+				dispose();
 			}
 		}
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 + 340 && Gdx.input.getX() < 140 + 340
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 5, NU!");
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level5(main));
+				dispose();
 			}
 		}
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 + 425 && Gdx.input.getX() < 140 + 425
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 6, NU!");
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level6(main));
+				dispose();
 			}
 		}
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 + 510 && Gdx.input.getX() < 140 + 510
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 7, NU!");
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level7(main));
+				dispose();
 			}
 		}
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 + 595 && Gdx.input.getX() < 140 + 595
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-				System.out.println("MAAK GVD LEVEL 8, NU!");
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Level8(main));
+				dispose();
 			}
 		}
 	}
