@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class MainMenu extends Game implements Screen {
 	public static SpriteBatch batch;
@@ -20,6 +22,7 @@ public class MainMenu extends Game implements Screen {
 	private Game game_class;
 	ShapeRenderer shapeRenderer, shapeRenderer2;
 	private LevelScreen levelscreen;
+	private Stage stage = new Stage();
 	
 	public static int FPS;
 	
@@ -29,8 +32,8 @@ public class MainMenu extends Game implements Screen {
 	//Textures
 	Texture Background;
 
-	//Sprites
-	Sprite sprite_Background;
+	//Images
+	Image sprite_Background;
 	
 	public MainMenu(Main main){
 		this.game = main;
@@ -45,11 +48,12 @@ public class MainMenu extends Game implements Screen {
 	}
 	
 	public void render(float deltaTime) {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
+		stage.act();
+		stage.draw();
 		batch.begin();
-			batch.draw(sprite_Background, 0, 0);
 			font.draw(batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
 			font.draw(batch, "Options", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
 			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
@@ -88,9 +92,7 @@ public class MainMenu extends Game implements Screen {
 	
 	//Loading and flipping the sprites.
 	public void LoadSprite(){
-		sprite_Background = new Sprite(Background);
-	
-		sprite_Background.flip(false, false);
+		sprite_Background = new Image(Background);
 	}
 	
 	public void SetupFont(){
@@ -106,7 +108,8 @@ public class MainMenu extends Game implements Screen {
 	}
 
 	public void show() {
-		
+		stage.addActor(sprite_Background);
+		sprite_Background.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 	}
 
 	public void create() {
