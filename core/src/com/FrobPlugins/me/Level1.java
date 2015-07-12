@@ -103,7 +103,7 @@ public class Level1 extends Game implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
-			font.draw(batch, "Hit the left side of the screen to finish the level.", 600, 100);
+			font.draw(batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
 			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
 	}
@@ -134,16 +134,16 @@ public class Level1 extends Game implements Screen{
 	
 	public void CharControls(){
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
-			CharBounds.y += 6;
+			CharBounds.y += 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
-			CharBounds.y -= 6;
+			CharBounds.y -= 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
-			CharBounds.x -= 6;
+			CharBounds.x -= 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
-			CharBounds.x += 6;
+			CharBounds.x += 2;
 		}
 	}
 	
