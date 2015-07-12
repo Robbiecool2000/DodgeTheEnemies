@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,10 +17,15 @@ public class Level1 extends Game implements Screen{
 	//Texture
 	Texture Character;
 	Texture EvilCharacter;
+	Texture Level1Background;
 	
 	//Sprites
 	Sprite sprite_character;
 	Sprite sprite_evilcharacter;
+	Sprite sprite_level1background;
+	
+	//Font
+	public static BitmapFont font;
 	
 	private SpriteBatch batch;
 	
@@ -84,8 +90,10 @@ public class Level1 extends Game implements Screen{
 		EvilCharBackMovement();
 		CharFinish();
 		Collide();
+		Setupfont();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+			batch.draw(sprite_level1background, 0, 0);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
@@ -95,6 +103,8 @@ public class Level1 extends Game implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
+			font.draw(batch, "Hit the left side of the screen to finish the level.", 600, 100);
+			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
 	}
 	public void resize(int arg0, int arg1) {
@@ -113,6 +123,7 @@ public class Level1 extends Game implements Screen{
 	public void LoadTexture(){
 		Character = new Texture("assets/DodgeTheEnemiesCharacter.png");
 		EvilCharacter = new Texture("assets/DodgeTheEnemiesEvilCharacter.png");
+		Level1Background = new Texture("assets/Level1Background.png");
 	}
 	
 	public void LoadSprite(){
@@ -120,6 +131,8 @@ public class Level1 extends Game implements Screen{
 		sprite_character.flip(false, true);
 		sprite_evilcharacter = new Sprite(EvilCharacter);
 		sprite_evilcharacter.flip(false, true);
+		sprite_level1background = new Sprite(Level1Background);
+		sprite_level1background.flip(false, true);
 	}
 	
 	public void CharControls(){
@@ -308,5 +321,8 @@ public class Level1 extends Game implements Screen{
 		if(CharBounds.overlaps(EvilCharBounds_8)){
 			System.out.println("You died!");
 		}
+	}
+	public void Setupfont(){
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
 	}
 }
