@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Level1 extends Game implements Screen{
 	
@@ -32,25 +33,16 @@ public class Level1 extends Game implements Screen{
 	int EvilCharAtTop_7 = 0;
 	int EvilCharAtTop_8 = 0;
 	
-	//(Evil)CharX-Y
-	int CharX = 360;
-	int CharY = 160;
-	int EvilCharX_1 = 0;
-	int EvilCharY_1 = 0;
-	int EvilCharX_2 = 160;
-	int EvilCharY_2 = 0;
-	int EvilCharX_3 = 320;
-	int EvilCharY_3 = 0;
-	int EvilCharX_4 = 480;
-	int EvilCharY_4 = 0;
-	int EvilCharX_5 = 80;
-	int EvilCharY_5 = 320;
-	int EvilCharX_6 = 240;
-	int EvilCharY_6 = 320;
-	int EvilCharX_7 = 400;
-	int EvilCharY_7 = 320;
-	int EvilCharX_8 = 560;
-	int EvilCharY_8 = 320;
+	//(Evil)CharBounds
+	private final Rectangle CharBounds;
+	private final Rectangle EvilCharBounds_1;
+	private final Rectangle EvilCharBounds_2;
+	private final Rectangle EvilCharBounds_3;
+	private final Rectangle EvilCharBounds_4;
+	private final Rectangle EvilCharBounds_5;
+	private final Rectangle EvilCharBounds_6;
+	private final Rectangle EvilCharBounds_7;
+	private final Rectangle EvilCharBounds_8;
 	
 	private OrthographicCamera camera;
 	Main main;
@@ -59,6 +51,15 @@ public class Level1 extends Game implements Screen{
 		this.main = main;
 		LoadTexture();
 		LoadSprite();
+		CharBounds = new Rectangle(360, 160, 60, 60);
+		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+		EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
+		EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
+		EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
+		EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
+		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
+		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
+		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
 	}
 	public void create(){
 		
@@ -82,17 +83,18 @@ public class Level1 extends Game implements Screen{
 		EvilCharMovement();
 		EvilCharBackMovement();
 		CharFinish();
+		Collide();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-			batch.draw(sprite_character, CharX, CharY);
-			batch.draw(sprite_evilcharacter, EvilCharX_1, EvilCharY_1);
-			batch.draw(sprite_evilcharacter, EvilCharX_2, EvilCharY_2);
-			batch.draw(sprite_evilcharacter, EvilCharX_3, EvilCharY_3);
-			batch.draw(sprite_evilcharacter, EvilCharX_4, EvilCharY_4);
-			batch.draw(sprite_evilcharacter, EvilCharX_5, EvilCharY_5);
-			batch.draw(sprite_evilcharacter, EvilCharX_6, EvilCharY_6);
-			batch.draw(sprite_evilcharacter, EvilCharX_7, EvilCharY_7);
-			batch.draw(sprite_evilcharacter, EvilCharX_8, EvilCharY_8);
+			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_3.x, EvilCharBounds_3.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_4.x, EvilCharBounds_4.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_5.x, EvilCharBounds_5.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
+			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
 		batch.end();
 	}
 	public void resize(int arg0, int arg1) {
@@ -122,163 +124,189 @@ public class Level1 extends Game implements Screen{
 	
 	public void CharControls(){
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
-			CharY -= 6;
+			CharBounds.y -= 6;
 		}
 		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
-			CharY += 6;
+			CharBounds.y += 6;
 		}
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
-			CharX -= 6;
+			CharBounds.x -= 6;
 		}
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
-			CharX += 6;
+			CharBounds.x += 6;
 		}
 	}
 	
 	public void CharBoundaries(){
-		if(CharX >= 720){
-			CharX = 720;
+		if(CharBounds.x >= 720){
+			CharBounds.x = 720;
 		}
-		if(CharX <= 0){
-			CharX = 0;
+		if(CharBounds.x <= 0){
+			CharBounds.x = 0;
 		}
-		if(CharY >= 320){
-			CharY = 320;
+		if(CharBounds.y >= 320){
+			CharBounds.y = 320;
 		}
-		if(CharY <= 0){
-			CharY = 0;
+		if(CharBounds.y <= 0){
+			CharBounds.y = 0;
 		}
 	}
 	public void EvilCharIntSystem(){
-		if(EvilCharY_1 == 0){
+		if(EvilCharBounds_1.y == 0){
 			EvilCharAtTop_1 = 1;
 		}
-		if(EvilCharY_1 == 320){
+		if(EvilCharBounds_1.y == 320){
 			EvilCharAtTop_1 = 0;
 		}
 		
-		if(EvilCharY_2 == 0){
+		if(EvilCharBounds_2.y == 0){
 			EvilCharAtTop_2 = 1;
 		}
-		if(EvilCharY_2 == 320){
+		if(EvilCharBounds_2.y == 320){
 			EvilCharAtTop_2 = 0;
 		}
 		
-		if(EvilCharY_3 == 0){
+		if(EvilCharBounds_3.y == 0){
 			EvilCharAtTop_3 = 1;
 		}
-		if(EvilCharY_3 == 320){
+		if(EvilCharBounds_3.y == 320){
 			EvilCharAtTop_3 = 0;
 		}
 		
-		if(EvilCharY_4 == 0){
+		if(EvilCharBounds_4.y == 0){
 			EvilCharAtTop_4 = 1;
 		}
-		if(EvilCharY_4 == 320){
+		if(EvilCharBounds_4.y == 320){
 			EvilCharAtTop_4 = 0;
 		}
 		
-		if(EvilCharY_5 == 0){
+		if(EvilCharBounds_5.y == 0){
 			EvilCharAtTop_5 = 1;
 		}
-		if(EvilCharY_5 == 320){
+		if(EvilCharBounds_5.y == 320){
 			EvilCharAtTop_5 = 0;
 		}
 		
-		if(EvilCharY_6 == 0){
+		if(EvilCharBounds_6.y == 0){
 			EvilCharAtTop_6 = 1;
 		}
-		if(EvilCharY_6 == 320){
+		if(EvilCharBounds_6.y == 320){
 			EvilCharAtTop_6 = 0;
 		}
 		
-		if(EvilCharY_7 == 0){
+		if(EvilCharBounds_7.y == 0){
 			EvilCharAtTop_7 = 1;
 		}
-		if(EvilCharY_7 == 320){
+		if(EvilCharBounds_7.y == 320){
 			EvilCharAtTop_7 = 0;
 		}
 		
-		if(EvilCharY_8 == 0){
+		if(EvilCharBounds_8.y == 0){
 			EvilCharAtTop_8 = 1;
 		}
-		if(EvilCharY_8 == 320){
+		if(EvilCharBounds_8.y == 320){
 			EvilCharAtTop_8 = 0;
 		}
 	}
 	public void EvilCharMovement(){
 		if(EvilCharAtTop_1 == 1){
-			EvilCharY_1 += 1;
+			EvilCharBounds_1.y += 1;
 		}
 		
 		if(EvilCharAtTop_2 == 1){
-			EvilCharY_2 += 1;
+			EvilCharBounds_2.y += 1;
 		}
 		
 		if(EvilCharAtTop_3 == 1){
-			EvilCharY_3 += 1;
+			EvilCharBounds_3.y += 1;
 		}
 		
 		if(EvilCharAtTop_4 == 1){
-			EvilCharY_4 += 1;
+			EvilCharBounds_4.y += 1;
 		}
 		
 		
 		if(EvilCharAtTop_5 == 0){
-			EvilCharY_5 -= 1;
+			EvilCharBounds_5.y -= 1;
 		}
 		
 		if(EvilCharAtTop_6 == 0){
-			EvilCharY_6 -= 1;
+			EvilCharBounds_6.y -= 1;
 		}
 		
 		if(EvilCharAtTop_7 == 0){
-			EvilCharY_7 -= 1;
+			EvilCharBounds_7.y -= 1;
 		}
 		
 		if(EvilCharAtTop_8 == 0){
-			EvilCharY_8 -= 1;
+			EvilCharBounds_8.y -= 1;
 		}
 	}
 	public void EvilCharBackMovement(){
 		if(EvilCharAtTop_1 == 0){
-			EvilCharY_1 -= 1;
+			EvilCharBounds_1.y -= 1;
 		}
 		
 		if(EvilCharAtTop_2 == 0){
-			EvilCharY_2 -= 1;
+			EvilCharBounds_2.y -= 1;
 		}
 		
 		if(EvilCharAtTop_3 == 0){
-			EvilCharY_3 -= 1;
+			EvilCharBounds_3.y -= 1;
 		}
 		
 		if(EvilCharAtTop_4 == 0){
-			EvilCharY_4 -= 1;
+			EvilCharBounds_4.y -= 1;
 		}
 		
 		
 		if(EvilCharAtTop_5 == 1){
-			EvilCharY_5 += 1;
+			EvilCharBounds_5.y += 1;
 		}
 		
 		if(EvilCharAtTop_6 == 1){
-			EvilCharY_6 += 1;
+			EvilCharBounds_6.y += 1;
 		}
 		
 		if(EvilCharAtTop_7 == 1){
-			EvilCharY_7 += 1;
+			EvilCharBounds_7.y += 1;
 		}
 		
 		if(EvilCharAtTop_8 == 1){
-			EvilCharY_8 += 1;
+			EvilCharBounds_8.y += 1;
 		}
 	}
 	public void CharFinish(){
-		if(CharX == 0 && CharY >= 0 && CharY <= 400){
-			if(CharX == 0 && CharY + 80 >= 0 && CharY + 80 <= 400){
+		if(CharBounds.x == 0 && CharBounds.y >= 0 && CharBounds.y <= 400){
+			if(CharBounds.x == 0 && CharBounds.y + 80 >= 0 && CharBounds.y + 80 <= 400){
 				System.out.println("Finished!");
 			}
+		}
+	}
+	public void Collide(){
+		if(CharBounds.overlaps(EvilCharBounds_1)){
+			System.out.println("You died!");
+		}
+		if(CharBounds.overlaps(EvilCharBounds_2)){
+			System.out.println("You died!");
+		}
+		if(CharBounds.overlaps(EvilCharBounds_3)){
+			System.out.println("You died!");
+		}
+		if(CharBounds.overlaps(EvilCharBounds_4)){
+			System.out.println("You died!");
+		}
+		if(CharBounds.overlaps(EvilCharBounds_5)){
+			System.out.println("You died!");
+		}
+		if(CharBounds.overlaps(EvilCharBounds_6)){
+			System.out.println("You died!");
+		}
+		if(CharBounds.overlaps(EvilCharBounds_7)){
+			System.out.println("You died!");
+		}
+		if(CharBounds.overlaps(EvilCharBounds_8)){
+			System.out.println("You died!");
 		}
 	}
 }
