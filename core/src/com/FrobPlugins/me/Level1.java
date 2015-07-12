@@ -93,8 +93,6 @@ public class Level1 extends Game implements Screen{
 		Setupfont();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-			font.draw(batch, "Hit the left side of the screen to finish the level.", 600, 100);
-			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 			batch.draw(sprite_level1background, 0, 0);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
@@ -105,6 +103,8 @@ public class Level1 extends Game implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
+			font.draw(batch, "Hit the left side of the screen to finish the level.", 600, 100);
+			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
 	}
 	public void resize(int arg0, int arg1) {
@@ -116,7 +116,7 @@ public class Level1 extends Game implements Screen{
 	public void show() {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, 800, 400);
+		camera.setToOrtho(false, 800, 400);
 		camera.update();
 	}
 	
@@ -128,11 +128,8 @@ public class Level1 extends Game implements Screen{
 	
 	public void LoadSprite(){
 		sprite_character = new Sprite(Character);
-		sprite_character.flip(false, true);
 		sprite_evilcharacter = new Sprite(EvilCharacter);
-		sprite_evilcharacter.flip(false, true);
 		sprite_level1background = new Sprite(Level1Background);
-		sprite_level1background.flip(false, true);
 	}
 	
 	public void CharControls(){
