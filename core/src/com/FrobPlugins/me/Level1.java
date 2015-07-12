@@ -134,10 +134,10 @@ public class Level1 extends Game implements Screen{
 	
 	public void CharControls(){
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
-			CharBounds.y -= 6;
+			CharBounds.y += 6;
 		}
 		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
-			CharBounds.y += 6;
+			CharBounds.y -= 6;
 		}
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
 			CharBounds.x -= 6;

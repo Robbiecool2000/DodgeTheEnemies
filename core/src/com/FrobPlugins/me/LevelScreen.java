@@ -4,6 +4,7 @@ import com.FrobPlugins.me.Actor.PlayButton;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,11 +25,10 @@ public class LevelScreen extends Game implements Screen {
 	public BitmapFont font;
 	private Texture redButton;
 	private Sprite sprite_redButton;
-	int X = 1;
-	int Y = 2;
 	Main main;
 	private Texture Background;
 	private Sprite sprite_Background;
+	boolean changeCamera = false;
 	
 	private OrthographicCamera camera;
 
@@ -54,6 +54,14 @@ public class LevelScreen extends Game implements Screen {
 					batch.draw(sprite_redButton, xPos + 65, yPos + 75);
 				}
 			}
+			for(x = 0; x < numrows; x++){
+				for(y = 0; y < numcols; y++){
+					int xPos = x * colwidth;
+					int yPos = y * rowheight;
+					batch.draw(sprite_redButton, xPos + 885, yPos + 75);
+				}
+			}
+			batch.draw(sprite_redButton, 725, 0);
 			font.draw(batch, "1", 0 + (float)97.5, 0 + (float)292.5);
 			font.draw(batch, "2", 0 + (float)182.5, 0 + (float)292.5);
 			font.draw(batch, "3", 0 + (float)267.5, 0 + (float)292.5);
@@ -78,8 +86,18 @@ public class LevelScreen extends Game implements Screen {
 			font.draw(batch, "22", 0 + 515, 0 + (float)122.5);
 			font.draw(batch, "23", 0 + 600, 0 + (float)122.5);
 			font.draw(batch, "24", 0 + 685, 0 + (float)122.5);
+			font.draw(batch, ">", (float)760, (float)45);
 		batch.end();
 		onClickEvent();
+		if(changeCamera){
+			if(camera.position.x >= 1200){
+				camera.position.x += 0;
+				camera.position.x = 1200;
+				changeCamera = false;
+			}
+			camera.position.x += 20;
+			System.out.println(camera.position.x);
+		}
 	}
 	
 	public void LoadTexture(){
@@ -91,6 +109,13 @@ public class LevelScreen extends Game implements Screen {
 	}
 	
 	public void onClickEvent(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 725 && Gdx.input.getX() < 725 + 75
+					&& Gdx.input.getY() > 325 && Gdx.input.getY() < 325 + 75){
+				camera.translate(0, 0);
+				changeCamera = true;
+			}
+		}
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
 					&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
@@ -176,17 +201,14 @@ public class LevelScreen extends Game implements Screen {
 	}
 
 	public void pause() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void resize(int arg0, int arg1) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void resume() {
-		// TODO Auto-generated method stub
 		
 	}
 
