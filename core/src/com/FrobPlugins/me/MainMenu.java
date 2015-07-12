@@ -19,7 +19,9 @@ public class MainMenu extends Game implements Screen {
 	public static BitmapFont font;
 	Main game;
 	boolean hover = true;
+	private Game game_class;
 	ShapeRenderer shapeRenderer, shapeRenderer2;
+	private LevelScreen levelscreen;
 	private Stage stage = new Stage();
 	
 	public static int FPS;
