@@ -93,6 +93,8 @@ public class Level1 extends Game implements Screen{
 		Setupfont();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+			font.draw(batch, "Hit the left side of the screen to finish the level.", 600, 100);
+			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 			batch.draw(sprite_level1background, 0, 0);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
@@ -103,8 +105,6 @@ public class Level1 extends Game implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
-			font.draw(batch, "Hit the left side of the screen to finish the level.", 600, 100);
-			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
 	}
 	public void resize(int arg0, int arg1) {
@@ -151,14 +151,14 @@ public class Level1 extends Game implements Screen{
 	}
 	
 	public void CharBoundaries(){
-		if(CharBounds.x >= 720){
-			CharBounds.x = 720;
+		if(CharBounds.x >= 740){
+			CharBounds.x = 740;
 		}
 		if(CharBounds.x <= 0){
 			CharBounds.x = 0;
 		}
-		if(CharBounds.y >= 320){
-			CharBounds.y = 320;
+		if(CharBounds.y >= 340){
+			CharBounds.y = 340;
 		}
 		if(CharBounds.y <= 0){
 			CharBounds.y = 0;
