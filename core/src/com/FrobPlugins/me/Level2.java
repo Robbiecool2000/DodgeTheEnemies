@@ -60,6 +60,7 @@ public class Level2 extends Game implements Screen{
 		Setupfont();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+			batch.draw(sprite_level2background, 0, 0);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 		batch.end();
 	}
@@ -83,15 +84,16 @@ public class Level2 extends Game implements Screen{
 	
 	public void LoadSprite(){
 		sprite_character = new Sprite(Character);
+		sprite_level2background = new Sprite(Level2Background);
 		
 	}
 	
 	public void CharControls(){
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
-			CharBounds.y -= 2;
+			CharBounds.y += 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
-			CharBounds.y += 2;
+			CharBounds.y -= 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
 			CharBounds.x -= 2;
@@ -102,14 +104,14 @@ public class Level2 extends Game implements Screen{
 	}
 	
 	public void CharBoundaries(){
-		if(CharBounds.x >= 720){
-			CharBounds.x = 720;
+		if(CharBounds.x >= 740){
+			CharBounds.x = 740;
 		}
 		if(CharBounds.x <= 0){
 			CharBounds.x = 0;
 		}
-		if(CharBounds.y >= 320){
-			CharBounds.y = 320;
+		if(CharBounds.y >= 340){
+			CharBounds.y = 340;
 		}
 		if(CharBounds.y <= 0){
 			CharBounds.y = 0;
