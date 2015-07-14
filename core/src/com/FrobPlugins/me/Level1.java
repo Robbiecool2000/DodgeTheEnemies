@@ -123,7 +123,7 @@ public class Level1 extends Game implements Screen{
 	public void LoadTexture(){
 		Character = new Texture("assets/DodgeTheEnemiesCharacter.png");
 		EvilCharacter = new Texture("assets/DodgeTheEnemiesEvilCharacter.png");
-		Level1Background = new Texture("assets/Level1Background.png");
+		Level1Background = new Texture("assets/LevelBackground.png");
 	}
 	
 	public void LoadSprite(){

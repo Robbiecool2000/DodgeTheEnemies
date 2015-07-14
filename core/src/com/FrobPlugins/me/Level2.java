@@ -7,22 +7,28 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Level2 extends Game implements Screen{
 	
 	//Texture
 	Texture Character;
+	Texture Level2Background;
 	
 	//Sprites
 	Sprite sprite_character;
+	Sprite sprite_level2background;
+	
+	//Font
+	public static BitmapFont font;
 	
 	private SpriteBatch batch;
 	
-	//CharX-Y
-	int CharX = 360;
-	int CharY = 160;
+	//(Evil)CharBounds
+	private final Rectangle CharBounds;
 	
 	private OrthographicCamera camera;
 	Main main;
@@ -31,6 +37,7 @@ public class Level2 extends Game implements Screen{
 		this.main = main;
 		LoadTexture();
 		LoadSprite();
+		CharBounds = new Rectangle(360, 160, 60, 60);
 	}
 	public void create(){
 		
@@ -50,9 +57,10 @@ public class Level2 extends Game implements Screen{
 		camera.update();
 		CharControls();
 		CharBoundaries();
+		Setupfont();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-			batch.draw(sprite_character, CharX, CharY);
+			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 		batch.end();
 	}
 	public void resize(int arg0, int arg1) {
@@ -64,47 +72,50 @@ public class Level2 extends Game implements Screen{
 	public void show() {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(true, 800, 400);
+		camera.setToOrtho(false, 800, 400);
 		camera.update();
 	}
 	
 	public void LoadTexture(){
 		Character = new Texture("assets/DodgeTheEnemiesCharacter.png");
+		Level2Background = new Texture("assets/LevelBackground.png");
 	}
 	
 	public void LoadSprite(){
 		sprite_character = new Sprite(Character);
 		
-		sprite_character.flip(false, true);
 	}
 	
 	public void CharControls(){
 		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
-			CharY -= 5;
+			CharBounds.y -= 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
-			CharY += 5;
+			CharBounds.y += 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
-			CharX -= 5;
+			CharBounds.x -= 2;
 		}
 		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
-			CharX += 5;
+			CharBounds.x += 2;
 		}
 	}
 	
 	public void CharBoundaries(){
-		if(CharX >= 720){
-			CharX = 720;
+		if(CharBounds.x >= 720){
+			CharBounds.x = 720;
 		}
-		if(CharX <= 0){
-			CharX = 0;
+		if(CharBounds.x <= 0){
+			CharBounds.x = 0;
 		}
-		if(CharY >= 320){
-			CharY = 320;
+		if(CharBounds.y >= 320){
+			CharBounds.y = 320;
 		}
-		if(CharY <= 0){
-			CharY = 0;
+		if(CharBounds.y <= 0){
+			CharBounds.y = 0;
 		}
+	}
+	public void Setupfont(){
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
 	}
 }
