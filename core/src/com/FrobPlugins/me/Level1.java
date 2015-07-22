@@ -4,25 +4,40 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 
-public class Level1 extends Game implements Screen{
+public class Level1 implements Screen{
 	
 	//Texture
 	Texture Character;
 	Texture EvilCharacter;
 	Texture Level1Background;
+	Texture died_texture = new Texture("assets/Died.png");;
 	
 	//Sprites
 	Sprite sprite_character;
 	Sprite sprite_evilcharacter;
 	Sprite sprite_level1background;
+	
+	//Images
+	Image died_window = new Image(died_texture);
+	
+	private Stage stage = new Stage();
 	
 	//Font
 	public static BitmapFont font;
@@ -40,21 +55,24 @@ public class Level1 extends Game implements Screen{
 	int EvilCharAtTop_8 = 0;
 	
 	//(Evil)CharBounds
-	private final Rectangle CharBounds;
-	private final Rectangle EvilCharBounds_1;
-	private final Rectangle EvilCharBounds_2;
-	private final Rectangle EvilCharBounds_3;
-	private final Rectangle EvilCharBounds_4;
-	private final Rectangle EvilCharBounds_5;
-	private final Rectangle EvilCharBounds_6;
-	private final Rectangle EvilCharBounds_7;
-	private final Rectangle EvilCharBounds_8;
+	private Rectangle CharBounds;
+	private Rectangle EvilCharBounds_1;
+	private Rectangle EvilCharBounds_2;
+	private Rectangle EvilCharBounds_3;
+	private Rectangle EvilCharBounds_4;
+	private Rectangle EvilCharBounds_5;
+	private Rectangle EvilCharBounds_6;
+	private Rectangle EvilCharBounds_7;
+	private Rectangle EvilCharBounds_8;
 	
+	private boolean died = false;
+	private boolean Disabled = false;
 	private OrthographicCamera camera;
 	Main main;
 	
 	public Level1(Main main) {
 		this.main = main;
+		Setupfont();
 		LoadTexture();
 		LoadSprite();
 		CharBounds = new Rectangle(360, 160, 60, 60);
@@ -74,13 +92,13 @@ public class Level1 extends Game implements Screen{
 		
 	}
 	public void hide() {
-		
+		stage.dispose();
 	}
 	public void pause() {
 		
 	}
 	public void render(float deltaTime) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		CharControls();
@@ -92,6 +110,7 @@ public class Level1 extends Game implements Screen{
 		Collide();
 		Setupfont();
 		batch.setProjectionMatrix(camera.combined);
+		
 		batch.begin();
 			batch.draw(sprite_level1background, 0, 0);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
@@ -106,6 +125,12 @@ public class Level1 extends Game implements Screen{
 			font.draw(batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
 			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
+		if(died){
+			stage.act();
+			stage.draw();
+			Disabled = true;
+			ClickListener();
+		}
 	}
 	public void resize(int arg0, int arg1) {
 		
@@ -118,6 +143,30 @@ public class Level1 extends Game implements Screen{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 400);
 		camera.update();
+		stage.addActor(died_window);
+		died_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
+		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
+		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		Disabled = false;
+	
+	}
+	
+	public void ClickListener(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() >= 225 && Gdx.input.getX() <= 400 && Gdx.input.getY() >= 300 && Gdx.input.getY() <= 375){
+				died = false;
+				Disabled = false;
+				CharBounds = new Rectangle(360, 160, 60, 60);
+				EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+				EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
+				EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
+				EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
+				EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
+				EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
+				EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
+				EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+			}
+		}
 	}
 	
 	public void LoadTexture(){
@@ -133,17 +182,19 @@ public class Level1 extends Game implements Screen{
 	}
 	
 	public void CharControls(){
-		if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
-			CharBounds.y += 2;
-		}
-		if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
-			CharBounds.y -= 2;
-		}
-		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
-			CharBounds.x -= 2;
-		}
-		if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
-			CharBounds.x += 2;
+		if(!Disabled){
+			if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
+				CharBounds.y += 2;
+			}
+			if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
+				CharBounds.y -= 2;
+			}
+			if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
+				CharBounds.x -= 2;
+			}
+			if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
+				CharBounds.x += 2;
+			}
 		}
 	}
 	
@@ -287,39 +338,44 @@ public class Level1 extends Game implements Screen{
 		}
 	}
 	public void CharFinish(){
-		if(CharBounds.x == 0 && CharBounds.y >= 0 && CharBounds.y <= 400){
-			if(CharBounds.x == 0 && CharBounds.y + 80 >= 0 && CharBounds.y + 80 <= 400){
-				System.out.println("Finished!");
+		if(!Disabled){
+			if(CharBounds.x == 0 && CharBounds.y >= 0 && CharBounds.y <= 400){
+				if(CharBounds.x == 0 && CharBounds.y + 80 >= 0 && CharBounds.y + 80 <= 400){
+					System.out.println("Finished!");
+				}
 			}
 		}
 	}
 	public void Collide(){
-		if(CharBounds.overlaps(EvilCharBounds_1)){
-			System.out.println("You died!");
-		}
-		if(CharBounds.overlaps(EvilCharBounds_2)){
-			System.out.println("You died!");
-		}
-		if(CharBounds.overlaps(EvilCharBounds_3)){
-			System.out.println("You died!");
-		}
-		if(CharBounds.overlaps(EvilCharBounds_4)){
-			System.out.println("You died!");
-		}
-		if(CharBounds.overlaps(EvilCharBounds_5)){
-			System.out.println("You died!");
-		}
-		if(CharBounds.overlaps(EvilCharBounds_6)){
-			System.out.println("You died!");
-		}
-		if(CharBounds.overlaps(EvilCharBounds_7)){
-			System.out.println("You died!");
-		}
-		if(CharBounds.overlaps(EvilCharBounds_8)){
-			System.out.println("You died!");
+		if(!Disabled){
+			if(CharBounds.overlaps(EvilCharBounds_1)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_2)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_3)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_4)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_5)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_6)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_7)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_8)){
+				died = true;
+			}
 		}
 	}
 	public void Setupfont(){
-		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
+		font = new BitmapFont(Gdx.files.internal("assets/data/arial-15.fnt"));
+		font.setColor(Color.CYAN);
 	}
 }

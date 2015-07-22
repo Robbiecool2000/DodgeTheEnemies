@@ -298,11 +298,11 @@ public class LevelScreen extends Game implements Screen {
 	}
 	
 	public void dispose() {
-		
+		font.dispose();
 	}
 
 	public void hide() {
-		
+		dispose();
 	}
 
 	public void pause() {

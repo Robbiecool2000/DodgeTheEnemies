@@ -20,7 +20,6 @@ public class MainMenu extends Game implements Screen {
 	Main game;
 	boolean hover = true;
 	private Game game_class;
-	ShapeRenderer shapeRenderer, shapeRenderer2;
 	private LevelScreen levelscreen;
 	private Stage stage = new Stage();
 	
@@ -64,9 +63,11 @@ public class MainMenu extends Game implements Screen {
 	}
 	
 	public void dispose() {
+		font.dispose();
 	}
-
+	
 	public void hide() {
+		dispose();
 	}
 
 	public void pause() {
