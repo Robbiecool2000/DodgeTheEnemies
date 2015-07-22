@@ -153,7 +153,7 @@ public class Level1 implements Screen{
 	
 	public void ClickListener(){
 		if(Gdx.input.justTouched()){
-			if(Gdx.input.getX() >= 225 && Gdx.input.getX() <= 400 && Gdx.input.getY() >= 300 && Gdx.input.getY() <= 375){
+			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
 				Disabled = false;
 				CharBounds = new Rectangle(360, 160, 60, 60);
@@ -165,6 +165,11 @@ public class Level1 implements Screen{
 				EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
 				EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
 				EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+			}
+			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				died = false;
+				Disabled = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 		}
 	}
