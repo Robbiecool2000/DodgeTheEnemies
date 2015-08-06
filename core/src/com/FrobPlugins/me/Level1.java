@@ -31,6 +31,8 @@ public class Level1 implements Screen{
 	Sprite sprite_evilcharacter;
 	Sprite sprite_level1background;
 	
+	WarpClient warpClient;
+	
 	//Images
 	Image died_window = new Image(died_texture);
 	
@@ -147,11 +149,14 @@ public class Level1 implements Screen{
 		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 		Disabled = false;
-		/*try {
-			WarpClient.getInstance().connectWithUserName(username);
+		
+		WarpClient.initialize(WarpController.apiKey, WarpController.secretKey);
+		try {
+			warpClient = WarpClient.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
+		warpClient.connectWithUserName(username);
 	}
 	
 	public void ClickListener(){

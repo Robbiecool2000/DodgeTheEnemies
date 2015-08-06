@@ -5,11 +5,13 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 
 import com.FrobPlugins.me.Level1;
+import com.FrobPlugins.me.Main;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 import com.shephertz.app42.gaming.multiplayer.client.command.WarpResponseResultCode;
 import com.shephertz.app42.gaming.multiplayer.client.events.LobbyData;
 import com.shephertz.app42.gaming.multiplayer.client.events.MoveEvent;
 import com.shephertz.app42.gaming.multiplayer.client.events.RoomEvent;
+import com.shephertz.app42.server.domain.User;
 import com.sun.deploy.uitoolkit.impl.fx.ui.resources.Deployment;
 
 public class WarpController 
@@ -22,12 +24,16 @@ public class WarpController
 	
 	private WarpClient warpClient;
 	
-	private String localUser;
+	private String localUser = "bobber";
 	private String roomId;
 	
 	public boolean isOnline = false;
 	public boolean isConnected = false;
 	boolean isUDPEnabled = false;
+	
+	String userName = "Nick";    
+	String pwd = "********";    
+	String emailId = "nick@shephertz.com";
 	
 	private WarpListener multiplayerScreenListener ;
 	private WarpListener waitingRoomListener ;
@@ -46,8 +52,8 @@ public class WarpController
 	public static final int GAME_LOOSE = 6;
 	public static final int ENEMY_LEFT = 7;
 	
-	public final String apiKey = "y8905ur90uf04rt0490fu095u942iu94i49038493890482394u03434783464783hg";
-	public final String secretKey = "y8g5gyi8f37t8f4ih9d32892w9i0si037ty8fihvu98fr89fio3uye789t56edui";
+	public static final String apiKey = "737b0a5f17b2159a449270de51cd91c5eaaf447ac46e4f900f14450b5611348b";
+	public static final String secretKey = "80c3506db9e74b2eb4acccc089548fd2018e03dfba7871ad132c08745704f1b8";
 	
 	public WarpController() 
 	{
@@ -58,7 +64,7 @@ public class WarpController
 		warpClient.addZoneRequestListener(new ZoneListener(this));
 		warpClient.addRoomRequestListener(new RoomListener(this));
 		warpClient.addNotificationListener(new NotificationListener(this));
-		//warpClient.addLobbyRequestListener(new LobbyListener(this));
+		warpClient.addLobbyRequestListener(new LobbyListener(this));
 	}
 	
 	public void setMultiplayerScreenListener(WarpListener listener)
@@ -84,6 +90,7 @@ public class WarpController
 		{
 			WarpClient.initialize(apiKey,secretKey);
 			warpClient = WarpClient.getInstance();
+			System.out.println(Main.Message_INFO + "Initialized WarpClient class");
 		} 
 		catch (Exception e) 
 		{
@@ -203,16 +210,16 @@ public class WarpController
 	//---
 	
 	//---CONNECTION LISTENER
-	public void connectWithUserName ( String username ){
-		onConnectDone(true);
-	}
+	
     public void onConnectDone(boolean status){  
         if(status){  
             warpClient.initUDP();  
             warpClient.joinRoomInRange(1, 1, false);  
+            System.out.println(Main.Message_INFO + "Joined lobby");
         }else{  
             isConnected = false;  
-            handleError();  
+            handleError();
+            System.out.println(Main.Message_ERROR + "Unable to connect.");
         }  
     }  
 	public void onDisconnectDone(boolean status)
@@ -244,6 +251,7 @@ public class WarpController
 		if(STATE==STARTED && !localUser.equals(userName))
 		{// Game Started and other user left the room
 			gameListener.onGameFinished(ENEMY_LEFT, true);
+			System.out.println(Main.Message_INFO + "User left room");
 		}
 	}
 	public void onUpdatePeersReceived(String message)

@@ -16,7 +16,10 @@ public class Main extends Game implements ApplicationListener {
 	public static Level7 level7;
 	public static Level8 level8;
 	public SplashScreen splash_screen;
-	
+	public static final String Message_INFO = "[Main/Info]: ";
+	public static final String Message_ERROR = "[Main/ERROR]: ";
+	public static final String Message_WARNING = "[Main/WARNING]: ";
+	public static final String Message_DEBUG = "[Main/DEBUG]: ";
 	public void create() {
 		splash_screen = new SplashScreen();
 		level1 = new Level1(this);

@@ -122,7 +122,7 @@ public class LevelScreen extends Game implements Screen {
 		if(changeCamera){
 			if(camera.position.x < 1200){
 				camera.position.x += 20;
-				System.out.println(camera.position.x);
+				System.out.println(Main.Message_DEBUG + camera.position.x);
 				if(camera.position.x == 1200){
 					camera.position.x = 1200;
 					changeCamera = false;
@@ -132,7 +132,7 @@ public class LevelScreen extends Game implements Screen {
 		if(changeCamera2){
 			if(camera.position.x > 400){
 				camera.position.x -= 20;
-				System.out.println(camera.position.x);
+				System.out.println(Main.Message_DEBUG + camera.position.x);
 				if(camera.position.x == 400){
 					camera.position.x = 400;
 					changeCamera2 = false;
@@ -228,49 +228,49 @@ public class LevelScreen extends Game implements Screen {
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 25");
+						System.out.println(Main.Message_INFO + "Load level 25");
 					}
 				}
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 + 85 && Gdx.input.getX() < 140 + 85
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 26");
+						System.out.println(Main.Message_INFO + "Load level 26");
 					}
 				}
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 + 170 && Gdx.input.getX() < 140 + 170
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 27");
+						System.out.println(Main.Message_INFO + "Load level 27");
 					}
 				}
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 + 255 && Gdx.input.getX() < 140 + 255
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 28");
+						System.out.println(Main.Message_INFO + "Load level 28");
 					}
 				}
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 + 340 && Gdx.input.getX() < 140 + 340
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 29");
+						System.out.println(Main.Message_INFO + "Load level 29");
 					}
 				}
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 + 425 && Gdx.input.getX() < 140 + 425
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 30");
+						System.out.println(Main.Message_INFO + "Load level 30");
 					}
 				}
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 + 510 && Gdx.input.getX() < 140 + 510
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 31");
+						System.out.println(Main.Message_INFO + "Load level 31");
 					}
 				}
 				if(Gdx.input.justTouched()){
 					if(Gdx.input.getX() > 65 + 595 && Gdx.input.getX() < 140 + 595
 							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println("Load level 32");
+						System.out.println(Main.Message_INFO + "Load level 32");
 					}
 				}
 			}
@@ -294,7 +294,7 @@ public class LevelScreen extends Game implements Screen {
 	
 	public void SetupFont(){
 		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
-		System.out.println("Loaded font(s)");
+		System.out.println(Main.Message_INFO + "Loaded font(s)");
 	}
 	
 	public void dispose() {
