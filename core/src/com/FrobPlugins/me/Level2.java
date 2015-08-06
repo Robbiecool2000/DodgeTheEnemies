@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Level2 extends Game implements Screen{
 	
@@ -24,15 +27,20 @@ public class Level2 extends Game implements Screen{
 	Sprite sprite_level2background;
 	Sprite sprite_evilcharacter;
 	
+	private Stage stage = new Stage();
+	private Image died_image = new Image(new Texture(Gdx.files.internal("assets/Died.png")));
+	
+	private boolean died = false;
+	
 	//Font
 	public static BitmapFont font;
 	
 	private SpriteBatch batch;
 	
 	//(Evil)CharBounds
-	private final Rectangle CharBounds;
-	private final Rectangle EvilCharBounds_1;
-	private final Rectangle EvilCharBounds_2;
+	private Rectangle CharBounds;
+	private Rectangle EvilCharBounds_1;
+	private Rectangle EvilCharBounds_2;
 	
 	int EvilCharAtTop_1 = 0;
 	int EvilCharAtTop_2 = 0;
@@ -64,13 +72,10 @@ public class Level2 extends Game implements Screen{
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		CharControls();
-		CharBoundaries();
 		Setupfont();
 		EvilCharIntSystem();
 		EvilCharMovement();
 		EvilCharBackMovement();
-		Collide();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 			batch.draw(sprite_level2background, 0, 0);
@@ -78,6 +83,16 @@ public class Level2 extends Game implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
 		batch.end();
+		
+		if(died){
+			stage.act();
+			stage.draw();
+			ClickListener();
+		}else{
+			Collide();
+			CharControls();
+			CharBoundaries();
+		}
 	}
 	public void resize(int arg0, int arg1) {
 		
@@ -90,6 +105,26 @@ public class Level2 extends Game implements Screen{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 400);
 		camera.update();
+		
+		stage.addActor(died_image);
+		died_image.setX(Main.SCREEN_WIDTH/2 - 350/2);
+		died_image.setY(Main.SCREEN_HEIGHT/2 - 350/2);
+		died_image.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1f)));
+	}
+	
+	public void ClickListener(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				died = false;
+				CharBounds = new Rectangle(360, 160, 60, 60);
+				EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+				EvilCharBounds_2 = new Rectangle(720, 0, 80, 80);
+			}
+			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				died = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+			}
+		}
 	}
 	
 	public void LoadTexture(){
@@ -174,10 +209,10 @@ public class Level2 extends Game implements Screen{
 	}
 	public void Collide(){
 		if(CharBounds.overlaps(EvilCharBounds_1)){
-			System.out.println("You died!");
+			died = true;
 		}
 		if(CharBounds.overlaps(EvilCharBounds_2)){
-			System.out.println("You died!");
+			died = true;
 		}
 	}
 }

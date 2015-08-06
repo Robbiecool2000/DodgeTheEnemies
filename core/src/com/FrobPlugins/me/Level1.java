@@ -11,15 +11,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 
 public class Level1 implements Screen{
 	
@@ -346,7 +343,7 @@ public class Level1 implements Screen{
 		if(!Disabled){
 			if(CharBounds.x == 0 && CharBounds.y >= 0 && CharBounds.y <= 400){
 				if(CharBounds.x == 0 && CharBounds.y + 80 >= 0 && CharBounds.y + 80 <= 400){
-					System.out.println("Finished!");
+					((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 				}
 			}
 		}

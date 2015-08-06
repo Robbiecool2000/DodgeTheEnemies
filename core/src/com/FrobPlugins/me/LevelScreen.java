@@ -1,5 +1,7 @@
 package com.FrobPlugins.me;
 
+import java.util.ArrayList;
+
 import com.FrobPlugins.me.Actor.PlayButton;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -32,9 +34,7 @@ public class LevelScreen extends Game implements Screen {
 	boolean changeCamera = false;
 	boolean changeCamera2 = false;
 	boolean changed = false;
-	
 	private OrthographicCamera camera;
-
 	public LevelScreen(Main main) {
 		this.main = main;
 	}

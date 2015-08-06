@@ -55,7 +55,7 @@ public class MainMenu extends Game implements Screen {
 		batch.begin();
 			font.draw(batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
 			font.draw(batch, "Options", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
-			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
+			//font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
         if(hover){
         	Hover();
