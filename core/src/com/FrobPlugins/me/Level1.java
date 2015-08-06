@@ -150,13 +150,13 @@ public class Level1 implements Screen{
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 		Disabled = false;
 		
-		WarpClient.initialize(WarpController.apiKey, WarpController.secretKey);
+		/*WarpClient.initialize(WarpController.apiKey, WarpController.secretKey);
 		try {
 			warpClient = WarpClient.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		warpClient.connectWithUserName(username);
+		warpClient.connectWithUserName(username);*/
 	}
 	
 	public void ClickListener(){
