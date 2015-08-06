@@ -1,5 +1,6 @@
 package com.FrobPlugins.me;
 
+import com.FrobPlugins.appwarp.WarpController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -11,12 +12,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 
 public class Level1 implements Screen{
 	
@@ -66,6 +66,8 @@ public class Level1 implements Screen{
 	private boolean Disabled = false;
 	private OrthographicCamera camera;
 	Main main;
+	
+	private String username = "Bob";
 	
 	public Level1(Main main) {
 		this.main = main;
@@ -145,7 +147,11 @@ public class Level1 implements Screen{
 		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 		Disabled = false;
-	
+		/*try {
+			WarpClient.getInstance().connectWithUserName(username);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 	}
 	
 	public void ClickListener(){
