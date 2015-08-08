@@ -124,7 +124,6 @@ public class Level1 implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
 			font.draw(batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
-			font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		batch.end();
 		if(died){
 			stage.act();
@@ -389,6 +388,6 @@ public class Level1 implements Screen{
 	}
 	public void Setupfont(){
 		font = new BitmapFont(Gdx.files.internal("assets/data/arial-15.fnt"));
-		font.setColor(Color.CYAN);
+		font.setColor(Color.BLACK);
 	}
 }
