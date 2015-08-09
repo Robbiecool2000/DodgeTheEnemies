@@ -69,6 +69,7 @@ public class Level1 implements Screen{
 	
 	private long start;
     private long secsToWait = 3;
+    private long displaytime;
 	
 	public Level1(Main main) {
 		this.main = main;
@@ -108,6 +109,7 @@ public class Level1 implements Screen{
 		CharFinish();
 		Collide();
 		Setupfont();
+		Timer();
 		batch.setProjectionMatrix(camera.combined);
 		System.out.println(TimeUtils.millis() / 1000 - start);
 		batch.begin();
@@ -123,7 +125,7 @@ public class Level1 implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
 			if(!hasCompleted()){
 				font.draw(batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
-				font.draw(batch, "Starting in: " + (TimeUtils.millis() / 1000 - start), Main.SCREEN_WIDTH/3, 100);
+				font.draw(batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
 			}
 		batch.end();
 		if(died){
@@ -397,5 +399,16 @@ public class Level1 implements Screen{
 		font = new BitmapFont(Gdx.files.internal("assets/data/arial-15.fnt"));
 		font.setColor(Color.BLACK);
 		
+	}
+	public void Timer(){
+		if(TimeUtils.millis() / 1000 - start == 0){
+			displaytime = 3;
+		}
+		if(TimeUtils.millis() / 1000 - start == 1){
+			displaytime = 2;
+		}
+		if(TimeUtils.millis() / 1000 - start == 2){
+			displaytime = 1;
+		}
 	}
 }
