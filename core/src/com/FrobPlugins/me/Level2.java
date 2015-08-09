@@ -50,11 +50,6 @@ public class Level2 extends Game implements Screen{
 	
 	public Level2(Main main) {
 		this.main = main;
-		LoadTexture();
-		LoadSprite();
-		CharBounds = new Rectangle(360, 160, 60, 60);
-		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
-		EvilCharBounds_2 = new Rectangle(720, 0, 80, 80);
 	}
 	public void create(){
 		
@@ -105,7 +100,11 @@ public class Level2 extends Game implements Screen{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 400);
 		camera.update();
-		
+		LoadTexture();
+		LoadSprite();
+		CharBounds = new Rectangle(360, 160, 60, 60);
+		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+		EvilCharBounds_2 = new Rectangle(720, 0, 80, 80);
 		stage.addActor(died_image);
 		died_image.setX(Main.SCREEN_WIDTH/2 - 350/2);
 		died_image.setY(Main.SCREEN_HEIGHT/2 - 350/2);

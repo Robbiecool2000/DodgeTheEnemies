@@ -52,13 +52,12 @@ public class WarpController
 	public static final int GAME_LOOSE = 6;
 	public static final int ENEMY_LEFT = 7;
 	
-	public static final String apiKey = "737b0a5f17b2159a449270de51cd91c5eaaf447ac46e4f900f14450b5611348b";
-	public static final String secretKey = "80c3506db9e74b2eb4acccc089548fd2018e03dfba7871ad132c08745704f1b8";
+	public static final String apiKey = "ba6ea5de6d9248268d09c9af50da00665eb2193831ebaa962740689a2c3426e9";
+	public static final String secretKey = "c1d75dd6ec63123196bba526a9942428e8f5b2bf055196ae46c799310adc87c9";
 	
 	public WarpController() 
 	{
 		initAppwarp();
-		
 		warpClient.addConnectionRequestListener(new ConnectionListener(this));
 		warpClient.addChatRequestListener(new ChatListener(this));
 		warpClient.addZoneRequestListener(new ZoneListener(this));
@@ -90,6 +89,7 @@ public class WarpController
 		{
 			WarpClient.initialize(apiKey,secretKey);
 			warpClient = WarpClient.getInstance();
+			WarpClient.enableTrace(true);
 			System.out.println(Main.Message_INFO + "Initialized WarpClient class");
 		} 
 		catch (Exception e) 

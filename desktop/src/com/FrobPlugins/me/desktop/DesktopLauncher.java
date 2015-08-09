@@ -13,7 +13,7 @@ public class DesktopLauncher {
 		new LwjglApplication(new Main(), config);
 		config.width = Main.SCREEN_WIDTH;
 		config.height = Main.SCREEN_HEIGHT;
-		config.resizable = true;
-		config.title = "DodgeTheEnemies (FPS: " + MainMenu.FPS + ")";
+		config.resizable = false;
+		config.title = "DodgeTheEnemies";
 	}
 }

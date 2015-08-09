@@ -1,6 +1,5 @@
 package com.FrobPlugins.me;
 
-import com.FrobPlugins.appwarp.WarpController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 
 public class Level1 implements Screen{
@@ -24,8 +24,7 @@ public class Level1 implements Screen{
 	Texture Character;
 	Texture EvilCharacter;
 	Texture Level1Background;
-	Texture died_texture = new Texture("assets/Died.png");;
-	
+	Texture died_texture = new Texture("assets/Died.png");
 	//Sprites
 	Sprite sprite_character;
 	Sprite sprite_evilcharacter;
@@ -35,7 +34,6 @@ public class Level1 implements Screen{
 	
 	//Images
 	Image died_window = new Image(died_texture);
-	
 	private Stage stage = new Stage();
 	
 	//Font
@@ -69,22 +67,11 @@ public class Level1 implements Screen{
 	private OrthographicCamera camera;
 	Main main;
 	
-	private String username = "Bob";
+	private long start;
+    private long secsToWait = 3;
 	
 	public Level1(Main main) {
 		this.main = main;
-		Setupfont();
-		LoadTexture();
-		LoadSprite();
-		CharBounds = new Rectangle(360, 160, 60, 60);
-		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
-		EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
-		EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
-		EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
-		EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
-		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
-		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
-		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
 	}
 	public void create(){
 		
@@ -98,6 +85,17 @@ public class Level1 implements Screen{
 	public void pause() {
 		
 	}
+	
+    public void start()
+    {
+        start = TimeUtils.millis() / 1000;
+    }
+
+    public boolean hasCompleted()
+    {
+        return TimeUtils.millis() / 1000 - start >= secsToWait;
+    }
+    
 	public void render(float deltaTime) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -111,7 +109,7 @@ public class Level1 implements Screen{
 		Collide();
 		Setupfont();
 		batch.setProjectionMatrix(camera.combined);
-		
+		System.out.println(TimeUtils.millis() / 1000 - start);
 		batch.begin();
 			batch.draw(sprite_level1background, 0, 0);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
@@ -123,7 +121,10 @@ public class Level1 implements Screen{
 			batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
-			font.draw(batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
+			if(!hasCompleted()){
+				font.draw(batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
+				font.draw(batch, "Starting in: " + (TimeUtils.millis() / 1000 - start), Main.SCREEN_WIDTH/3, 100);
+			}
 		batch.end();
 		if(died){
 			stage.act();
@@ -143,19 +144,24 @@ public class Level1 implements Screen{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 400);
 		camera.update();
+		Setupfont();
+		LoadTexture();
+		LoadSprite();
+		CharBounds = new Rectangle(360, 160, 60, 60);
+		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+		EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
+		EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
+		EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
+		EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
+		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
+		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
+		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
 		stage.addActor(died_window);
 		died_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
 		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 		Disabled = false;
-		
-		/*WarpClient.initialize(WarpController.apiKey, WarpController.secretKey);
-		try {
-			warpClient = WarpClient.getInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		warpClient.connectWithUserName(username);*/
+		start();
 	}
 	
 	public void ClickListener(){
@@ -172,6 +178,7 @@ public class Level1 implements Screen{
 				EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
 				EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
 				EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+				start();
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
@@ -389,5 +396,6 @@ public class Level1 implements Screen{
 	public void Setupfont(){
 		font = new BitmapFont(Gdx.files.internal("assets/data/arial-15.fnt"));
 		font.setColor(Color.BLACK);
+		
 	}
 }
