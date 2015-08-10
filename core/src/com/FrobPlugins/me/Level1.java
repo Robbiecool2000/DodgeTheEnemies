@@ -1,5 +1,7 @@
 package com.FrobPlugins.me;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -16,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.shephertz.app42.gaming.multiplayer.client.WarpClient;
 
 public class Level1 implements Screen{
 	
@@ -25,12 +26,14 @@ public class Level1 implements Screen{
 	Texture EvilCharacter;
 	Texture Level1Background;
 	Texture died_texture = new Texture("assets/Died.png");
+	Texture Coin;
 	//Sprites
 	Sprite sprite_character;
 	Sprite sprite_evilcharacter;
 	Sprite sprite_level1background;
+	Sprite Coin_Image;
 	
-	WarpClient warpClient;
+	//WarpClient warpClient;
 	
 	//Images
 	Image died_window = new Image(died_texture);
@@ -51,6 +54,18 @@ public class Level1 implements Screen{
 	int EvilCharAtTop_7 = 0;
 	int EvilCharAtTop_8 = 0;
 	
+	int CoinX1;
+	int CoinY1;
+	int CoinX2;
+	int CoinY2;
+	int CoinX3;
+	int CoinY3;
+	
+	public static int coinCount;
+	private int coinCountSession;
+	
+	private boolean CollectedCoins = false;
+	
 	//(Evil)CharBounds
 	private Rectangle CharBounds;
 	private Rectangle EvilCharBounds_1;
@@ -61,6 +76,10 @@ public class Level1 implements Screen{
 	private Rectangle EvilCharBounds_6;
 	private Rectangle EvilCharBounds_7;
 	private Rectangle EvilCharBounds_8;
+	
+	private Rectangle CoinRect1;
+	private Rectangle CoinRect2;
+	private Rectangle CoinRect3;
 	
 	private boolean died = false;
 	private boolean Disabled = false;
@@ -113,6 +132,11 @@ public class Level1 implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 			batch.draw(sprite_level1background, 0, 0);
+			if(!CollectedCoins){
+				batch.draw(Coin_Image, CoinRect1.x, CoinRect1.y);
+				batch.draw(Coin_Image, CoinRect2.x, CoinRect2.y);
+				batch.draw(Coin_Image, CoinRect3.x, CoinRect3.y);
+			}
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
@@ -133,6 +157,14 @@ public class Level1 implements Screen{
 			Disabled = true;
 			ClickListener();
 		}
+		
+		if(coinCountSession == 3){
+			CollectedCoins = true;
+		}
+		
+		if(CollectedCoins){
+			Coin.dispose();
+		}
 	}
 	public void resize(int arg0, int arg1) {
 		
@@ -148,6 +180,15 @@ public class Level1 implements Screen{
 		Setupfont();
 		LoadTexture();
 		LoadSprite();
+		
+		Random random = new Random();
+		CoinX1 = random.nextInt(800);
+		CoinY1 = random.nextInt(400);
+		CoinX2 = random.nextInt(800);
+		CoinY2 = random.nextInt(400);
+		CoinX3 = random.nextInt(800);
+		CoinY3 = random.nextInt(400);
+		
 		CharBounds = new Rectangle(360, 160, 60, 60);
 		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
 		EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
@@ -157,6 +198,9 @@ public class Level1 implements Screen{
 		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
 		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
 		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+		CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
+		CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
+		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
 		stage.addActor(died_window);
 		died_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
 		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
@@ -193,12 +237,14 @@ public class Level1 implements Screen{
 		Character = new Texture("assets/DodgeTheEnemiesCharacter.png");
 		EvilCharacter = new Texture("assets/DodgeTheEnemiesEvilCharacter.png");
 		Level1Background = new Texture("assets/LevelBackground.png");
+		Coin = new Texture(Gdx.files.internal("assets/Coin.png"));
 	}
 	
 	public void LoadSprite(){
 		sprite_character = new Sprite(Character);
 		sprite_evilcharacter = new Sprite(EvilCharacter);
 		sprite_level1background = new Sprite(Level1Background);
+		Coin_Image = new Sprite(Coin);
 	}
 	
 	public void CharControls(){
@@ -395,6 +441,27 @@ public class Level1 implements Screen{
 			}
 			if(CharBounds.overlaps(EvilCharBounds_8)){
 				died = true;
+			}
+			if(CharBounds.overlaps(CoinRect1)){
+				CoinRect1.x = 10000;
+				CoinRect1.y = 10000;
+				coinCount++;
+				coinCountSession++;
+				System.out.println(coinCountSession);
+			}
+			if(CharBounds.overlaps(CoinRect2)){
+				CoinRect2.x = 10000;
+				CoinRect2.y = 10000;
+				coinCount++;
+				coinCountSession++;
+				System.out.println(coinCountSession);
+			}
+			if(CharBounds.overlaps(CoinRect3)){
+				CoinRect3.x = 10000;
+				CoinRect3.y = 10000;
+				coinCount++;
+				coinCountSession++;
+				System.out.println(coinCountSession);
 			}
 		}
 	}
