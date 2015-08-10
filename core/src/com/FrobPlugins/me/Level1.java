@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -27,6 +27,7 @@ public class Level1 implements Screen{
 	Texture Level1Background;
 	Texture died_texture = new Texture("assets/Died.png");
 	Texture Coin;
+	
 	//Sprites
 	Sprite sprite_character;
 	Sprite sprite_evilcharacter;
@@ -34,6 +35,8 @@ public class Level1 implements Screen{
 	Sprite Coin_Image;
 	
 	//WarpClient warpClient;
+	
+	private ParticleEffect effect;
 	
 	//Images
 	Image died_window = new Image(died_texture);
@@ -134,6 +137,7 @@ public class Level1 implements Screen{
 				Main.batch.draw(Coin_Image, CoinRect2.x, CoinRect2.y);
 				Main.batch.draw(Coin_Image, CoinRect3.x, CoinRect3.y);
 			}
+			//effect.draw(Main.batch, deltaTime);
 			Main.batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
@@ -173,6 +177,11 @@ public class Level1 implements Screen{
 		Setupfont();
 		LoadTexture();
 		LoadSprite();
+		
+		/*effect = new ParticleEffect();
+		effect.load(Gdx.files.internal("assets/particle.pex"), Gdx.files.internal("assets/effects"));
+		effect.setPosition(CharBounds.x, CharBounds.y);
+		effect.start();*/
 		
 		Random random = new Random();
 		CoinX1 = random.nextInt(800);
