@@ -111,7 +111,6 @@ public class Level1 implements Screen{
 		Setupfont();
 		Timer();
 		batch.setProjectionMatrix(camera.combined);
-		System.out.println(TimeUtils.millis() / 1000 - start);
 		batch.begin();
 			batch.draw(sprite_level1background, 0, 0);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
@@ -203,7 +202,7 @@ public class Level1 implements Screen{
 	}
 	
 	public void CharControls(){
-		if(!Disabled){
+		if(!Disabled && hasCompleted()){
 			if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
 				CharBounds.y += 2;
 			}
@@ -291,71 +290,75 @@ public class Level1 implements Screen{
 		}
 	}
 	public void EvilCharMovement(){
-		if(EvilCharAtTop_1 == 1){
-			EvilCharBounds_1.y += 1;
-		}
-		
-		if(EvilCharAtTop_2 == 1){
-			EvilCharBounds_2.y += 1;
-		}
-		
-		if(EvilCharAtTop_3 == 1){
-			EvilCharBounds_3.y += 1;
-		}
-		
-		if(EvilCharAtTop_4 == 1){
-			EvilCharBounds_4.y += 1;
-		}
-		
-		
-		if(EvilCharAtTop_5 == 0){
-			EvilCharBounds_5.y -= 1;
-		}
-		
-		if(EvilCharAtTop_6 == 0){
-			EvilCharBounds_6.y -= 1;
-		}
-		
-		if(EvilCharAtTop_7 == 0){
-			EvilCharBounds_7.y -= 1;
-		}
-		
-		if(EvilCharAtTop_8 == 0){
-			EvilCharBounds_8.y -= 1;
+		if(hasCompleted()){
+			if(EvilCharAtTop_1 == 1){
+				EvilCharBounds_1.y += 1;
+			}
+			
+			if(EvilCharAtTop_2 == 1){
+				EvilCharBounds_2.y += 1;
+			}
+			
+			if(EvilCharAtTop_3 == 1){
+				EvilCharBounds_3.y += 1;
+			}
+			
+			if(EvilCharAtTop_4 == 1){
+				EvilCharBounds_4.y += 1;
+			}
+			
+			
+			if(EvilCharAtTop_5 == 0){
+				EvilCharBounds_5.y -= 1;
+			}
+			
+			if(EvilCharAtTop_6 == 0){
+				EvilCharBounds_6.y -= 1;
+			}
+			
+			if(EvilCharAtTop_7 == 0){
+				EvilCharBounds_7.y -= 1;
+			}
+			
+			if(EvilCharAtTop_8 == 0){
+				EvilCharBounds_8.y -= 1;
+			}
 		}
 	}
 	public void EvilCharBackMovement(){
-		if(EvilCharAtTop_1 == 0){
-			EvilCharBounds_1.y -= 1;
-		}
-		
-		if(EvilCharAtTop_2 == 0){
-			EvilCharBounds_2.y -= 1;
-		}
-		
-		if(EvilCharAtTop_3 == 0){
-			EvilCharBounds_3.y -= 1;
-		}
-		
-		if(EvilCharAtTop_4 == 0){
-			EvilCharBounds_4.y -= 1;
-		}
-		
-		
-		if(EvilCharAtTop_5 == 1){
-			EvilCharBounds_5.y += 1;
-		}
-		
-		if(EvilCharAtTop_6 == 1){
-			EvilCharBounds_6.y += 1;
-		}
-		
-		if(EvilCharAtTop_7 == 1){
-			EvilCharBounds_7.y += 1;
-		}
-		
-		if(EvilCharAtTop_8 == 1){
-			EvilCharBounds_8.y += 1;
+		if(hasCompleted()){
+			if(EvilCharAtTop_1 == 0){
+				EvilCharBounds_1.y -= 1;
+			}
+			
+			if(EvilCharAtTop_2 == 0){
+				EvilCharBounds_2.y -= 1;
+			}
+			
+			if(EvilCharAtTop_3 == 0){
+				EvilCharBounds_3.y -= 1;
+			}
+			
+			if(EvilCharAtTop_4 == 0){
+				EvilCharBounds_4.y -= 1;
+			}
+			
+			
+			if(EvilCharAtTop_5 == 1){
+				EvilCharBounds_5.y += 1;
+			}
+			
+			if(EvilCharAtTop_6 == 1){
+				EvilCharBounds_6.y += 1;
+			}
+			
+			if(EvilCharAtTop_7 == 1){
+				EvilCharBounds_7.y += 1;
+			}
+			
+			if(EvilCharAtTop_8 == 1){
+				EvilCharBounds_8.y += 1;
+			}
 		}
 	}
 	public void CharFinish(){
