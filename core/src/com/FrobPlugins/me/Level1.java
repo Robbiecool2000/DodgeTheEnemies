@@ -42,8 +42,6 @@ public class Level1 implements Screen{
 	//Font
 	public static BitmapFont font;
 	
-	private SpriteBatch batch;
-	
 	int EvilCharAtTop_1 = 1;
 	int EvilCharAtTop_2 = 1;
 	int EvilCharAtTop_3 = 1;
@@ -129,28 +127,27 @@ public class Level1 implements Screen{
 		Collide();
 		Setupfont();
 		Timer();
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-			batch.draw(sprite_level1background, 0, 0);
+		Main.batch.begin();
+			Main.batch.draw(sprite_level1background, 0, 0);
 			if(!CollectedCoins){
-				batch.draw(Coin_Image, CoinRect1.x, CoinRect1.y);
-				batch.draw(Coin_Image, CoinRect2.x, CoinRect2.y);
-				batch.draw(Coin_Image, CoinRect3.x, CoinRect3.y);
+				Main.batch.draw(Coin_Image, CoinRect1.x, CoinRect1.y);
+				Main.batch.draw(Coin_Image, CoinRect2.x, CoinRect2.y);
+				Main.batch.draw(Coin_Image, CoinRect3.x, CoinRect3.y);
 			}
-			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_3.x, EvilCharBounds_3.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_4.x, EvilCharBounds_4.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_5.x, EvilCharBounds_5.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
-			batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
+			Main.batch.draw(sprite_character, CharBounds.x, CharBounds.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_3.x, EvilCharBounds_3.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_4.x, EvilCharBounds_4.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_5.x, EvilCharBounds_5.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
 			if(!hasCompleted()){
-				font.draw(batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
-				font.draw(batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
+				font.draw(Main.batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
+				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
 			}
-		batch.end();
+		Main.batch.end();
 		if(died){
 			stage.act();
 			stage.draw();
@@ -161,10 +158,6 @@ public class Level1 implements Screen{
 		if(coinCountSession == 3){
 			CollectedCoins = true;
 		}
-		
-		if(CollectedCoins){
-			Coin.dispose();
-		}
 	}
 	public void resize(int arg0, int arg1) {
 		
@@ -173,7 +166,7 @@ public class Level1 implements Screen{
 		
 	}
 	public void show() {
-		batch = new SpriteBatch();
+		main = new Main();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 400);
 		camera.update();
@@ -214,6 +207,13 @@ public class Level1 implements Screen{
 			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
 				Disabled = false;
+				Random random = new Random();
+				CoinX1 = random.nextInt(800);
+				CoinY1 = random.nextInt(400);
+				CoinX2 = random.nextInt(800);
+				CoinY2 = random.nextInt(400);
+				CoinX3 = random.nextInt(800);
+				CoinY3 = random.nextInt(400);
 				CharBounds = new Rectangle(360, 160, 60, 60);
 				EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
 				EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
@@ -223,6 +223,11 @@ public class Level1 implements Screen{
 				EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
 				EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
 				EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+				CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
+				CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
+				CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
+				coinCountSession = 0;
+				CollectedCoins = false;
 				start();
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){

@@ -7,13 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class MainMenu extends Game implements Screen {
-	private SpriteBatch batch;
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
 	Main game;
@@ -35,7 +33,6 @@ public class MainMenu extends Game implements Screen {
 	
 	public MainMenu(Main main){
 		this.game = main;
-		batch = new SpriteBatch();
 		LoadTexture();
 		LoadSprite();
 		camera = new OrthographicCamera();
@@ -51,11 +48,11 @@ public class MainMenu extends Game implements Screen {
 		camera.update();
 		stage.act();
 		stage.draw();
-		batch.begin();
-			font.draw(batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
-			font.draw(batch, "Options", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
-			//font.draw(batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
-		batch.end();
+		Main.batch.begin();
+			font.draw(Main.batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
+			font.draw(Main.batch, "Shop", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
+			//font.draw(Main.batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
+		Main.batch.end();
         if(hover){
         	Hover();
         }
@@ -63,10 +60,11 @@ public class MainMenu extends Game implements Screen {
 	
 	public void dispose() {
 		font.dispose();
+		Main.batch.dispose();
 	}
 	
 	public void hide() {
-		dispose();
+		
 	}
 
 	public void pause() {
