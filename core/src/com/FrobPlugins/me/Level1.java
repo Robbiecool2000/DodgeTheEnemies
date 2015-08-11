@@ -147,14 +147,20 @@ public class Level1 implements Screen{
 		Collide();
 		Setupfont();
 		Timer();
+		effect.setPosition(CharBounds.x +30, CharBounds.y +30);
+		effect.update(deltaTime);
 		Main.batch.begin();
 			Main.batch.draw(sprite_level1background, 0, 0);
+		Main.batch.end();
+		button_stage.act();
+		button_stage.draw();
+		Main.batch.begin();
 			if(!CollectedCoins){
 				Main.batch.draw(Coin_Image, CoinRect1.x, CoinRect1.y);
 				Main.batch.draw(Coin_Image, CoinRect2.x, CoinRect2.y);
 				Main.batch.draw(Coin_Image, CoinRect3.x, CoinRect3.y);
 			}
-			//effect.draw(Main.batch, deltaTime);
+			effect.draw(Main.batch, deltaTime);
 			Main.batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
@@ -170,9 +176,6 @@ public class Level1 implements Screen{
 				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
 			}
 		Main.batch.end();
-		
-		button_stage.act();
-		button_stage.draw();
 		
 		if(died){
 			stage.act();
@@ -199,11 +202,6 @@ public class Level1 implements Screen{
 		Setupfont();
 		LoadTexture();
 		LoadSprite();
-		
-		/*effect = new ParticleEffect();
-		effect.load(Gdx.files.internal("assets/particle.pex"), Gdx.files.internal("assets/effects"));
-		effect.setPosition(CharBounds.x, CharBounds.y);
-		effect.start();*/
 		
 		Random random = new Random();
 		CoinX1 = random.nextInt(800);
@@ -232,7 +230,7 @@ public class Level1 implements Screen{
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 		Disabled = false;
 		
-Gdx.input.setInputProcessor(button_stage);
+		Gdx.input.setInputProcessor(button_stage);
 		
 		atlas = new TextureAtlas("assets/button.pack");
 		skin = new Skin(atlas);
@@ -260,6 +258,10 @@ Gdx.input.setInputProcessor(button_stage);
 		table.getCell(back_button).prefSize(100, 50);
 		table.getCell(back_button).pad(Main.SCREEN_HEIGHT/2 + 150, Main.SCREEN_WIDTH/2 + 300, 0, 0);
 		button_stage.addActor(table);
+		
+		effect = new ParticleEffect();
+		effect.load(Gdx.files.internal("assets/effects/green.p"), Gdx.files.internal("assets/effects"));
+		effect.start();
 		
 		start();
 	}
