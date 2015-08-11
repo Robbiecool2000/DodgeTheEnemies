@@ -26,6 +26,8 @@ public class LevelScreen extends Game implements Screen {
 	private Skin skin;
 	private Table table;
 	
+	private boolean buttonchange = false;
+	
 	PlayButton playbutton;
 	int numrows = 8;
 	int numcols = 3;
@@ -150,6 +152,7 @@ public class LevelScreen extends Game implements Screen {
 		}
 		button_stage.act();
 		button_stage.draw();
+		
 	}
 	
 	public void LoadTexture(){
@@ -358,11 +361,10 @@ public class LevelScreen extends Game implements Screen {
 				((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(main));
 			}
 		});
-		
 		table.add(back_button);
 		table.getCell(back_button).spaceBottom(10);
 		table.getCell(back_button).prefSize(100, 50);
-		table.getCell(back_button).pad(Main.SCREEN_HEIGHT/2 + 150, Main.SCREEN_WIDTH/2 + 300, 0, 0);
+		table.getCell(back_button).pad(0, 0, 350, 700);
 		button_stage.addActor(table);
 	}
 }

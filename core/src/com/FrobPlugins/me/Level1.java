@@ -32,6 +32,7 @@ public class Level1 implements Screen{
 	Texture Character;
 	Texture EvilCharacter;
 	Texture Level1Background;
+	Texture finished_texture = new Texture("assets/Finished.jpg");
 	Texture died_texture = new Texture("assets/Died.png");
 	Texture Coin;
 	Texture TextureFinish;
@@ -54,8 +55,10 @@ public class Level1 implements Screen{
 	private Table table;
 	
 	//Images
+	Image finished_window = new Image(finished_texture);
+	private Stage stagefinished = new Stage();
 	Image died_window = new Image(died_texture);
-	private Stage stage = new Stage();
+	private Stage stagedied = new Stage();
 	
 	//Font
 	public static BitmapFont font;
@@ -118,7 +121,7 @@ public class Level1 implements Screen{
 		
 	}
 	public void hide() {
-		stage.dispose();
+		stagedied.dispose();
 	}
 	public void pause() {
 		
@@ -177,9 +180,15 @@ public class Level1 implements Screen{
 			}
 		Main.batch.end();
 		
+		if(finished){
+			stagefinished.act();
+			stagefinished.draw();
+			Disabled = true;
+			ClickListener2();
+		}
 		if(died){
-			stage.act();
-			stage.draw();
+			stagedied.act();
+			stagedied.draw();
 			Disabled = true;
 			ClickListener();
 		}
@@ -224,7 +233,11 @@ public class Level1 implements Screen{
 		CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
 		CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
 		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
-		stage.addActor(died_window);
+		stagefinished.addActor(finished_window);
+		finished_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
+		finished_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
+		finished_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		stagedied.addActor(died_window);
 		died_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
 		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
@@ -293,6 +306,21 @@ public class Level1 implements Screen{
 				coinCountSession = 0;
 				CollectedCoins = false;
 				start();
+			}
+			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				died = false;
+				Disabled = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+			}
+		}
+	}
+	
+	public void ClickListener2(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				died = false;
+				Disabled = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
@@ -535,9 +563,7 @@ public class Level1 implements Screen{
 		}
 	}
 	public void Setupfont(){
-		font = new BitmapFont(Gdx.files.internal("assets/data/arial-15.fnt"));
-		font.setColor(Color.BLACK);
-		
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
 	}
 	public void Timer(){
 		if(TimeUtils.millis() / 1000 - start == 0){
