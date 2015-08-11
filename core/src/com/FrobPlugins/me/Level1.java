@@ -184,12 +184,12 @@ public class Level1 implements Screen{
 		effect.start();*/
 		
 		Random random = new Random();
-		CoinX1 = random.nextInt(770);
-		CoinY1 = random.nextInt(370);
-		CoinX2 = random.nextInt(770);
-		CoinY2 = random.nextInt(370);
-		CoinX3 = random.nextInt(770);
-		CoinY3 = random.nextInt(370);
+		CoinX1 = random.nextInt(800);
+		CoinY1 = random.nextInt(400);
+		CoinX2 = random.nextInt(800);
+		CoinY2 = random.nextInt(400);
+		CoinX3 = random.nextInt(800);
+		CoinY3 = random.nextInt(400);
 		
 		CharBounds = new Rectangle(360, 160, 60, 60);
 		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
