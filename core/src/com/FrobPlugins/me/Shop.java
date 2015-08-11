@@ -29,9 +29,11 @@ public class Shop implements Screen{
 	
 	//Textures
 	Texture ShopBackground;
+	Texture Coin;
 	
 	//Sprites
 	Sprite sprite_shopbackground;
+	Sprite sprite_coin;
 	
 	//Font
 	public static BitmapFont font;
@@ -67,6 +69,7 @@ public class Shop implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 			batch.draw(sprite_shopbackground, 0, 0);
+			batch.draw(sprite_coin, 0, 370);
 		batch.end();
 		button_stage.act();
 		button_stage.draw();
@@ -117,14 +120,16 @@ public class Shop implements Screen{
 		table.add(back_button);
 		table.getCell(back_button).spaceBottom(10);
 		table.getCell(back_button).prefSize(100, 50);
-		table.getCell(back_button).pad(Main.SCREEN_HEIGHT/2 + 150, Main.SCREEN_WIDTH/2 + 300, 0, 0);
+		table.getCell(back_button).pad(350, 0, 0, 700);
 		button_stage.addActor(table);
 	}
 	public void LoadTexture(){
 		ShopBackground = new Texture("assets/Background.png");
+		Coin = new Texture("assets/Coin.png");
 	}
 	public void LoadSprite(){
 		sprite_shopbackground = new Sprite(ShopBackground);
+		sprite_coin = new Sprite(Coin);
 	}
 	public void Setupfont(){
 		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
