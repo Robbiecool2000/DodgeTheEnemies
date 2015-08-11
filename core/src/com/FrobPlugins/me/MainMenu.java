@@ -71,11 +71,11 @@ public class MainMenu extends Game implements Screen {
 	
 	public void dispose() {
 		font.dispose();
-		Main.batch.dispose();
+		button_stage.dispose();
 	}
 	
 	public void hide() {
-		
+		dispose();
 	}
 
 	public void pause() {

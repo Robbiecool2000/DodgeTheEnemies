@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -27,6 +28,7 @@ public class Level2 extends Game implements Screen{
 	Sprite sprite_level2background;
 	Sprite sprite_evilcharacter;
 	
+	private ParticleEffect effect;
 	private Stage stage = new Stage();
 	private Image died_image = new Image(new Texture(Gdx.files.internal("assets/Died.png")));
 	
@@ -72,12 +74,19 @@ public class Level2 extends Game implements Screen{
 		EvilCharMovement();
 		EvilCharBackMovement();
 		batch.setProjectionMatrix(camera.combined);
+		effect.setPosition(CharBounds.x +30, CharBounds.y +30);
+		effect.update(deltaTime);
 		batch.begin();
 			batch.draw(sprite_level2background, 0, 0);
+			effect.draw(batch, deltaTime);
 			batch.draw(sprite_character, CharBounds.x, CharBounds.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
 			batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
 		batch.end();
+		
+		if(effect.isComplete()){
+			effect.reset();
+		}
 		
 		if(died){
 			stage.act();
@@ -109,6 +118,10 @@ public class Level2 extends Game implements Screen{
 		died_image.setX(Main.SCREEN_WIDTH/2 - 350/2);
 		died_image.setY(Main.SCREEN_HEIGHT/2 - 350/2);
 		died_image.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1f)));
+		
+		effect = new ParticleEffect();
+		effect.load(Gdx.files.internal("assets/particle.p"), Gdx.files.internal("assets"));
+		effect.start();
 	}
 	
 	public void ClickListener(){
