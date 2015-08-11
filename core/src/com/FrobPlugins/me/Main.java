@@ -16,6 +16,7 @@ public class Main extends Game implements ApplicationListener {
 	public static Level6 level6;
 	public static Level7 level7;
 	public static Level8 level8;*/
+	public static Shop shop;
 	public SplashScreen splash_screen;
 	public static final String Message_INFO = "[Main/Info]: ";
 	public static final String Message_ERROR = "[Main/ERROR]: ";
@@ -33,6 +34,7 @@ public class Main extends Game implements ApplicationListener {
 		level6 = new Level6(this);
 		level7 = new Level7(this);
 		level8 = new Level8(this);*/
+		shop = new Shop(this);
 		setScreen(splash_screen);
 	}
 }
