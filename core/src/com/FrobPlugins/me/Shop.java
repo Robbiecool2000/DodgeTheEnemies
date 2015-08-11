@@ -127,7 +127,6 @@ public class Shop implements Screen{
 		sprite_shopbackground = new Sprite(ShopBackground);
 	}
 	public void Setupfont(){
-		font = new BitmapFont(Gdx.files.internal("assets/data/arial-15.fnt"));
-		font.setColor(Color.BLACK);
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
 	}
 }

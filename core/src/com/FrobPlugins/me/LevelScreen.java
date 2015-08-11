@@ -9,8 +9,22 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class LevelScreen extends Game implements Screen {
+	
+	private Stage button_stage = new Stage();
+	private TextureAtlas atlas;
+	private TextButton back_button;
+	private Skin skin;
+	private Table table;
 	
 	PlayButton playbutton;
 	int numrows = 8;
@@ -134,6 +148,8 @@ public class LevelScreen extends Game implements Screen {
 				}
 			}
 		}
+		button_stage.act();
+		button_stage.draw();
 	}
 	
 	public void LoadTexture(){
@@ -319,5 +335,34 @@ public class LevelScreen extends Game implements Screen {
 		loadTextures();
 		loadSprites();
 		SetupFont();
+		
+		Gdx.input.setInputProcessor(button_stage);
+		
+		atlas = new TextureAtlas("assets/button.pack");
+		skin = new Skin(atlas);
+		
+		table = new Table(skin);
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		TextButtonStyle textButtonStyle = new TextButtonStyle(); 
+		textButtonStyle.up = skin.getDrawable("button_up");
+		textButtonStyle.down = skin.getDrawable("button_down");
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = font;
+		
+		back_button = new TextButton("Back", textButtonStyle);
+		back_button.pad(10);
+		back_button.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(main));
+			}
+		});
+		
+		table.add(back_button);
+		table.getCell(back_button).spaceBottom(10);
+		table.getCell(back_button).prefSize(100, 50);
+		table.getCell(back_button).pad(Main.SCREEN_HEIGHT/2 + 150, Main.SCREEN_WIDTH/2 + 300, 0, 0);
+		button_stage.addActor(table);
 	}
 }
