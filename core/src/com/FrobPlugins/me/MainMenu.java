@@ -8,11 +8,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.sun.javafx.property.adapter.PropertyDescriptor.Listener;
 
 public class MainMenu extends Game implements Screen {
 	public static OrthographicCamera camera;
@@ -20,12 +26,13 @@ public class MainMenu extends Game implements Screen {
 	Main game;
 	boolean hover = true;
 	private Game game_class;
-	private LevelScreen levelscreen;
 	private Stage stage = new Stage();
 	private Stage button_stage = new Stage();
 	private TextureAtlas atlas;
-	private TextButton text_button;
-	private Label heading;
+	private TextButton play_button;
+	private TextButton shop_button;
+	private Skin skin;
+	private Table table;
 	
 	public static int FPS;
 	
@@ -46,50 +53,33 @@ public class MainMenu extends Game implements Screen {
 		camera.setToOrtho(true, 800, 400);
 		camera.update();
 		SetupFont();
-		levelscreen = new LevelScreen(main);
 	}
 	
 	public void render(float deltaTime) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
+		
 		stage.act();
 		stage.draw();
 		Main.batch.begin();
-			font.draw(Main.batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
-			font.draw(Main.batch, "Shop", Main.SCREEN_WIDTH/2 - 30, Main.SCREEN_HEIGHT/2 + 20);
 			//font.draw(Main.batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		Main.batch.end();
-        if(hover){
-        	Hover();
-        }
+        button_stage.act();
+        button_stage.draw();
 	}
 	
 	public void dispose() {
 		font.dispose();
-		Main.batch.dispose();
+		button_stage.dispose();
 	}
 	
 	public void hide() {
-		
+		dispose();
 	}
 
 	public void pause() {
 		
-	}
-	
-	public void Hover(){
-		if(Gdx.input.justTouched()){
-			if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
-        		&& Gdx.input.getY() < Main.SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 95){
-				dispose();
-				((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen(game));
-			}
-			if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
-				&& Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() < Main.SCREEN_HEIGHT/2 + 30){
-				((Game)Gdx.app.getApplicationListener()).setScreen(new Shop(game));
-			}
-		}
 	}
 	
 	//Loading all of the textures in the 'assets' folder.
@@ -117,6 +107,44 @@ public class MainMenu extends Game implements Screen {
 	public void show() {
 		stage.addActor(sprite_Background);
 		sprite_Background.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		
+		Gdx.input.setInputProcessor(button_stage);
+		
+		atlas = new TextureAtlas("assets/button.pack");
+		skin = new Skin(atlas);
+		
+		table = new Table(skin);
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		TextButtonStyle textButtonStyle = new TextButtonStyle(); 
+		textButtonStyle.up = skin.getDrawable("button_up");
+		textButtonStyle.down = skin.getDrawable("button_down");
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = font;
+		
+		play_button = new TextButton("Play", textButtonStyle);
+		play_button.pad(10);
+		play_button.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen(game));
+			}
+		});
+		shop_button = new TextButton("Shop", textButtonStyle);
+		shop_button.pad(10);
+		shop_button.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y) {
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Shop(game));
+			}
+		});
+		
+		table.add(play_button);
+		table.getCell(play_button).spaceBottom(10);
+		table.getCell(play_button).prefSize(100, 50);
+		table.row();
+		table.add(shop_button);
+		table.getCell(shop_button).prefSize(100, 50);
+		button_stage.addActor(table);
 	}
 
 	public void create() {
