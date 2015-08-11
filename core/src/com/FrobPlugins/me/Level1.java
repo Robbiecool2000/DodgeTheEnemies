@@ -13,10 +13,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Level1 implements Screen{
@@ -39,6 +46,12 @@ public class Level1 implements Screen{
 	//WarpClient warpClient;
 	
 	private ParticleEffect effect;
+	
+	private Stage button_stage = new Stage();
+	private TextureAtlas atlas;
+	private TextButton back_button;
+	private Skin skin;
+	private Table table;
 	
 	//Images
 	Image died_window = new Image(died_texture);
@@ -157,6 +170,10 @@ public class Level1 implements Screen{
 				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
 			}
 		Main.batch.end();
+		
+		button_stage.act();
+		button_stage.draw();
+		
 		if(died){
 			stage.act();
 			stage.draw();
@@ -214,6 +231,36 @@ public class Level1 implements Screen{
 		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 		Disabled = false;
+		
+Gdx.input.setInputProcessor(button_stage);
+		
+		atlas = new TextureAtlas("assets/button.pack");
+		skin = new Skin(atlas);
+		
+		table = new Table(skin);
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		TextButtonStyle textButtonStyle = new TextButtonStyle(); 
+		textButtonStyle.up = skin.getDrawable("button_up");
+		textButtonStyle.down = skin.getDrawable("button_down");
+		textButtonStyle.pressedOffsetX = 1;
+		textButtonStyle.pressedOffsetY = -1;
+		textButtonStyle.font = font;
+		
+		back_button = new TextButton("Back", textButtonStyle);
+		back_button.pad(10);
+		back_button.addListener(new ClickListener(){
+			public void clicked(InputEvent event, float x, float y){
+				((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+			}
+		});
+		
+		table.add(back_button);
+		table.getCell(back_button).spaceBottom(10);
+		table.getCell(back_button).prefSize(100, 50);
+		table.getCell(back_button).pad(Main.SCREEN_HEIGHT/2 + 150, Main.SCREEN_WIDTH/2 + 300, 0, 0);
+		button_stage.addActor(table);
+		
 		start();
 	}
 	
