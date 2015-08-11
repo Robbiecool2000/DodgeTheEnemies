@@ -34,16 +34,7 @@ timeline2: 1.0
 - Life Offset - 
 active: false
 - X Offset - 
-active: true
-lowMin: 0.0
-lowMax: 0.0
-highMin: 0.0
-highMax: 0.0
-relative: false
-scalingCount: 1
-scaling0: 1.0
-timelineCount: 1
-timeline0: 0.0
+active: false
 - Y Offset - 
 active: false
 - Spawn Shape - 
@@ -71,8 +62,8 @@ timeline0: 0.0
 - Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 32.0
-highMax: 32.0
+highMin: 45.0
+highMax: 45.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -121,7 +112,7 @@ timeline0: 0.0
 active: false
 - Tint - 
 colorsCount: 3
-colors0: 0.07450981
+colors0: 0.08235294
 colors1: 1.0
 colors2: 0.07058824
 timelineCount: 1
