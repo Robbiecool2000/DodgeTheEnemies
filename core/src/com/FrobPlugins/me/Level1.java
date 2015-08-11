@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -43,6 +44,9 @@ public class Level1 implements Screen{
 	Sprite sprite_level1background;
 	Sprite Coin_Image;
 	Sprite sprite_finish;
+	
+	//Sounds
+	private Sound CountingSound;
 	
 	//WarpClient warpClient;
 	
@@ -277,6 +281,8 @@ public class Level1 implements Screen{
 		effect.start();
 		
 		start();
+		
+		CountingSound = Gdx.audio.newSound(Gdx.files.internal("assets/CountingSound.wav"));
 	}
 	
 	public void ClickListener(){
@@ -568,12 +574,15 @@ public class Level1 implements Screen{
 	public void Timer(){
 		if(TimeUtils.millis() / 1000 - start == 0){
 			displaytime = 3;
+			CountingSound.play();
 		}
 		if(TimeUtils.millis() / 1000 - start == 1){
 			displaytime = 2;
+			CountingSound.play();
 		}
 		if(TimeUtils.millis() / 1000 - start == 2){
 			displaytime = 1;
+			CountingSound.play();
 		}
 	}
 }
