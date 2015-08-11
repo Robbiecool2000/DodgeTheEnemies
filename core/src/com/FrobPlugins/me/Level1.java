@@ -27,12 +27,14 @@ public class Level1 implements Screen{
 	Texture Level1Background;
 	Texture died_texture = new Texture("assets/Died.png");
 	Texture Coin;
+	Texture TextureFinish;
 	
 	//Sprites
 	Sprite sprite_character;
 	Sprite sprite_evilcharacter;
 	Sprite sprite_level1background;
 	Sprite Coin_Image;
+	Sprite sprite_finish;
 	
 	//WarpClient warpClient;
 	
@@ -77,11 +79,13 @@ public class Level1 implements Screen{
 	private Rectangle EvilCharBounds_6;
 	private Rectangle EvilCharBounds_7;
 	private Rectangle EvilCharBounds_8;
+	private Rectangle Finish;
 	
 	private Rectangle CoinRect1;
 	private Rectangle CoinRect2;
 	private Rectangle CoinRect3;
 	
+	private boolean finished = false;
 	private boolean died = false;
 	private boolean Disabled = false;
 	private OrthographicCamera camera;
@@ -147,6 +151,7 @@ public class Level1 implements Screen{
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
+			Main.batch.draw(sprite_finish, Finish.x, Finish.y);
 			if(!hasCompleted()){
 				font.draw(Main.batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
 				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
@@ -200,6 +205,7 @@ public class Level1 implements Screen{
 		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
 		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
 		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+		Finish = new Rectangle(0, 0, 1, 400);
 		CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
 		CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
 		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
@@ -252,6 +258,7 @@ public class Level1 implements Screen{
 		EvilCharacter = new Texture("assets/DodgeTheEnemiesEvilCharacter.png");
 		Level1Background = new Texture("assets/LevelBackground.png");
 		Coin = new Texture(Gdx.files.internal("assets/Coin.png"));
+		TextureFinish = new Texture("assets/InvisibleFinish.png");
 	}
 	
 	public void LoadSprite(){
@@ -259,6 +266,7 @@ public class Level1 implements Screen{
 		sprite_evilcharacter = new Sprite(EvilCharacter);
 		sprite_level1background = new Sprite(Level1Background);
 		Coin_Image = new Sprite(Coin);
+		sprite_finish = new Sprite(TextureFinish);
 	}
 	
 	public void CharControls(){
@@ -423,10 +431,8 @@ public class Level1 implements Screen{
 	}
 	public void CharFinish(){
 		if(!Disabled){
-			if(CharBounds.x == 0 && CharBounds.y >= 0 && CharBounds.y <= 400){
-				if(CharBounds.x == 0 && CharBounds.y + 80 >= 0 && CharBounds.y + 80 <= 400){
-					((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
-				}
+			if(CharBounds.overlaps(Finish)){
+				finished = true;
 			}
 		}
 	}
