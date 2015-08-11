@@ -7,9 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class MainMenu extends Game implements Screen {
 	public static OrthographicCamera camera;
@@ -19,6 +22,10 @@ public class MainMenu extends Game implements Screen {
 	private Game game_class;
 	private LevelScreen levelscreen;
 	private Stage stage = new Stage();
+	private Stage button_stage = new Stage();
+	private TextureAtlas atlas;
+	private TextButton text_button;
+	private Label heading;
 	
 	public static int FPS;
 	
@@ -50,7 +57,7 @@ public class MainMenu extends Game implements Screen {
 		stage.draw();
 		Main.batch.begin();
 			font.draw(Main.batch, "Play", Main.SCREEN_WIDTH/2 - 25, Main.SCREEN_HEIGHT/2 + 80);
-			font.draw(Main.batch, "Shop", Main.SCREEN_WIDTH/2 - 45, Main.SCREEN_HEIGHT/2 + 20);
+			font.draw(Main.batch, "Shop", Main.SCREEN_WIDTH/2 - 30, Main.SCREEN_HEIGHT/2 + 20);
 			//font.draw(Main.batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
 		Main.batch.end();
         if(hover){
@@ -77,6 +84,10 @@ public class MainMenu extends Game implements Screen {
         		&& Gdx.input.getY() < Main.SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 95){
 				dispose();
 				((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen(game));
+			}
+			if(Gdx.input.getX() > Main.SCREEN_WIDTH/2 - 60 && Gdx.input.getX() < Main.SCREEN_WIDTH/2 + 60
+				&& Gdx.input.getY() > Main.SCREEN_HEIGHT/2 - 40 && Gdx.input.getY() < Main.SCREEN_HEIGHT/2 + 30){
+				((Game)Gdx.app.getApplicationListener()).setScreen(new Shop(game));
 			}
 		}
 	}
