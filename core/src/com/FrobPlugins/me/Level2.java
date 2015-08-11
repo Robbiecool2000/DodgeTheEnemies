@@ -120,7 +120,7 @@ public class Level2 extends Game implements Screen{
 		died_image.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1f)));
 		
 		effect = new ParticleEffect();
-		effect.load(Gdx.files.internal("assets/particle.p"), Gdx.files.internal("assets"));
+		effect.load(Gdx.files.internal("assets/effects/green.p"), Gdx.files.internal("assets/effects"));
 		effect.start();
 	}
 	
