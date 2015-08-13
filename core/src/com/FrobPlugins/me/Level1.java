@@ -323,6 +323,7 @@ public class Level1 implements Screen{
 				CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
 				coinCountSession = 0;
 				CollectedCoins = false;
+				CoinsCollected = 0;
 				start();
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
@@ -366,6 +367,7 @@ public class Level1 implements Screen{
 				CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
 				coinCountSession = 0;
 				CollectedCoins = false;
+				CoinsCollected = 0;
 				start();
 			}
 		}
