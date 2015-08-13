@@ -315,7 +315,7 @@ public class Level1 implements Screen{
 		button_stage.addActor(table);
 		
 		effect = new ParticleEffect();
-		effect.load(Gdx.files.internal("effects/green.p"), Gdx.files.internal("assets/effects"));
+		effect.load(Gdx.files.internal("assets/effects/green.p"), Gdx.files.internal("assets/effects"));
 		effect.start();
 		
 		start();
