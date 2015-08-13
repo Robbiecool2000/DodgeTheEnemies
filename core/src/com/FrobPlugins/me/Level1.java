@@ -36,8 +36,8 @@ public class Level1 implements Screen{
 	Texture died_texture = new Texture("assets/Died.png");
 	Texture Coin;
 	Texture TextureFinish;
-	Texture Star;
-	Texture Cross;
+	Texture Star = new Texture("assets/Star.png");
+	Texture Cross = new Texture("assets/Cross.png");
 	
 	//Sprites
 	Sprite sprite_character;
@@ -63,9 +63,13 @@ public class Level1 implements Screen{
 	
 	//Images
 	Image finished_window = new Image(finished_texture);
-	private Stage stagefinished = new Stage();
 	Image died_window = new Image(died_texture);
+	Image star_image = new Image(Star);
+	Image cross_image = new Image(Cross);
+	
+	//Stages
 	private Stage stagedied = new Stage();
+	private Stage stagefinished = new Stage();
 	
 	//Font
 	public static BitmapFont font;
@@ -210,11 +214,9 @@ public class Level1 implements Screen{
 			Main.batch.begin();
 			if(finished){
 				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
-				Main.batch.draw(sprite_star, 310, 110);
 				drawstage2 = true;
 			}
 			if(died){
-				Main.batch.draw(sprite_cross, 310, 110);
 				drawstage = true;
 			}
 			Main.batch.end();
@@ -260,14 +262,26 @@ public class Level1 implements Screen{
 		CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
 		CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
 		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
+		
+		//Stage for finished
 		stagefinished.addActor(finished_window);
+		stagefinished.addActor(star_image);
 		finished_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
 		finished_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
+		star_image.setX(305);
+		star_image.setY(110);
 		finished_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		star_image.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		
+		//Stage for died
 		stagedied.addActor(died_window);
+		stagedied.addActor(cross_image);
 		died_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
 		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
+		cross_image.setX(305);
+		cross_image.setY(110);
 		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		cross_image.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 		Disabled = false;
 		
 		Gdx.input.setInputProcessor(button_stage);
@@ -286,6 +300,7 @@ public class Level1 implements Screen{
 		textButtonStyle.font = font;
 		
 		back_button = new TextButton("Back", textButtonStyle);
+		
 		back_button.pad(10);
 		back_button.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
@@ -300,7 +315,7 @@ public class Level1 implements Screen{
 		button_stage.addActor(table);
 		
 		effect = new ParticleEffect();
-		effect.load(Gdx.files.internal("assets/effects/green.p"), Gdx.files.internal("assets/effects"));
+		effect.load(Gdx.files.internal("effects/green.p"), Gdx.files.internal("assets/effects"));
 		effect.start();
 		
 		start();
@@ -316,33 +331,7 @@ public class Level1 implements Screen{
 				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
-				died = false;
-				finished = false;
-				drawstage = false;
-				Disabled = false;
-				Random random = new Random();
-				CoinX1 = random.nextInt(800);
-				CoinY1 = random.nextInt(400);
-				CoinX2 = random.nextInt(800);
-				CoinY2 = random.nextInt(400);
-				CoinX3 = random.nextInt(800);
-				CoinY3 = random.nextInt(400);
-				CharBounds = new Rectangle(360, 160, 60, 60);
-				EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
-				EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
-				EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
-				EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
-				EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
-				EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
-				EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
-				EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
-				CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
-				CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
-				CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
-				coinCountSession = 0;
-				CollectedCoins = false;
-				CoinsCollected = 0;
-				start();
+				reset();
 			}
 		}
 	}
@@ -355,35 +344,41 @@ public class Level1 implements Screen{
 				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
-				died = false;
-				finished = false;
-				drawstage2 = false;
-				Disabled = false;
-				Random random = new Random();
-				CoinX1 = random.nextInt(800);
-				CoinY1 = random.nextInt(400);
-				CoinX2 = random.nextInt(800);
-				CoinY2 = random.nextInt(400);
-				CoinX3 = random.nextInt(800);
-				CoinY3 = random.nextInt(400);
-				CharBounds = new Rectangle(360, 160, 60, 60);
-				EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
-				EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
-				EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
-				EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
-				EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
-				EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
-				EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
-				EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
-				CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
-				CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
-				CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
-				coinCountSession = 0;
-				CollectedCoins = false;
-				CoinsCollected = 0;
-				start();
+				reset();
 			}
 		}
+	}
+	
+	public void reset(){
+		died = false;
+		finished = false;
+		drawstage2 = false;
+		drawstage = false;
+		Disabled = false;
+		effect.reset();
+		Random random = new Random();
+		CoinX1 = random.nextInt(800);
+		CoinY1 = random.nextInt(400);
+		CoinX2 = random.nextInt(800);
+		CoinY2 = random.nextInt(400);
+		CoinX3 = random.nextInt(800);
+		CoinY3 = random.nextInt(400);
+		CharBounds = new Rectangle(360, 160, 60, 60);
+		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+		EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
+		EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
+		EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
+		EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
+		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
+		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
+		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+		CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
+		CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
+		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
+		coinCountSession = 0;
+		CollectedCoins = false;
+		CoinsCollected = 0;
+		start();
 	}
 	
 	public void LoadTexture(){

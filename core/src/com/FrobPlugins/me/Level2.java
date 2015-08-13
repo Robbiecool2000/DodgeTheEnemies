@@ -30,7 +30,7 @@ public class Level2 extends Game implements Screen{
 	
 	private ParticleEffect effect;
 	private Stage stage = new Stage();
-	private Image died_image = new Image(new Texture(Gdx.files.internal("assets/Died.png")));
+	private Image died_image = new Image(new Texture(Gdx.files.internal("assets/assets/Died.png")));
 	
 	private boolean died = false;
 	
