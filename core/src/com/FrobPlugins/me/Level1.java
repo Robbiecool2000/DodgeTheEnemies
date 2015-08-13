@@ -189,23 +189,25 @@ public class Level1 implements Screen{
 				font.draw(Main.batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
 				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
 			}
+			Main.batch.end();
+			if(drawstage2){
+				stagefinished.act();
+				stagefinished.draw();
+				Disabled = true;
+				ClickListener2();
+			}
+			Main.batch.begin();
 			if(finished){
 				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
 				drawstage2 = true;
 			}
-			if(drawstage2){
-				stagefinished.act();
-				//stagefinished.draw();
-				Disabled = true;
-				ClickListener2();
-			}
+			Main.batch.end();
 			if(died){
 				stagedied.act();
 				stagedied.draw();
 				Disabled = true;
 				ClickListener();
 			}
-		Main.batch.end();
 		
 		if(coinCountSession == 3){
 			CollectedCoins = true;
