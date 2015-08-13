@@ -557,7 +557,7 @@ public class Level1 implements Screen{
 				coinCount++;
 				coinCountSession++;
 				System.out.println(coinCountSession);
-				CoinsCollected = CoinsCollected + 1;
+				CoinsCollected++;
 			}
 			if(CharBounds.overlaps(CoinRect2)){
 				CoinRect2.x = 10000;
@@ -565,7 +565,7 @@ public class Level1 implements Screen{
 				coinCount++;
 				coinCountSession++;
 				System.out.println(coinCountSession);
-				CoinsCollected = CoinsCollected + 1;
+				CoinsCollected++;
 			}
 			if(CharBounds.overlaps(CoinRect3)){
 				CoinRect3.x = 10000;
@@ -573,7 +573,7 @@ public class Level1 implements Screen{
 				coinCount++;
 				coinCountSession++;
 				System.out.println(coinCountSession);
-				CoinsCollected = CoinsCollected + 1;
+				CoinsCollected++;
 			}
 		}
 	}
