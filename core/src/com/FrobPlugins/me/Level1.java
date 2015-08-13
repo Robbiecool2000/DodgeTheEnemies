@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -114,6 +113,8 @@ public class Level1 implements Screen{
 	private long start;
     private long secsToWait = 3;
     private long displaytime;
+    
+    private long CoinsCollected;
 	
 	public Level1(Main main) {
 		this.main = main;
@@ -156,6 +157,10 @@ public class Level1 implements Screen{
 		Timer();
 		effect.setPosition(CharBounds.x +30, CharBounds.y +30);
 		effect.update(deltaTime);
+		
+		long InputX = Gdx.input.getX();
+		long InputY = Gdx.input.getY();
+		
 		Main.batch.begin();
 			Main.batch.draw(sprite_level1background, 0, 0);
 		Main.batch.end();
@@ -178,24 +183,25 @@ public class Level1 implements Screen{
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
 			Main.batch.draw(sprite_finish, Finish.x, Finish.y);
+			font.draw(Main.batch, InputX + "   " + InputY, 300, 200);
 			if(!hasCompleted()){
 				font.draw(Main.batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
 				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
 			}
+			if(finished){
+				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
+				stagefinished.act();
+				stagefinished.draw();
+				Disabled = true;
+				ClickListener2();
+			}
+			if(died){
+				stagedied.act();
+				stagedied.draw();
+				Disabled = true;
+				ClickListener();
+			}
 		Main.batch.end();
-		
-		if(finished){
-			stagefinished.act();
-			stagefinished.draw();
-			Disabled = true;
-			ClickListener2();
-		}
-		if(died){
-			stagedied.act();
-			stagedied.draw();
-			Disabled = true;
-			ClickListener();
-		}
 		
 		if(coinCountSession == 3){
 			CollectedCoins = true;
@@ -551,6 +557,7 @@ public class Level1 implements Screen{
 				coinCount++;
 				coinCountSession++;
 				System.out.println(coinCountSession);
+				CoinsCollected = CoinsCollected + 1;
 			}
 			if(CharBounds.overlaps(CoinRect2)){
 				CoinRect2.x = 10000;
@@ -558,6 +565,7 @@ public class Level1 implements Screen{
 				coinCount++;
 				coinCountSession++;
 				System.out.println(coinCountSession);
+				CoinsCollected = CoinsCollected + 1;
 			}
 			if(CharBounds.overlaps(CoinRect3)){
 				CoinRect3.x = 10000;
@@ -565,6 +573,7 @@ public class Level1 implements Screen{
 				coinCount++;
 				coinCountSession++;
 				System.out.println(coinCountSession);
+				CoinsCollected = CoinsCollected + 1;
 			}
 		}
 	}
