@@ -343,6 +343,7 @@ public class Level1 implements Screen{
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
 				finished = false;
+				drawstage2 = false;
 				Disabled = false;
 				Random random = new Random();
 				CoinX1 = random.nextInt(800);
