@@ -30,10 +30,12 @@ public class Shop implements Screen{
 	//Textures
 	Texture ShopBackground;
 	Texture Coin;
+	Texture ShopButton;
 	
 	//Sprites
 	Sprite sprite_shopbackground;
 	Sprite sprite_coin;
+	Sprite sprite_shopbutton;
 	
 	//Font
 	public static BitmapFont font;
@@ -70,6 +72,11 @@ public class Shop implements Screen{
 		batch.begin();
 			batch.draw(sprite_shopbackground, 0, 0);
 			batch.draw(sprite_coin, 0, 370);
+			batch.draw(sprite_shopbutton, 28, 80);
+			batch.draw(sprite_shopbutton, 216, 80);
+			batch.draw(sprite_shopbutton, 408, 80);
+			batch.draw(sprite_shopbutton, 600, 80);
+			font.draw(batch, Gdx.input.getX() + "  " + Gdx.input.getY(), 200, 200);
 		batch.end();
 		button_stage.act();
 		button_stage.draw();
@@ -126,10 +133,12 @@ public class Shop implements Screen{
 	public void LoadTexture(){
 		ShopBackground = new Texture("assets/Background.png");
 		Coin = new Texture("assets/Coin.png");
+		ShopButton = new Texture("assets/ShopButton.png");
 	}
 	public void LoadSprite(){
 		sprite_shopbackground = new Sprite(ShopBackground);
 		sprite_coin = new Sprite(Coin);
+		sprite_shopbutton = new Sprite(ShopButton);
 	}
 	public void Setupfont(){
 		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
