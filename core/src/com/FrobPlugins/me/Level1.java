@@ -32,7 +32,7 @@ public class Level1 implements Screen{
 	Texture Character;
 	Texture EvilCharacter;
 	Texture Level1Background;
-	Texture finished_texture = new Texture("assets/Finished.jpg");
+	Texture finished_texture = new Texture("assets/Finished.png");
 	Texture died_texture = new Texture("assets/Died.png");
 	Texture Coin;
 	Texture TextureFinish;
@@ -342,8 +342,30 @@ public class Level1 implements Screen{
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
+				finished = false;
 				Disabled = false;
-				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+				Random random = new Random();
+				CoinX1 = random.nextInt(800);
+				CoinY1 = random.nextInt(400);
+				CoinX2 = random.nextInt(800);
+				CoinY2 = random.nextInt(400);
+				CoinX3 = random.nextInt(800);
+				CoinY3 = random.nextInt(400);
+				CharBounds = new Rectangle(360, 160, 60, 60);
+				EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+				EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
+				EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
+				EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
+				EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
+				EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
+				EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
+				EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+				CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
+				CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
+				CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
+				coinCountSession = 0;
+				CollectedCoins = false;
+				start();
 			}
 		}
 	}
