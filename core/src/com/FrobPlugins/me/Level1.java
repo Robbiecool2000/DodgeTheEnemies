@@ -302,6 +302,11 @@ public class Level1 implements Screen{
 			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
 				Disabled = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+			}
+			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				died = false;
+				Disabled = false;
 				Random random = new Random();
 				CoinX1 = random.nextInt(800);
 				CoinY1 = random.nextInt(400);
@@ -325,11 +330,6 @@ public class Level1 implements Screen{
 				CollectedCoins = false;
 				CoinsCollected = 0;
 				start();
-			}
-			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
-				died = false;
-				Disabled = false;
-				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 		}
 	}
