@@ -189,7 +189,7 @@ public class Level1 implements Screen{
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
 			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
 			Main.batch.draw(sprite_finish, Finish.x, Finish.y);
-			font.draw(Main.batch, InputX + "   " + InputY, 300, 200);
+			font.draw(Main.batch, InputX + "   " + InputY, 200, 200);
 			if(!hasCompleted()){
 				font.draw(Main.batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
 				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
@@ -210,11 +210,11 @@ public class Level1 implements Screen{
 			Main.batch.begin();
 			if(finished){
 				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
-				Main.batch.draw(sprite_star, 310, 100);
+				Main.batch.draw(sprite_star, 310, 110);
 				drawstage2 = true;
 			}
 			if(died){
-				Main.batch.draw(sprite_cross, 310, 100);
+				Main.batch.draw(sprite_cross, 310, 110);
 				drawstage = true;
 			}
 			Main.batch.end();
