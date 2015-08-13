@@ -105,6 +105,7 @@ public class Level1 implements Screen{
 	private Rectangle CoinRect3;
 	
 	private boolean finished = false;
+	private boolean drawstage2 = false;
 	private boolean died = false;
 	private boolean Disabled = false;
 	private OrthographicCamera camera;
@@ -190,8 +191,11 @@ public class Level1 implements Screen{
 			}
 			if(finished){
 				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
+				drawstage2 = true;
+			}
+			if(drawstage2){
 				stagefinished.act();
-				stagefinished.draw();
+				//stagefinished.draw();
 				Disabled = true;
 				ClickListener2();
 			}
