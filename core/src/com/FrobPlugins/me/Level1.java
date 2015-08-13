@@ -36,6 +36,8 @@ public class Level1 implements Screen{
 	Texture died_texture = new Texture("assets/Died.png");
 	Texture Coin;
 	Texture TextureFinish;
+	Texture Star;
+	Texture Cross;
 	
 	//Sprites
 	Sprite sprite_character;
@@ -43,6 +45,8 @@ public class Level1 implements Screen{
 	Sprite sprite_level1background;
 	Sprite Coin_Image;
 	Sprite sprite_finish;
+	Sprite sprite_star;
+	Sprite sprite_cross;
 	
 	//Sounds
 	private Sound CountingSound;
@@ -107,6 +111,7 @@ public class Level1 implements Screen{
 	private boolean finished = false;
 	private boolean drawstage2 = false;
 	private boolean died = false;
+	private boolean drawstage = false;
 	private boolean Disabled = false;
 	private OrthographicCamera camera;
 	Main main;
@@ -196,18 +201,24 @@ public class Level1 implements Screen{
 				Disabled = true;
 				ClickListener2();
 			}
-			Main.batch.begin();
-			if(finished){
-				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
-				drawstage2 = true;
-			}
-			Main.batch.end();
-			if(died){
+			if(drawstage){
 				stagedied.act();
 				stagedied.draw();
 				Disabled = true;
 				ClickListener();
 			}
+			Main.batch.begin();
+			if(finished){
+				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
+				Main.batch.draw(sprite_star, 310, 100);
+				drawstage2 = true;
+			}
+			if(died){
+				Main.batch.draw(sprite_cross, 310, 100);
+				drawstage = true;
+			}
+			Main.batch.end();
+			
 		
 		if(coinCountSession == 3){
 			CollectedCoins = true;
@@ -306,6 +317,8 @@ public class Level1 implements Screen{
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
+				finished = false;
+				drawstage = false;
 				Disabled = false;
 				Random random = new Random();
 				CoinX1 = random.nextInt(800);
@@ -379,6 +392,8 @@ public class Level1 implements Screen{
 		Level1Background = new Texture("assets/LevelBackground.png");
 		Coin = new Texture(Gdx.files.internal("assets/Coin.png"));
 		TextureFinish = new Texture("assets/InvisibleFinish.png");
+		Star = new Texture("assets/Star.png");
+		Cross = new Texture("assets/Cross.png");
 	}
 	
 	public void LoadSprite(){
@@ -387,6 +402,8 @@ public class Level1 implements Screen{
 		sprite_level1background = new Sprite(Level1Background);
 		Coin_Image = new Sprite(Coin);
 		sprite_finish = new Sprite(TextureFinish);
+		sprite_star = new Sprite(Star);
+		sprite_cross = new Sprite(Cross);
 	}
 	
 	public void CharControls(){
