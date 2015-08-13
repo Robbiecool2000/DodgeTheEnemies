@@ -111,7 +111,7 @@ public class Level1 implements Screen{
 	Main main;
 	
 	private long start;
-    private long secsToWait = 3;
+    private long secsToWait = 4;
     private long displaytime;
     
     private long CoinsCollected;
@@ -584,14 +584,19 @@ public class Level1 implements Screen{
 		if(TimeUtils.millis() / 1000 - start == 0){
 			displaytime = 3;
 			CountingSound.play();
+			CountingSound.pause();
 		}
 		if(TimeUtils.millis() / 1000 - start == 1){
 			displaytime = 2;
+			CountingSound.resume();
 			CountingSound.play();
+			CountingSound.pause();
 		}
 		if(TimeUtils.millis() / 1000 - start == 2){
 			displaytime = 1;
+			CountingSound.resume();
 			CountingSound.play();
+			CountingSound.pause();
 		}
 	}
 }
