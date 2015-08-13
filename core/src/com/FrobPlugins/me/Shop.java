@@ -37,6 +37,12 @@ public class Shop implements Screen{
 	Sprite sprite_coin;
 	Sprite sprite_shopbutton;
 	
+	int numrows = 4;
+	int numcols = 1;
+	
+	int rowheight = 85;
+	int colwidth = 175;
+	
 	//Font
 	public static BitmapFont font;
 	
@@ -72,10 +78,13 @@ public class Shop implements Screen{
 		batch.begin();
 			batch.draw(sprite_shopbackground, 0, 0);
 			batch.draw(sprite_coin, 0, 370);
-			batch.draw(sprite_shopbutton, 28, 80);
-			batch.draw(sprite_shopbutton, 216, 80);
-			batch.draw(sprite_shopbutton, 408, 80);
-			batch.draw(sprite_shopbutton, 600, 80);
+			for(int x = 0; x < numrows; x++){
+				for(int y = 0; y < numcols; y++){
+					int xPos = x * colwidth;
+					int yPos = y * rowheight;
+					batch.draw(sprite_shopbutton, xPos + (float) 57.5, yPos + 80);
+				}
+			}
 			font.draw(batch, Gdx.input.getX() + "  " + Gdx.input.getY(), 200, 200);
 		batch.end();
 		button_stage.act();
