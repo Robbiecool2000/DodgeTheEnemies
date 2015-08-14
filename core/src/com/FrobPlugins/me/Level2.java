@@ -120,7 +120,7 @@ public class Level2 extends Game implements Screen{
 		died_image.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1f)));
 		
 		effect = new ParticleEffect();
-		effect.load(Gdx.files.internal("effects/green.p"), Gdx.files.internal("assets/effects"));
+		effect.load(Gdx.files.internal("assets/effects/green.p"), Gdx.files.internal("assets/effects"));
 		effect.start();
 	}
 	
@@ -128,14 +128,14 @@ public class Level2 extends Game implements Screen{
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
 				died = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+			}
+			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				died = false;
 				CharBounds = new Rectangle(360, 160, 60, 60);
 				EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
 				EvilCharBounds_2 = new Rectangle(720, 0, 80, 80);
 				effect.reset();
-			}
-			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
-				died = false;
-				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 		}
 	}

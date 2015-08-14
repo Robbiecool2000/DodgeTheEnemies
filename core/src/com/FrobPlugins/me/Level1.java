@@ -344,7 +344,7 @@ public class Level1 implements Screen{
 				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
-				reset();
+				((Game) Gdx.app.getApplicationListener()).setScreen(new Level2(main));
 			}
 		}
 	}
