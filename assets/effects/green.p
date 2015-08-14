@@ -62,8 +62,8 @@ timeline0: 0.0
 - Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 45.0
-highMax: 45.0
+highMin: 35.0
+highMax: 35.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -141,4 +141,4 @@ additive: true
 behind: false
 premultipliedAlpha: false
 - Image Path -
-/D:/downloads/particle.png
+particle.png
