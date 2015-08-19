@@ -5,7 +5,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.FrobPlugins.me.Main;
 import com.FrobPlugins.me.MainMenu;
-	
+
+
 public class DesktopLauncher {
 	
 	public static void main (String[] arg) {
@@ -15,5 +16,6 @@ public class DesktopLauncher {
 		config.height = Main.SCREEN_HEIGHT;
 		config.resizable = false;
 		config.title = "DodgeTheEnemies";
+
 	}
 }
