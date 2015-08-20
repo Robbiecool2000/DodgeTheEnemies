@@ -28,6 +28,16 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class Level1 implements Screen{
 	
+	/*
+	 * Things to do:
+	 * 
+	 * - Assets class for all the assets.
+	 * - Fix sound system.
+	 * - Make the timer system better.
+	 * - Save coins in a file.
+	 * - Adding coins when finished to the total coins.
+	 */
+	
 	//Texture
 	Texture Character;
 	Texture EvilCharacter;
