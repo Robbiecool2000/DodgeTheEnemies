@@ -36,6 +36,9 @@ public class Level1 implements Screen{
 	 * - Make the timer system better.
 	 * - Save coins in a file.
 	 * - Adding coins when finished to the total coins.
+	 * - Make a finish line
+	 * - Begin level 2
+	 * - Make upgrades like: Being smaller or being faster (examples)
 	 */
 	
 	//Texture
