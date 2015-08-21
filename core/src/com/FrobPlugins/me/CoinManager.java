@@ -7,10 +7,10 @@ public class CoinManager {
 	
 	public static FileHandle handle = Gdx.files.local("assets/Coins.txt");
 	
-	public static int TotalCoins;
+	public static String TotalCoins;
 	
 	public CoinManager(){
-		TotalCoins = getText();
+		TotalCoins = handle.readString();
 	}
 	public static void writeText(String text){
 		handle.writeString(text, false);

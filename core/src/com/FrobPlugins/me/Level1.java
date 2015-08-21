@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -34,8 +35,8 @@ public class Level1 implements Screen{
 	 * - Assets class for all the assets.
 	 * - Fix sound system.
 	 * - Make the timer system better.
-	 * - Save coins in a file.
-	 * - Adding coins when finished to the total coins.
+	 * - Save coins in a file. //DONE
+	 * - Adding coins when finished to the total coins. //DONE
 	 * - Make a finish line
 	 * - Begin level 2
 	 * - Make upgrades like: Being smaller or being faster (examples)
@@ -254,8 +255,6 @@ public class Level1 implements Screen{
 		Setupfont();
 		LoadTexture();
 		LoadSprite();
-		
-		coinCount = CoinManager.getText();
 		
 		Random random = new Random();
 		CoinX1 = random.nextInt(800);
