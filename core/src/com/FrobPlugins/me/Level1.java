@@ -227,6 +227,7 @@ public class Level1 implements Screen{
 			Main.batch.begin();
 			if(finished){
 				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
+				font.draw(Main.batch, "Total coins: " + CoinManager.TotalCoins, 240, 340);
 				drawstage2 = true;
 			}
 			if(died){
@@ -253,6 +254,8 @@ public class Level1 implements Screen{
 		Setupfont();
 		LoadTexture();
 		LoadSprite();
+		
+		coinCount = CoinManager.getText();
 		
 		Random random = new Random();
 		CoinX1 = random.nextInt(800);
@@ -339,6 +342,10 @@ public class Level1 implements Screen{
 	public void ClickListener(){
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				if(finished){
+					coinCount += coinCountSession;
+					CoinManager.writeText("" + coinCount);
+				}
 				died = false;
 				Disabled = false;
 				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
@@ -352,17 +359,29 @@ public class Level1 implements Screen{
 	public void ClickListener2(){
 		if(Gdx.input.justTouched()){
 			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				if(finished){
+					System.out.println("Coins in this session: " + coinCountSession);
+					CoinManager.TotalCoins += coinCountSession;
+					CoinManager.writeText("" + CoinManager.TotalCoins);
+				}
 				died = false;
 				Disabled = false;
 				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
 			}
 			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				CoinManager.TotalCoins += coinCountSession;
+				CoinManager.writeText("" + CoinManager.TotalCoins);
 				((Game) Gdx.app.getApplicationListener()).setScreen(new Level2(main));
 			}
 		}
 	}
 	
 	public void reset(){
+		if(finished){
+			System.out.println("Coins in this session: " + coinCountSession);
+			CoinManager.TotalCoins += coinCountSession;
+			CoinManager.writeText("" + CoinManager.TotalCoins);
+		}
 		died = false;
 		finished = false;
 		drawstage2 = false;
@@ -390,7 +409,6 @@ public class Level1 implements Screen{
 		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
 		coinCountSession = 0;
 		CollectedCoins = false;
-		CoinsCollected = 0;
 		start();
 	}
 	
