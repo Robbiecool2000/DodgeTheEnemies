@@ -228,7 +228,7 @@ public class Level1 implements Screen{
 			Main.batch.begin();
 			if(finished){
 				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
-				font.draw(Main.batch, "Total coins: " + CoinManager.TotalCoins, 240, 340);
+				font.draw(Main.batch, "Total coins: " + CoinManager.TotalCoins, 240, 295);
 				drawstage2 = true;
 			}
 			if(died){
