@@ -22,8 +22,6 @@ public class MainMenu extends Game implements Screen {
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
 	Main game;
-	boolean hover = true;
-	private Game game_class;
 	private Stage stage = new Stage();
 	private Stage button_stage = new Stage();
 	private TextureAtlas atlas;
@@ -31,11 +29,6 @@ public class MainMenu extends Game implements Screen {
 	private TextButton shop_button;
 	private Skin skin;
 	private Table table;
-	
-	public static int FPS;
-	
-	public static boolean hoverButton1 = false;
-	public static boolean hoverButton2 = false;
 	
 	//Textures
 	Texture Background;
@@ -61,7 +54,7 @@ public class MainMenu extends Game implements Screen {
 		stage.act();
 		stage.draw();
 		Main.batch.begin();
-			//font.draw(Main.batch, "X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY(), 100, 100);
+
 		Main.batch.end();
         button_stage.act();
         button_stage.draw();
@@ -128,11 +121,11 @@ public class MainMenu extends Game implements Screen {
 				((Game)Gdx.app.getApplicationListener()).setScreen(new LevelScreen(game));
 			}
 		});
-		shop_button = new TextButton("Shop", textButtonStyle);
+		shop_button = new TextButton("Instructions", textButtonStyle);
 		shop_button.pad(10);
 		shop_button.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y) {
-				((Game)Gdx.app.getApplicationListener()).setScreen(new Shop(game));
+				((Game)Gdx.app.getApplicationListener()).setScreen(new InstructionScreen(game));
 			}
 		});
 		

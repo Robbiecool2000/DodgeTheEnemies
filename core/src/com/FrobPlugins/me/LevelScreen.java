@@ -1,24 +1,69 @@
 package com.FrobPlugins.me;
 
-import com.FrobPlugins.me.Actor.PlayButton;
+import java.util.Random;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.TimeUtils;
 
-public class LevelScreen extends Game implements Screen {
+public class LevelScreen implements Screen{
+	
+	/*
+	 * Things to do:
+	 * 
+	 * - Assets class for all the assets.
+	 * - Fix sound system.
+	 * - Make the timer system better.
+	 * - Save coins in a file. //DONE
+	 * - Adding coins when finished to the total coins. //DONE
+	 * - Make a finish line
+	 * - Make upgrades like: Being smaller or being faster (examples)
+	 */
+	
+	//Texture
+	Texture Character;
+	Texture EvilCharacter;
+	Texture Level1Background;
+	Texture finished_texture = new Texture("assets/Finished.png");
+	Texture died_texture = new Texture("assets/Died.png");
+	Texture Coin;
+	Texture TextureFinish;
+	Texture Star = new Texture("assets/Star.png");
+	Texture Cross = new Texture("assets/Cross.png");
+	
+	//Sprites
+	Sprite sprite_character;
+	Sprite sprite_evilcharacter;
+	Sprite sprite_level1background;
+	Sprite Coin_Image;
+	Sprite sprite_finish;
+	Sprite sprite_star;
+	Sprite sprite_cross;
+	
+	//Sounds
+	private Sound CountingSound;
+	
+	private ParticleEffect effect;
 	
 	private Stage button_stage = new Stage();
 	private TextureAtlas atlas;
@@ -26,318 +71,227 @@ public class LevelScreen extends Game implements Screen {
 	private Skin skin;
 	private Table table;
 	
-	private boolean buttonchange = false;
+	//Images
+	Image finished_window = new Image(finished_texture);
+	Image died_window = new Image(died_texture);
+	Image star_image = new Image(Star);
+	Image cross_image = new Image(Cross);
 	
-	PlayButton playbutton;
-	int numrows = 8;
-	int numcols = 3;
-	int x;
-	int y;
-	int rowheight = 85;
-	int colwidth = 85;
-	public BitmapFont font;
-	private Texture redButton;
-	private Sprite sprite_redButton;
-	Main main;
-	private Texture Background;
-	private Sprite sprite_Background;
-	private Sprite sprite_Background2;
-	boolean changeCamera = false;
-	boolean changeCamera2 = false;
-	boolean changed = false;
+	//Stages
+	private Stage stagedied = new Stage();
+	private Stage stagefinished = new Stage();
+	
+	//Font
+	public static BitmapFont font;
+	
+	int EvilCharAtTop_1 = 1;
+	int EvilCharAtTop_2 = 1;
+	int EvilCharAtTop_3 = 1;
+	int EvilCharAtTop_4 = 1;
+	
+	int EvilCharAtTop_5 = 0;
+	int EvilCharAtTop_6 = 0;
+	int EvilCharAtTop_7 = 0;
+	int EvilCharAtTop_8 = 0;
+	
+	int CoinX1;
+	int CoinY1;
+	int CoinX2;
+	int CoinY2;
+	int CoinX3;
+	int CoinY3;
+	
+	public static int coinCount;
+	private int coinCountSession;
+	
+	private boolean CollectedCoins = false;
+	
+	//(Evil)CharBounds
+	private Rectangle CharBounds;
+	private Rectangle EvilCharBounds_1;
+	private Rectangle EvilCharBounds_2;
+	private Rectangle EvilCharBounds_3;
+	private Rectangle EvilCharBounds_4;
+	private Rectangle EvilCharBounds_5;
+	private Rectangle EvilCharBounds_6;
+	private Rectangle EvilCharBounds_7;
+	private Rectangle EvilCharBounds_8;
+	private Rectangle Finish;
+	
+	private Rectangle CoinRect1;
+	private Rectangle CoinRect2;
+	private Rectangle CoinRect3;
+	
+	private boolean finished = false;
+	private boolean drawstage2 = false;
+	private boolean died = false;
+	private boolean drawstage = false;
+	private boolean Disabled = false;
 	private OrthographicCamera camera;
+	Main main;
+	
+	private long start;
+    private long secsToWait = 4;
+    private long displaytime;
+    
+    private long CoinsCollected;
+	
 	public LevelScreen(Main main) {
 		this.main = main;
 	}
 
-	public void create(){
-		
-	}
-	
-	public void render(float deltaTime) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
-		Main.batch.setProjectionMatrix(camera.combined);
-		Main.batch.begin();
-		Main.batch.draw(sprite_Background, 0, 0);
-		Main.batch.draw(sprite_Background2, 0 + 800, 0);
-			for(x = 0; x < numrows; x++){
-				for(y = 0; y < numcols; y++){
-					int xPos = x * colwidth;
-					int yPos = y * rowheight;
-					Main.batch.draw(sprite_redButton, xPos + 65, yPos + 75);
-				}
-			}
-			for(x = 0; x < numrows; x++){
-				for(y = 0; y < numcols; y++){
-					int xPos = x * colwidth;
-					int yPos = y * rowheight;
-					Main.batch.draw(sprite_redButton, xPos + 865, yPos + 75);
-				}
-			}
-			Main.batch.draw(sprite_redButton, 725, 0);
-			Main.batch.draw(sprite_redButton, 725 + 75, 0);
-			font.draw(Main.batch, "1", 0 + (float)97.5, 0 + (float)292.5);
-			font.draw(Main.batch, "2", 0 + (float)182.5, 0 + (float)292.5);
-			font.draw(Main.batch, "3", 0 + (float)267.5, 0 + (float)292.5);
-			font.draw(Main.batch, "4", 0 + (float)352.5, 0 + (float)292.5);
-			font.draw(Main.batch, "5", 0 + (float)437.5, 0 + (float)292.5);
-			font.draw(Main.batch, "6", 0 + (float)522.5, 0 + (float)292.5);
-			font.draw(Main.batch, "7", 0 + (float)607.5, 0 + (float)292.5);
-			font.draw(Main.batch, "8", 0 + (float)692.5, 0 + (float)292.5);
-			font.draw(Main.batch, "9", 0 + (float)97.5, 0 + (float)207.5);
-			font.draw(Main.batch, "10", 0 + 175, 0 + (float)207.5);
-			font.draw(Main.batch, "11", 0 + 260, 0 + (float)207.5);
-			font.draw(Main.batch, "12", 0 + 345, 0 + (float)207.5);
-			font.draw(Main.batch, "13", 0 + 430, 0 + (float)207.5);
-			font.draw(Main.batch, "14", 0 + 515, 0 + (float)207.5);
-			font.draw(Main.batch, "15", 0 + 600, 0 + (float)207.5);
-			font.draw(Main.batch, "16", 0 + 685, 0 + (float)207.5);
-			font.draw(Main.batch, "17", 0 + 90, 0 + (float)122.5);
-			font.draw(Main.batch, "18", 0 + 175, 0 + (float)122.5);
-			font.draw(Main.batch, "19", 0 + 260, 0 + (float)122.5);
-			font.draw(Main.batch, "20", 0 + 345, 0 + (float)122.5);
-			font.draw(Main.batch, "21", 0 + 430, 0 + (float)122.5);
-			font.draw(Main.batch, "22", 0 + 515, 0 + (float)122.5);
-			font.draw(Main.batch, "23", 0 + 600, 0 + (float)122.5);
-			font.draw(Main.batch, "24", 0 + 685, 0 + (float)122.5);
-			font.draw(Main.batch, "25", 0 + (float)97.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "26", 0 + (float)182.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "27", 0 + (float)267.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "28", 0 + (float)352.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "29", 0 + (float)437.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "30", 0 + (float)522.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "31", 0 + (float)607.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "32", 0 + (float)692.5 + 790, 0 + (float)292.5);
-			font.draw(Main.batch, "33", 0 + (float)97.5 + 790, 0 + (float)207.5);
-			font.draw(Main.batch, "34", 0 + 175 + 800, 0 + (float)207.5);
-			font.draw(Main.batch, "35", 0 + 260 + 800, 0 + (float)207.5);
-			font.draw(Main.batch, "36", 0 + 345 + 800, 0 + (float)207.5);
-			font.draw(Main.batch, "37", 0 + 430 + 800, 0 + (float)207.5);
-			font.draw(Main.batch, "38", 0 + 515 + 800, 0 + (float)207.5);
-			font.draw(Main.batch, "39", 0 + 600 + 800, 0 + (float)207.5);
-			font.draw(Main.batch, "40", 0 + 685 + 800, 0 + (float)207.5);
-			font.draw(Main.batch, "41", 0 + 90 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, "42", 0 + 175 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, "43", 0 + 260 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, "44", 0 + 345 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, "45", 0 + 430 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, "46", 0 + 515 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, "47", 0 + 600 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, "48", 0 + 685 + 800, 0 + (float)122.5);
-			font.draw(Main.batch, ">", (float)760, (float)45);
-			font.draw(Main.batch, "<", (float)830, (float)45);
-		Main.batch.end();
-		onClickEvent();
-		if(changeCamera){
-			if(camera.position.x < 1200){
-				camera.position.x += 20;
-				System.out.println(Main.Message_DEBUG + camera.position.x);
-				if(camera.position.x == 1200){
-					camera.position.x = 1200;
-					changeCamera = false;
-				}
-			}
-		}
-		if(changeCamera2){
-			if(camera.position.x > 400){
-				camera.position.x -= 20;
-				System.out.println(Main.Message_DEBUG + camera.position.x);
-				if(camera.position.x == 400){
-					camera.position.x = 400;
-					changeCamera2 = false;
-				}
-			}
-		}
-		button_stage.act();
-		button_stage.draw();
-		
-	}
-	
-	public void LoadTexture(){
-		
-	}
-	
-	public void LoadSprite(){
-		
-	}
-	
-	public void onClickEvent(){
-		if(changeCamera == false && changeCamera2 == false){
-			if(!changed){
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 725 && Gdx.input.getX() < 725 + 75
-							&& Gdx.input.getY() > 325 && Gdx.input.getY() < 325 + 75){
-						camera.translate(0, 0);
-						changeCamera = true;
-						changed = true;
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level1(main));
-						dispose();
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 85 && Gdx.input.getX() < 140 + 85
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level2(main));
-						dispose();
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 170 && Gdx.input.getX() < 140 + 170
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level3(main));
-						dispose();
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 255 && Gdx.input.getX() < 140 + 255
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level4(main));
-						dispose();
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 340 && Gdx.input.getX() < 140 + 340
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level5(main));
-						dispose();
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 425 && Gdx.input.getX() < 140 + 425
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level6(main));
-						dispose();
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 510 && Gdx.input.getX() < 140 + 510
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level7(main));
-						dispose();
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 595 && Gdx.input.getX() < 140 + 595
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Level8(main));
-						dispose();
-					}
-				}
-			}else{
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 0 && Gdx.input.getX() < 0 + 75
-							&& Gdx.input.getY() > 325 && Gdx.input.getY() < 325 + 75){
-						camera.translate(0, 0);
-						changeCamera2 = true;
-						changed = false;
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 && Gdx.input.getX() < 140
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 25");
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 85 && Gdx.input.getX() < 140 + 85
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 26");
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 170 && Gdx.input.getX() < 140 + 170
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 27");
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 255 && Gdx.input.getX() < 140 + 255
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 28");
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 340 && Gdx.input.getX() < 140 + 340
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 29");
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 425 && Gdx.input.getX() < 140 + 425
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 30");
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 510 && Gdx.input.getX() < 140 + 510
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 31");
-					}
-				}
-				if(Gdx.input.justTouched()){
-					if(Gdx.input.getX() > 65 + 595 && Gdx.input.getX() < 140 + 595
-							&& Gdx.input.getY() > 75 && Gdx.input.getY() < 150){
-						System.out.println(Main.Message_INFO + "Load level 32");
-					}
-				}
-			}
-		}
-	}
-	
-	public void loadTextures(){
-		redButton = new Texture(Gdx.files.internal("assets/Red_Button.png"));
-		Background = new Texture("assets/Background.png");
-	}
-	
-	public void loadSprites(){
-		sprite_redButton = new Sprite(redButton);
-		sprite_Background = new Sprite(Background);
-		sprite_Background2 = new Sprite(Background);
-		
-		sprite_redButton.flip(false, false);
-		sprite_Background.flip(false, false);
-		sprite_Background2.flip(true, false);
-	}
-	
-	public void SetupFont(){
-		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
-		System.out.println(Main.Message_INFO + "Loaded font(s)");
-	}
-	
 	public void dispose() {
-		font.dispose();
+		
 	}
 
 	public void hide() {
-		dispose();
+		stagedied.dispose();
 	}
 
 	public void pause() {
 		
 	}
+	
+    public void start() {
+        start = TimeUtils.millis() / 1000;
+    }
 
+    public boolean hasCompleted() {
+        return TimeUtils.millis() / 1000 - start >= secsToWait;
+    }
+    
+	public void render(float deltaTime) {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
+		CharControls();
+		CharBoundaries();
+		EvilCharIntSystem();
+		EvilCharMovement();
+		EvilCharBackMovement();
+		CharFinish();
+		Collide();
+		Setupfont();
+		Timer();
+		effect.setPosition(CharBounds.x +30, CharBounds.y +30);
+		effect.update(deltaTime);
+		
+		long InputX = Gdx.input.getX();
+		long InputY = Gdx.input.getY();
+		
+		Main.batch.begin();
+			Main.batch.draw(sprite_level1background, 0, 0);
+		Main.batch.end();
+		button_stage.act();
+		button_stage.draw();
+		Main.batch.begin();
+			if(!CollectedCoins){
+				Main.batch.draw(Coin_Image, CoinRect1.x, CoinRect1.y);
+				Main.batch.draw(Coin_Image, CoinRect2.x, CoinRect2.y);
+				Main.batch.draw(Coin_Image, CoinRect3.x, CoinRect3.y);
+			}
+			effect.draw(Main.batch, deltaTime);
+			Main.batch.draw(sprite_character, CharBounds.x, CharBounds.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_1.x, EvilCharBounds_1.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_2.x, EvilCharBounds_2.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_3.x, EvilCharBounds_3.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_4.x, EvilCharBounds_4.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_5.x, EvilCharBounds_5.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_6.x, EvilCharBounds_6.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_7.x, EvilCharBounds_7.y);
+			Main.batch.draw(sprite_evilcharacter, EvilCharBounds_8.x, EvilCharBounds_8.y);
+			Main.batch.draw(sprite_finish, Finish.x, Finish.y);
+			font.draw(Main.batch, InputX + "   " + InputY, 200, 200);
+			if(!hasCompleted()){
+				font.draw(Main.batch, "Hit the left side of the screen to finish the level.", Main.SCREEN_WIDTH/6, 400);
+				font.draw(Main.batch, "Starting in: " + displaytime, Main.SCREEN_WIDTH/3, 100);
+			}
+			Main.batch.end();
+			if(drawstage2){
+				stagefinished.act();
+				stagefinished.draw();
+				Disabled = true;
+				ClickListener2();
+			}
+			if(drawstage){
+				stagedied.act();
+				stagedied.draw();
+				Disabled = true;
+				ClickListener();
+			}
+			Main.batch.begin();
+			if(finished){
+				font.draw(Main.batch, "+ " + CoinsCollected + " " + "Coins", 240, 320);
+				font.draw(Main.batch, "Total coins: " + CoinManager.TotalCoins, 240, 295);
+				drawstage2 = true;
+			}
+			if(died){
+				drawstage = true;
+			}
+			Main.batch.end();
+			
+		
+		if(coinCountSession == 3){
+			CollectedCoins = true;
+		}
+	}
 	public void resize(int arg0, int arg1) {
 		
 	}
-
 	public void resume() {
 		
 	}
-
 	public void show() {
-		playbutton = new PlayButton();
+		main = new Main();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
-		loadTextures();
-		loadSprites();
-		SetupFont();
+		camera.setToOrtho(false, 800, 400);
+		camera.update();
+		Setupfont();
+		LoadTexture();
+		LoadSprite();
+		
+		Random random = new Random();
+		CoinX1 = random.nextInt(800);
+		CoinY1 = random.nextInt(400);
+		CoinX2 = random.nextInt(800);
+		CoinY2 = random.nextInt(400);
+		CoinX3 = random.nextInt(800);
+		CoinY3 = random.nextInt(400);
+		
+		CharBounds = new Rectangle(360, 160, 60, 60);
+		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+		EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
+		EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
+		EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
+		EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
+		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
+		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
+		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+		Finish = new Rectangle(0, 0, 1, 400);
+		CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
+		CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
+		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
+		
+		//Stage for finished
+		stagefinished.addActor(finished_window);
+		stagefinished.addActor(star_image);
+		finished_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
+		finished_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
+		star_image.setX(305);
+		star_image.setY(110);
+		finished_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		star_image.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		
+		//Stage for died
+		stagedied.addActor(died_window);
+		stagedied.addActor(cross_image);
+		died_window.setX(Main.SCREEN_WIDTH/2 - 350/2);
+		died_window.setY(Main.SCREEN_HEIGHT/2 - 350/2);
+		cross_image.setX(305);
+		cross_image.setY(110);
+		died_window.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		cross_image.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		Disabled = false;
 		
 		Gdx.input.setInputProcessor(button_stage);
 		
@@ -355,16 +309,360 @@ public class LevelScreen extends Game implements Screen {
 		textButtonStyle.font = font;
 		
 		back_button = new TextButton("Back", textButtonStyle);
+		
 		back_button.pad(10);
 		back_button.addListener(new ClickListener(){
 			public void clicked(InputEvent event, float x, float y){
 				((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(main));
 			}
 		});
+		
 		table.add(back_button);
 		table.getCell(back_button).spaceBottom(10);
 		table.getCell(back_button).prefSize(100, 50);
-		table.getCell(back_button).pad(0, 0, 350, 700);
+		table.getCell(back_button).pad(Main.SCREEN_HEIGHT/2 + 150, Main.SCREEN_WIDTH/2 + 300, 0, 0);
 		button_stage.addActor(table);
+		
+		effect = new ParticleEffect();
+		effect.load(Gdx.files.internal("assets/effects/green.p"), Gdx.files.internal("assets/effects"));
+		effect.start();
+		
+		start();
+		
+		CountingSound = Gdx.audio.newSound(Gdx.files.internal("assets/CountingSound.wav"));
+	}
+	
+	public void ClickListener(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				if(finished){
+					coinCount += coinCountSession;
+					CoinManager.writeText("" + coinCount);
+				}
+				died = false;
+				Disabled = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+			}
+			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				reset();
+			}
+		}
+	}
+	
+	public void ClickListener2(){
+		if(Gdx.input.justTouched()){
+			if(Gdx.input.getX() > 225 && Gdx.input.getX() < 400 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				if(finished){
+					System.out.println("Coins in this session: " + coinCountSession);
+					CoinManager.TotalCoins += coinCountSession;
+					CoinManager.writeText("" + CoinManager.TotalCoins);
+				}
+				died = false;
+				Disabled = false;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelScreen(main));
+			}
+			if(Gdx.input.getX() > 400 && Gdx.input.getX() < 575 && Gdx.input.getY() > 300 && Gdx.input.getY() < 375){
+				CoinManager.TotalCoins += coinCountSession;
+				CoinManager.writeText("" + CoinManager.TotalCoins);
+			}
+		}
+	}
+	
+	public void reset(){
+		if(finished){
+			System.out.println("Coins in this session: " + coinCountSession);
+			CoinManager.TotalCoins += coinCountSession;
+			CoinManager.writeText("" + CoinManager.TotalCoins);
+		}
+		died = false;
+		finished = false;
+		drawstage2 = false;
+		drawstage = false;
+		Disabled = false;
+		effect.reset();
+		Random random = new Random();
+		CoinX1 = random.nextInt(800);
+		CoinY1 = random.nextInt(400);
+		CoinX2 = random.nextInt(800);
+		CoinY2 = random.nextInt(400);
+		CoinX3 = random.nextInt(800);
+		CoinY3 = random.nextInt(400);
+		CharBounds = new Rectangle(360, 160, 60, 60);
+		EvilCharBounds_1 = new Rectangle(0, 0, 80, 80);
+		EvilCharBounds_2 = new Rectangle(160, 0, 80, 80);
+		EvilCharBounds_3 = new Rectangle(320, 0, 80, 80);
+		EvilCharBounds_4 = new Rectangle(480, 0, 80, 80);
+		EvilCharBounds_5 = new Rectangle(80, 320, 80, 80);
+		EvilCharBounds_6 = new Rectangle(240, 320, 80, 80);
+		EvilCharBounds_7 = new Rectangle(400, 320, 80, 80);
+		EvilCharBounds_8 = new Rectangle(560, 320, 80, 80);
+		CoinRect1 = new Rectangle(CoinX1, CoinY1, 30, 30);
+		CoinRect2 = new Rectangle(CoinX2, CoinY2, 30, 30);
+		CoinRect3 = new Rectangle(CoinX3, CoinY3, 30, 30);
+		coinCountSession = 0;
+		CollectedCoins = false;
+		start();
+	}
+	
+	public void LoadTexture(){
+		Character = new Texture("assets/DodgeTheEnemiesCharacter.png");
+		EvilCharacter = new Texture("assets/DodgeTheEnemiesEvilCharacter.png");
+		Level1Background = new Texture("assets/LevelBackground.png");
+		Coin = new Texture(Gdx.files.internal("assets/Coin.png"));
+		TextureFinish = new Texture("assets/InvisibleFinish.png");
+		Star = new Texture("assets/Star.png");
+		Cross = new Texture("assets/Cross.png");
+	}
+	
+	public void LoadSprite(){
+		sprite_character = new Sprite(Character);
+		sprite_evilcharacter = new Sprite(EvilCharacter);
+		sprite_level1background = new Sprite(Level1Background);
+		Coin_Image = new Sprite(Coin);
+		sprite_finish = new Sprite(TextureFinish);
+		sprite_star = new Sprite(Star);
+		sprite_cross = new Sprite(Cross);
+	}
+	
+	public void CharControls(){
+		if(!Disabled && hasCompleted()){
+			if(Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)){
+				CharBounds.y += 2;
+			}
+			if(Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)){
+				CharBounds.y -= 2;
+			}
+			if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)){
+				CharBounds.x -= 2;
+			}
+			if(Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)){
+				CharBounds.x += 2;
+			}
+		}
+	}
+	
+	public void CharBoundaries(){
+		if(CharBounds.x >= 740){
+			CharBounds.x = 740;
+		}
+		if(CharBounds.x <= 0){
+			CharBounds.x = 0;
+		}
+		if(CharBounds.y >= 340){
+			CharBounds.y = 340;
+		}
+		if(CharBounds.y <= 0){
+			CharBounds.y = 0;
+		}
+	}
+	public void EvilCharIntSystem(){
+		if(EvilCharBounds_1.y == 0){
+			EvilCharAtTop_1 = 1;
+		}
+		if(EvilCharBounds_1.y == 320){
+			EvilCharAtTop_1 = 0;
+		}
+		
+		if(EvilCharBounds_2.y == 0){
+			EvilCharAtTop_2 = 1;
+		}
+		if(EvilCharBounds_2.y == 320){
+			EvilCharAtTop_2 = 0;
+		}
+		
+		if(EvilCharBounds_3.y == 0){
+			EvilCharAtTop_3 = 1;
+		}
+		if(EvilCharBounds_3.y == 320){
+			EvilCharAtTop_3 = 0;
+		}
+		
+		if(EvilCharBounds_4.y == 0){
+			EvilCharAtTop_4 = 1;
+		}
+		if(EvilCharBounds_4.y == 320){
+			EvilCharAtTop_4 = 0;
+		}
+		
+		if(EvilCharBounds_5.y == 0){
+			EvilCharAtTop_5 = 1;
+		}
+		if(EvilCharBounds_5.y == 320){
+			EvilCharAtTop_5 = 0;
+		}
+		
+		if(EvilCharBounds_6.y == 0){
+			EvilCharAtTop_6 = 1;
+		}
+		if(EvilCharBounds_6.y == 320){
+			EvilCharAtTop_6 = 0;
+		}
+		
+		if(EvilCharBounds_7.y == 0){
+			EvilCharAtTop_7 = 1;
+		}
+		if(EvilCharBounds_7.y == 320){
+			EvilCharAtTop_7 = 0;
+		}
+		
+		if(EvilCharBounds_8.y == 0){
+			EvilCharAtTop_8 = 1;
+		}
+		if(EvilCharBounds_8.y == 320){
+			EvilCharAtTop_8 = 0;
+		}
+	}
+	public void EvilCharMovement(){
+		if(hasCompleted()){
+			if(EvilCharAtTop_1 == 1){
+				EvilCharBounds_1.y += 1;
+			}
+			
+			if(EvilCharAtTop_2 == 1){
+				EvilCharBounds_2.y += 1;
+			}
+			
+			if(EvilCharAtTop_3 == 1){
+				EvilCharBounds_3.y += 1;
+			}
+			
+			if(EvilCharAtTop_4 == 1){
+				EvilCharBounds_4.y += 1;
+			}
+			
+			
+			if(EvilCharAtTop_5 == 0){
+				EvilCharBounds_5.y -= 1;
+			}
+			
+			if(EvilCharAtTop_6 == 0){
+				EvilCharBounds_6.y -= 1;
+			}
+			
+			if(EvilCharAtTop_7 == 0){
+				EvilCharBounds_7.y -= 1;
+			}
+			
+			if(EvilCharAtTop_8 == 0){
+				EvilCharBounds_8.y -= 1;
+			}
+		}
+	}
+	public void EvilCharBackMovement(){
+		if(hasCompleted()){
+			if(EvilCharAtTop_1 == 0){
+				EvilCharBounds_1.y -= 1;
+			}
+			
+			if(EvilCharAtTop_2 == 0){
+				EvilCharBounds_2.y -= 1;
+			}
+			
+			if(EvilCharAtTop_3 == 0){
+				EvilCharBounds_3.y -= 1;
+			}
+			
+			if(EvilCharAtTop_4 == 0){
+				EvilCharBounds_4.y -= 1;
+			}
+			
+			
+			if(EvilCharAtTop_5 == 1){
+				EvilCharBounds_5.y += 1;
+			}
+			
+			if(EvilCharAtTop_6 == 1){
+				EvilCharBounds_6.y += 1;
+			}
+			
+			if(EvilCharAtTop_7 == 1){
+				EvilCharBounds_7.y += 1;
+			}
+			
+			if(EvilCharAtTop_8 == 1){
+				EvilCharBounds_8.y += 1;
+			}
+		}
+	}
+	public void CharFinish(){
+		if(!Disabled){
+			if(CharBounds.overlaps(Finish)){
+				finished = true;
+			}
+		}
+	}
+	public void Collide(){
+		if(!Disabled){
+			if(CharBounds.overlaps(EvilCharBounds_1)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_2)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_3)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_4)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_5)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_6)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_7)){
+				died = true;
+			}
+			if(CharBounds.overlaps(EvilCharBounds_8)){
+				died = true;
+			}
+			if(CharBounds.overlaps(CoinRect1)){
+				CoinRect1.x = 10000;
+				CoinRect1.y = 10000;
+				coinCount++;
+				coinCountSession++;
+				System.out.println(coinCountSession);
+				CoinsCollected++;
+			}
+			if(CharBounds.overlaps(CoinRect2)){
+				CoinRect2.x = 10000;
+				CoinRect2.y = 10000;
+				coinCount++;
+				coinCountSession++;
+				System.out.println(coinCountSession);
+				CoinsCollected++;
+			}
+			if(CharBounds.overlaps(CoinRect3)){
+				CoinRect3.x = 10000;
+				CoinRect3.y = 10000;
+				coinCount++;
+				coinCountSession++;
+				System.out.println(coinCountSession);
+				CoinsCollected++;
+			}
+		}
+	}
+	public void Setupfont(){
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
+	}
+	public void Timer(){
+		if(TimeUtils.millis() / 1000 - start == 0){
+			displaytime = 3;
+			CountingSound.play();
+			CountingSound.pause();
+		}
+		if(TimeUtils.millis() / 1000 - start == 1){
+			displaytime = 2;
+			CountingSound.resume();
+			CountingSound.play();
+			CountingSound.pause();
+		}
+		if(TimeUtils.millis() / 1000 - start == 2){
+			displaytime = 1;
+			CountingSound.resume();
+			CountingSound.play();
+			CountingSound.pause();
+		}
 	}
 }
