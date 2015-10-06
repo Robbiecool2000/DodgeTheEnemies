@@ -9,12 +9,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenu implements Screen {
 	public static OrthographicCamera camera;
 	public static BitmapFont font;
 	Main game;
-	private Stage stage = new Stage();
+	private Stage stage = new Stage(new StretchViewport(1920, 1080));
+	private Viewport viewport;
 	
 	//Textures
 	Texture Background;
@@ -38,7 +42,8 @@ public class MainMenu implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		
+
+		stage.getViewport().apply();
 		stage.act();
 		stage.draw();
 		Main.batch.begin();
@@ -75,7 +80,8 @@ public class MainMenu implements Screen {
 	}
 
 	public void resize(int arg0, int arg1) {
-
+		viewport.update(arg0, arg1);
+		stage.getViewport().update(arg0, arg1, false);
 	}
 
 	public void resume() {
@@ -88,6 +94,8 @@ public class MainMenu implements Screen {
 		stage.addActor(play_button);
 		play_button.setWidth(play_button.getWidth());
 		play_button.setHeight(play_button.getHeight());
-		play_button.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+		play_button.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1f)));
+
+		viewport = new FitViewport(800, 480, camera);
 	}
 }
