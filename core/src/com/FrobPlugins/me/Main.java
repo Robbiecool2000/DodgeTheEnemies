@@ -18,7 +18,7 @@ public class Main extends Game implements ApplicationListener {
 	public static SpriteBatch batch;
 	public void create() {
 		batch = new SpriteBatch();
-		splash_screen = new SplashScreen();
+		splash_screen = new SplashScreen(this);
 		level1 = new LevelScreen(this);
 		instruction_screen = new InstructionScreen(this);
 		setScreen(splash_screen);

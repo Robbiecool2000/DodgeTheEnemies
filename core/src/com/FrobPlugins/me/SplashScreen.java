@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -12,9 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class SplashScreen implements Screen {
 	
 	Main main;
-	private Texture texture = new Texture(Gdx.files.internal("assets/DodgeTheEnemies_Splash.png"));
-    private Image splashImage = new Image(texture);
-    private Stage stage = new Stage();
+	public static Texture texture;
+    public static Image splashImage;
+    Stage stage;
+	private OrthographicCamera camera;
+
+	public SplashScreen(Main main){
+		this.main = main;
+	}
 
 	public void dispose() {
 		texture.dispose();
@@ -29,9 +35,10 @@ public class SplashScreen implements Screen {
 		
 	}
 
-	public void render(float arg0) {
-		 Gdx.gl.glClearColor(1,1,1,1);
+	public void render(float deltaTime) {
+		 Gdx.gl.glClearColor(0, 0, 0, 1);
 	     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		 camera.update();
 	     stage.act();
 	     stage.draw();
 	}
@@ -45,6 +52,12 @@ public class SplashScreen implements Screen {
 	}
 
 	public void show() {
+		camera = new OrthographicCamera();
+		camera.setToOrtho(true, 1920, 1080);
+		camera.update();
+		LoadTextures();
+		LoadImages();
+		LoadStage();
 		stage.addActor(splashImage);
 		
 		splashImage.addAction(Actions.sequence(Actions.alpha(0)
@@ -53,5 +66,17 @@ public class SplashScreen implements Screen {
                 		((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(main));
                 	}
                 })));
+	}
+
+	public void LoadTextures(){
+		texture = new Texture("DodgeTheEnemies_Splash.png");
+	}
+
+	public void LoadImages(){
+		splashImage = new Image(texture);
+	}
+
+	public void LoadStage(){
+		stage = new Stage();
 	}
 }

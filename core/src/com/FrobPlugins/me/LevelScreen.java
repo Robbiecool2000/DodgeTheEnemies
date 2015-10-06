@@ -6,7 +6,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -44,12 +43,12 @@ public class LevelScreen implements Screen{
 	Texture Character;
 	Texture EvilCharacter;
 	Texture Level1Background;
-	Texture finished_texture = new Texture("assets/Finished.png");
-	Texture died_texture = new Texture("assets/Died.png");
+	Texture finished_texture;
+	Texture died_texture;
 	Texture Coin;
 	Texture TextureFinish;
-	Texture Star = new Texture("assets/Star.png");
-	Texture Cross = new Texture("assets/Cross.png");
+	Texture Star;
+	Texture Cross;
 	
 	//Sprites
 	Sprite sprite_character;
@@ -60,9 +59,6 @@ public class LevelScreen implements Screen{
 	Sprite sprite_star;
 	Sprite sprite_cross;
 	
-	//Sounds
-	private Sound CountingSound;
-	
 	private ParticleEffect effect;
 	
 	private Stage button_stage = new Stage();
@@ -72,10 +68,10 @@ public class LevelScreen implements Screen{
 	private Table table;
 	
 	//Images
-	Image finished_window = new Image(finished_texture);
-	Image died_window = new Image(died_texture);
-	Image star_image = new Image(Star);
-	Image cross_image = new Image(Cross);
+	Image finished_window;
+	Image died_window;
+	Image star_image;
+	Image cross_image;
 	
 	//Stages
 	private Stage stagedied = new Stage();
@@ -129,7 +125,7 @@ public class LevelScreen implements Screen{
 	private boolean Disabled = false;
 	private OrthographicCamera camera;
 	Main main;
-	
+
 	private long start;
     private long secsToWait = 4;
     private long displaytime;
@@ -151,7 +147,7 @@ public class LevelScreen implements Screen{
 	public void pause() {
 		
 	}
-	
+
     public void start() {
         start = TimeUtils.millis() / 1000;
     }
@@ -244,11 +240,12 @@ public class LevelScreen implements Screen{
 	public void show() {
 		main = new Main();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 400);
+		camera.setToOrtho(false, 1920, 1080);
 		camera.update();
 		Setupfont();
 		LoadTexture();
 		LoadSprite();
+		LoadImage();
 		
 		Random random = new Random();
 		CoinX1 = random.nextInt(800);
@@ -295,7 +292,7 @@ public class LevelScreen implements Screen{
 		
 		Gdx.input.setInputProcessor(button_stage);
 		
-		atlas = new TextureAtlas("assets/button.pack");
+		atlas = new TextureAtlas("button.pack");
 		skin = new Skin(atlas);
 		
 		table = new Table(skin);
@@ -324,12 +321,10 @@ public class LevelScreen implements Screen{
 		button_stage.addActor(table);
 		
 		effect = new ParticleEffect();
-		effect.load(Gdx.files.internal("assets/effects/green.p"), Gdx.files.internal("assets/effects"));
+		effect.load(Gdx.files.internal("effects/green.p"), Gdx.files.internal("effects"));
 		effect.start();
 		
 		start();
-		
-		CountingSound = Gdx.audio.newSound(Gdx.files.internal("assets/CountingSound.wav"));
 	}
 	
 	public void ClickListener(){
@@ -405,13 +400,17 @@ public class LevelScreen implements Screen{
 	}
 	
 	public void LoadTexture(){
-		Character = new Texture("assets/DodgeTheEnemiesCharacter.png");
-		EvilCharacter = new Texture("assets/DodgeTheEnemiesEvilCharacter.png");
-		Level1Background = new Texture("assets/LevelBackground.png");
-		Coin = new Texture(Gdx.files.internal("assets/Coin.png"));
-		TextureFinish = new Texture("assets/InvisibleFinish.png");
-		Star = new Texture("assets/Star.png");
-		Cross = new Texture("assets/Cross.png");
+		Character = new Texture("DodgeTheEnemiesCharacter.png");
+		EvilCharacter = new Texture("DodgeTheEnemiesEvilCharacter.png");
+		Level1Background = new Texture("LevelBackground.png");
+		Coin = new Texture("Coin.png");
+		TextureFinish = new Texture("InvisibleFinish.png");
+		Star = new Texture("Star.png");
+		Cross = new Texture("Cross.png");
+		finished_texture = new Texture("Finished.png");
+		died_texture = new Texture("Died.png");
+		Star = new Texture("Star.png");
+		Cross = new Texture("Cross.png");
 	}
 	
 	public void LoadSprite(){
@@ -422,6 +421,13 @@ public class LevelScreen implements Screen{
 		sprite_finish = new Sprite(TextureFinish);
 		sprite_star = new Sprite(Star);
 		sprite_cross = new Sprite(Cross);
+	}
+
+	public void LoadImage(){
+		finished_window = new Image(finished_texture);
+		died_window = new Image(died_texture);
+		star_image = new Image(Star);
+		cross_image = new Image(Cross);
 	}
 	
 	public void CharControls(){
@@ -644,25 +650,17 @@ public class LevelScreen implements Screen{
 		}
 	}
 	public void Setupfont(){
-		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
+		font = new BitmapFont(Gdx.files.internal("Font/MyFont.fnt"));
 	}
 	public void Timer(){
 		if(TimeUtils.millis() / 1000 - start == 0){
 			displaytime = 3;
-			CountingSound.play();
-			CountingSound.pause();
 		}
 		if(TimeUtils.millis() / 1000 - start == 1){
 			displaytime = 2;
-			CountingSound.resume();
-			CountingSound.play();
-			CountingSound.pause();
 		}
 		if(TimeUtils.millis() / 1000 - start == 2){
 			displaytime = 1;
-			CountingSound.resume();
-			CountingSound.play();
-			CountingSound.pause();
 		}
 	}
 }

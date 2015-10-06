@@ -14,32 +14,32 @@ public class InstructionScreen implements Screen{
     Main main;
 
     //Textures
-    private Texture Background;
+    Texture Background;
 
     //Sprites
-    private Sprite background;
+    Sprite background;
 
     //Font
     public static BitmapFont font;
 
     public InstructionScreen(Main main){
         this.main = main;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true, 800, 400);
-        camera.update();
-        LoadTextures();
-        LoadSprites();
-        SetupFont();
     }
 
     public void show() {
-
+        camera = new OrthographicCamera();
+        camera.setToOrtho(true, 1920, 1080);
+        camera.update();
     }
 
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
+
+        LoadTextures();
+        LoadSprites();
+        SetupFont();
 
         Main.batch.begin();
             Main.batch.draw(background, 0, 0);
@@ -67,7 +67,7 @@ public class InstructionScreen implements Screen{
     }
 
     public void LoadTextures(){
-        Background = new Texture(Gdx.files.internal("assets/Background.png"));
+        Background = new Texture("Background.png");
     }
 
     public void LoadSprites(){
@@ -75,6 +75,6 @@ public class InstructionScreen implements Screen{
     }
 
     public void SetupFont(){
-        font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
+        font = new BitmapFont(Gdx.files.internal("Font/MyFont.fnt"));
     }
 }
