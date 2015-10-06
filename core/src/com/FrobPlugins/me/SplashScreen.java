@@ -69,7 +69,7 @@ public class SplashScreen implements Screen {
 	}
 
 	public void LoadTextures(){
-		texture = new Texture("DodgeTheEnemies_Splash.png");
+		texture = new Texture("assets/DodgeTheEnemies_Splash.png");
 	}
 
 	public void LoadImages(){

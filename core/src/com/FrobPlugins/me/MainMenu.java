@@ -60,8 +60,8 @@ public class MainMenu implements Screen {
 	
 	//Loading all of the textures in the 'assets' folder.
 	public void LoadTexture(){
-		Background = new Texture("Background.png");
-		PlayButton = new Texture("Playbutton.png");
+		Background = new Texture("assets/Background.png");
+		PlayButton = new Texture("assets/Playbutton.png");
 	}
 	
 	//Loading and flipping the sprites.
@@ -71,7 +71,7 @@ public class MainMenu implements Screen {
 	}
 	
 	public void SetupFont(){
-		font = new BitmapFont(Gdx.files.internal("Font/MyFont.fnt"));
+		font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
 	}
 
 	public void resize(int arg0, int arg1) {
@@ -86,6 +86,8 @@ public class MainMenu implements Screen {
 		stage.addActor(sprite_Background);
 		sprite_Background.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1f)));
 		stage.addActor(play_button);
+		play_button.setWidth(play_button.getWidth());
+		play_button.setHeight(play_button.getHeight());
 		play_button.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
 	}
 }

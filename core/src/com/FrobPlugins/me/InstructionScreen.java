@@ -67,7 +67,7 @@ public class InstructionScreen implements Screen{
     }
 
     public void LoadTextures(){
-        Background = new Texture("Background.png");
+        Background = new Texture("assets/Background.png");
     }
 
     public void LoadSprites(){
@@ -75,6 +75,6 @@ public class InstructionScreen implements Screen{
     }
 
     public void SetupFont(){
-        font = new BitmapFont(Gdx.files.internal("Font/MyFont.fnt"));
+        font = new BitmapFont(Gdx.files.internal("assets/Font/MyFont.fnt"));
     }
 }

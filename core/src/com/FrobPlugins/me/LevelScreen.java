@@ -400,17 +400,17 @@ public class LevelScreen implements Screen{
 	}
 	
 	public void LoadTexture(){
-		Character = new Texture("DodgeTheEnemiesCharacter.png");
-		EvilCharacter = new Texture("DodgeTheEnemiesEvilCharacter.png");
-		Level1Background = new Texture("LevelBackground.png");
-		Coin = new Texture("Coin.png");
-		TextureFinish = new Texture("InvisibleFinish.png");
-		Star = new Texture("Star.png");
-		Cross = new Texture("Cross.png");
-		finished_texture = new Texture("Finished.png");
-		died_texture = new Texture("Died.png");
-		Star = new Texture("Star.png");
-		Cross = new Texture("Cross.png");
+		Character = new Texture("assets/DodgeTheEnemiesCharacter.png");
+		EvilCharacter = new Texture("assets/DodgeTheEnemiesEvilCharacter.png");
+		Level1Background = new Texture("assets/LevelBackground.png");
+		Coin = new Texture("assets/Coin.png");
+		TextureFinish = new Texture("assets/InvisibleFinish.png");
+		Star = new Texture("assets/Star.png");
+		Cross = new Texture("assets/Cross.png");
+		finished_texture = new Texture("assets/Finished.png");
+		died_texture = new Texture("assets/Died.png");
+		Star = new Texture("assets/Star.png");
+		Cross = new Texture("assets/Cross.png");
 	}
 	
 	public void LoadSprite(){
